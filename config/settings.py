@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'core',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -75,6 +76,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -176,4 +178,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://cleosys-backend.onrender.com",
+    "https://0e5c45b9.cleosys-fronted.pages.dev",
+]
+
+# Frontend (Cloudflare Pages) → API en Render / local
+CORS_ALLOWED_ORIGINS = [
+    "https://0e5c45b9.cleosys-fronted.pages.dev",
 ]

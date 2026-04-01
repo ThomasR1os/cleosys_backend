@@ -48,7 +48,11 @@ SECRET_KEY = 'django-insecure-ekx2uxz36!&vgsjryjy3^l@8xl^x_9leo7-2+9rck%z5&=g*70
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "cleosys-backend.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -156,3 +160,8 @@ REST_FRAMEWORK = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://cleosys-backend.onrender.com",
+]

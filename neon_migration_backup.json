@@ -1,0 +1,4709 @@
+[
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "company"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "accounts",
+    "model": "userprofile"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "core",
+    "model": "brand"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "core",
+    "model": "categoryproduct"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "core",
+    "model": "client"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "core",
+    "model": "paymentmethods"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "core",
+    "model": "subcategoryproduct"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "core",
+    "model": "supplier"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "core",
+    "model": "typeproduct"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "core",
+    "model": "unitmeasurement"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "ventas",
+    "model": "clientcontact"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "ventas",
+    "model": "quotation"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "ventas",
+    "model": "quotationproduct"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "almacen",
+    "model": "product"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "almacen",
+    "model": "productimage"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "almacen",
+    "model": "productsupplier"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "almacen",
+    "model": "warehouse"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "almacen",
+    "model": "warehousemovements"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "almacen",
+    "model": "warehouseproduct"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "logistica",
+    "model": "logistictask"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "ventas",
+    "model": "quotationsequence"
+  }
+},
+{
+  "model": "core.supplier",
+  "pk": 1,
+  "fields": {
+    "type": "NACIONAL",
+    "ruc": "20601158168",
+    "name": "COMPRESORES DEL PERU SAC",
+    "adress": "AV. LA PAZ 1532 SAN MIGUEL",
+    "contact": "THOMAS RIOS",
+    "email": "jrios@compresoresdelperu.com.pe",
+    "phone": "999999999",
+    "bank_accounts": "----"
+  }
+},
+{
+  "model": "core.supplier",
+  "pk": 2,
+  "fields": {
+    "type": "NACIONAL",
+    "ruc": "20525063012",
+    "name": "LEOS SERVICE COMPRESOR S.A.C.",
+    "adress": "AV. NICOLAS DE PIEROLA NRO. 817 URB. EL CERCADO LIMA - LIMA - VILLA MARIA DEL TRIUNFO",
+    "contact": "THOMAS RIOS",
+    "email": "jrios@leos-service.com",
+    "phone": "960911916",
+    "bank_accounts": "...."
+  }
+},
+{
+  "model": "core.brand",
+  "pk": 1,
+  "fields": {
+    "name": "SCHULZ"
+  }
+},
+{
+  "model": "core.brand",
+  "pk": 2,
+  "fields": {
+    "name": "KOTECH"
+  }
+},
+{
+  "model": "core.brand",
+  "pk": 3,
+  "fields": {
+    "name": "EMAX"
+  }
+},
+{
+  "model": "core.brand",
+  "pk": 4,
+  "fields": {
+    "name": "CHIAPERINI"
+  }
+},
+{
+  "model": "core.brand",
+  "pk": 5,
+  "fields": {
+    "name": "INGERSOLL RAND"
+  }
+},
+{
+  "model": "core.brand",
+  "pk": 6,
+  "fields": {
+    "name": "ATLAS COPCO"
+  }
+},
+{
+  "model": "core.brand",
+  "pk": 7,
+  "fields": {
+    "name": "QUINCY"
+  }
+},
+{
+  "model": "core.categoryproduct",
+  "pk": 1,
+  "fields": {
+    "name": "COMPRESOR"
+  }
+},
+{
+  "model": "core.categoryproduct",
+  "pk": 2,
+  "fields": {
+    "name": "SECADOR"
+  }
+},
+{
+  "model": "core.categoryproduct",
+  "pk": 3,
+  "fields": {
+    "name": "TANQUE"
+  }
+},
+{
+  "model": "core.categoryproduct",
+  "pk": 4,
+  "fields": {
+    "name": "SOPLADOR"
+  }
+},
+{
+  "model": "core.categoryproduct",
+  "pk": 5,
+  "fields": {
+    "name": "REPUESTOS"
+  }
+},
+{
+  "model": "core.categoryproduct",
+  "pk": 6,
+  "fields": {
+    "name": "CABEZAL"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "name": "COMPRESOR DE PISTON"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "name": "COMPRESOR DE TORNILLO"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 3,
+  "fields": {
+    "category": 1,
+    "name": "COMPRESOR DIESEL"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 4,
+  "fields": {
+    "category": 2,
+    "name": "SECADOR REFRIGERATIVO"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 5,
+  "fields": {
+    "category": 2,
+    "name": "SECADOR DE ADSORCION"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 6,
+  "fields": {
+    "category": 3,
+    "name": "TANQUE DE PULMON"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 7,
+  "fields": {
+    "category": 4,
+    "name": "SOPLADOR CENTRIFUGO"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 8,
+  "fields": {
+    "category": 1,
+    "name": "COMPRESOR DE PISTON DE ALTA PRESIÓN"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 9,
+  "fields": {
+    "category": 6,
+    "name": "CABEZAL DE PISTÓN"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 10,
+  "fields": {
+    "category": 6,
+    "name": "CABEZAL DE PISTÓN LIBRE DE ACEITE"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 11,
+  "fields": {
+    "category": 1,
+    "name": "COMPRESOR DE PISTÓN LIBRE DE ACEITE"
+  }
+},
+{
+  "model": "core.subcategoryproduct",
+  "pk": 12,
+  "fields": {
+    "category": 1,
+    "name": "COMPRESOR DE PISTÓN GASOLINERO"
+  }
+},
+{
+  "model": "core.typeproduct",
+  "pk": 1,
+  "fields": {
+    "name": "ALMACENABLE"
+  }
+},
+{
+  "model": "core.typeproduct",
+  "pk": 2,
+  "fields": {
+    "name": "CONSUMIBLE"
+  }
+},
+{
+  "model": "core.typeproduct",
+  "pk": 3,
+  "fields": {
+    "name": "SERVICIO"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 1,
+  "fields": {
+    "name": "Unidad",
+    "abreviation": "UND"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 2,
+  "fields": {
+    "name": "Pieza",
+    "abreviation": "PZA"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 3,
+  "fields": {
+    "name": "Juego",
+    "abreviation": "JGO"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 4,
+  "fields": {
+    "name": "Par",
+    "abreviation": "PAR"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 5,
+  "fields": {
+    "name": "Kilogramo",
+    "abreviation": "KG"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 6,
+  "fields": {
+    "name": "Gramo",
+    "abreviation": "GR"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 7,
+  "fields": {
+    "name": "Litro",
+    "abreviation": "L"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 8,
+  "fields": {
+    "name": "Mililitro",
+    "abreviation": "ML"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 9,
+  "fields": {
+    "name": "Metro",
+    "abreviation": "M"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 10,
+  "fields": {
+    "name": "Centimetro",
+    "abreviation": "CM"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 11,
+  "fields": {
+    "name": "Milimetro",
+    "abreviation": "MM"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 12,
+  "fields": {
+    "name": "Metro cubico",
+    "abreviation": "M3"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 13,
+  "fields": {
+    "name": "Bar",
+    "abreviation": "BAR"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 14,
+  "fields": {
+    "name": "PSI",
+    "abreviation": "PSI"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 15,
+  "fields": {
+    "name": "Hora",
+    "abreviation": "HR"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 16,
+  "fields": {
+    "name": "Minuto",
+    "abreviation": "MIN"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 17,
+  "fields": {
+    "name": "Segundo",
+    "abreviation": "SEG"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 18,
+  "fields": {
+    "name": "Kilowatt",
+    "abreviation": "KW"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 19,
+  "fields": {
+    "name": "Caballo de fuerza",
+    "abreviation": "HP"
+  }
+},
+{
+  "model": "core.unitmeasurement",
+  "pk": 20,
+  "fields": {
+    "name": "RPM",
+    "abreviation": "RPM"
+  }
+},
+{
+  "model": "core.client",
+  "pk": 3,
+  "fields": {
+    "ruc": "20558629585",
+    "name": "INSUMOS PISQUEROS DEL SUR E.I.R.L."
+  }
+},
+{
+  "model": "core.client",
+  "pk": 4,
+  "fields": {
+    "ruc": "20607201243",
+    "name": "PAPA CHOLO RESTAURANTE EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA"
+  }
+},
+{
+  "model": "core.paymentmethods",
+  "pk": 1,
+  "fields": {
+    "name": "CONTADO"
+  }
+},
+{
+  "model": "accounts.company",
+  "pk": 1,
+  "fields": {
+    "name": "CDP",
+    "logo_url": "",
+    "bank_accounts": ""
+  }
+},
+{
+  "model": "accounts.company",
+  "pk": 2,
+  "fields": {
+    "name": "LEOS",
+    "logo_url": "https://res.cloudinary.com/dxwupfizt/image/upload/v1774924632/cleosys/companies/li1e8dm0irarqxn43ylf.png",
+    "bank_accounts": "BBVA SOLES:\nBBVA DÓLARES:\nBCP SOLES:\nBCP DÓLARES:"
+  }
+},
+{
+  "model": "ventas.quotationsequence",
+  "pk": "ADM",
+  "fields": {
+    "last_number": 4
+  }
+},
+{
+  "model": "ventas.quotationsequence",
+  "pk": "TRL",
+  "fields": {
+    "last_number": 5
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 2,
+  "fields": {
+    "quotation": 1,
+    "product": 1024,
+    "cant": 1,
+    "product_price": "5079.77",
+    "line_sku": "",
+    "line_description": "",
+    "line_datasheet": ""
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 3,
+  "fields": {
+    "quotation": 1,
+    "product": 1001,
+    "cant": 1,
+    "product_price": "99.90",
+    "line_sku": "",
+    "line_description": "",
+    "line_datasheet": ""
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 4,
+  "fields": {
+    "quotation": 2,
+    "product": 1001,
+    "cant": 1,
+    "product_price": "299.70",
+    "line_sku": "SKU-EJEMPLO-001",
+    "line_description": "Descripción corta del producto",
+    "line_datasheet": "Texto o HTML del datasheet"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 5,
+  "fields": {
+    "quotation": 3,
+    "product": 1001,
+    "cant": 1,
+    "product_price": "99.90",
+    "line_sku": "SKU-EJEMPLO-001",
+    "line_description": "Descripción corta del producto",
+    "line_datasheet": "Texto o HTML del datasheet"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 6,
+  "fields": {
+    "quotation": 4,
+    "product": 1001,
+    "cant": 1,
+    "product_price": "299.70",
+    "line_sku": "SKU-EJEMPLO-001",
+    "line_description": "Descripción corta del producto",
+    "line_datasheet": "Texto o HTML del datasheet"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 7,
+  "fields": {
+    "quotation": 4,
+    "product": 1004,
+    "cant": 1,
+    "product_price": "3492.00",
+    "line_sku": "932.3429-0",
+    "line_description": "COMPRESOR DE PISTON SCHULZ PRATIC AIR CSL20.1/100 DE 5 HP 8.6 BAR 220V/1PH/60HZ CON RUEDAS",
+    "line_datasheet": "Fase – Tensión: Monofásico – 230 V\r\nRégimen de operación: Intermitente\r\nTipo de motor: Abierto\r\nPotencia: 5 HP (3,8 kW)\r\nDesplazamiento de aire: 20 SCFM / 566 l/min\r\nPresión máxima de operación: 125 psi / 8,6 bar\r\nPresión mínima de operación: 90 psi / 6,2 bar\r\nFrecuencia: 60 Hz\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nVolumen del tanque de aire: 26,4 galones (≈ 100 litros)\r\nLubricado o libre de aceite: Lubricado\r\nLongitud del producto empaquetado: 510 mm\r\nAncho del producto empaquetado: 1.120 mm\r\nAltura del producto empaquetado: 890 mm\r\nPeso bruto: 93 kg\r\nPeso neto: 77 kg\r\nVoltaje: 220V/1PH/60HZ"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 8,
+  "fields": {
+    "quotation": 5,
+    "product": 1001,
+    "cant": 1,
+    "product_price": "99.90",
+    "line_sku": "SKU-EJEMPLO-001",
+    "line_description": "Descripción corta del producto",
+    "line_datasheet": "Texto o HTML del datasheet"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 9,
+  "fields": {
+    "quotation": 5,
+    "product": 1001,
+    "cant": 1,
+    "product_price": "99.90",
+    "line_sku": "SKU-EJEMPLO-001",
+    "line_description": "Descripción corta del producto",
+    "line_datasheet": "Texto o HTML del datasheet"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 10,
+  "fields": {
+    "quotation": 6,
+    "product": 1006,
+    "cant": 1,
+    "product_price": "601.77",
+    "line_sku": "932.3329-0",
+    "line_description": "CABEZAL DE PISTON SCHULZ CSL15BR DE 3 HP 9.7 BAR",
+    "line_datasheet": "Potencia de motor: 3 HP (2,25 kW)\r\nDesplazamiento teórico (pcm): 15 CFM\r\nDesplazamiento teórico (l/m): 425 l/min\r\nMáxima presión de trabajo: 9,7 bar (140 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nDimensiones: ancho/alto/largo:  254 x 282  x 285 mm"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 11,
+  "fields": {
+    "quotation": 7,
+    "product": 1049,
+    "cant": 1,
+    "product_price": "2164.40",
+    "line_sku": "932.7554-0",
+    "line_description": "COMPRESOR DE PISTON SCHULZ MCSV20AUDAZ/200 DE 5 HP 12 BAR 220V/3PH/60HZ",
+    "line_datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi) \r\nVolumen de tanque: 200 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 4\r\nPeso neto: 107 kg\r\nPeso bruto: 145 kg\r\nDimensiones: ancho/alto/largo: 510 × 965 × 1355 mm\r\nVoltaje: 220V/3PH/60HZ"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 12,
+  "fields": {
+    "quotation": 7,
+    "product": 1020,
+    "cant": 1,
+    "product_price": "700.00",
+    "line_sku": "931.1000-5",
+    "line_description": "CABEZAL DE PISTON LIBRE DE ACEITE SCHULZ MSV6 DE 1 HP 8.3 BAR",
+    "line_datasheet": "Potencia de motor: 1 HP (0,75 kW)\r\nDesplazamiento teórico (pcm): 5 – 6 CFM\r\nDesplazamiento teórico (l/m): 141 – 170 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “V”\r\nDimensiones: ancho/alto/largo:  330 x 230 x 440 mm"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 13,
+  "fields": {
+    "quotation": 8,
+    "product": 1076,
+    "cant": 1,
+    "product_price": "990.00",
+    "line_sku": "931.1232-0",
+    "line_description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ MSV6/30 DE 1 HP 8.3 BAR 230V/1PH/60HZ",
+    "line_datasheet": "Potencia de motor: 1 HP (0,75 kW)\nDesplazamiento teórico (pcm): 5 – 6 CFM\nDesplazamiento teórico (l/m): 141 – 170 l/min\nMáxima presión de trabajo: 8,3 bar (120 psi)\nVelocidad de rotación (RPM): 1445 / 1730 rpm\nVolumen de tanque: 30 litros\nNúmero de etapas: 1\nNúmero de pistones: 2 en “V”\nPolos del motor: 4\nPeso neto: 42 kg\nPeso bruto: 54 kg\nDimensiones: ancho/alto/largo: 440 × 670 × 440 mm\nVoltaje: 230V/1PH/60HZ\nINCLUYE TABLERO ELECTRICO"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 14,
+  "fields": {
+    "quotation": 9,
+    "product": 1063,
+    "cant": 5,
+    "product_price": "4476.05",
+    "line_sku": "",
+    "line_description": "",
+    "line_datasheet": ""
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 15,
+  "fields": {
+    "quotation": 9,
+    "product": 1003,
+    "cant": 1,
+    "product_price": "727.50",
+    "line_sku": "809.1114-0",
+    "line_description": "CABEZAL DE PISTON SCHULZ CSL20 PRATIC DE 5 HP 8.6 BAR",
+    "line_datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión máxima de operación: 8,6 bar (125 psi)\r\nPresión mínima de operación: 6,2 bar (90 psi)\r\nRégimen de trabajo: Intermitente\r\nFrecuencia: 60 Hz\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nVolumen de aceite lubricante: 0,5 litros\r\nLubricado o libre de aceite: Lubricado\r\nConexión de descarga: NPT 1/4”\r\nDimensiones (empaquetado): 540 × 1085 × 1400 mm (ancho × alto × largo)"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 16,
+  "fields": {
+    "quotation": 9,
+    "product": 1026,
+    "cant": 1,
+    "product_price": "906.73",
+    "line_sku": "931.1311-0",
+    "line_description": "CABEZAL DE PISTON LIBRE DE ACEITE SCHULZ SILENCIOSO DE CSD9 1.5 HP 8.3 BAR",
+    "line_datasheet": "Potencia de motor: 1,5 HP (1,1 kW)\r\nDesplazamiento teórico (pcm): 9 CFM\r\nDesplazamiento teórico (l/m): 255 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2\r\nDimensiones: ancho/alto/largo: 260 x 390 x 400  mm"
+  }
+},
+{
+  "model": "ventas.quotationproduct",
+  "pk": 17,
+  "fields": {
+    "quotation": 9,
+    "product": 1067,
+    "cant": 1,
+    "product_price": "7786.52",
+    "line_sku": "934.7369-0",
+    "line_description": "COMPRESOR DE PISTON SCHULZ MSWV80MAX/425 DE 20 HP 12 BAR 220V/3PH/60HZ",
+    "line_datasheet": "Potencia de motor: 20 HP (15 kW)\r\nDesplazamiento teórico (pcm): 80 CFM\r\nDesplazamiento teórico (l/m): 2264 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 5 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 403 kg\r\nPeso bruto: 495 kg\r\nDimensiones: ancho/alto/largo: 650 × 1460 × 1990 mm\r\nVoltaje: 220V/3PH/60HZ"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1001,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "SKU-EJEMPLO-001",
+    "description": "Descripción corta del producto",
+    "datasheet": "Texto o HTML del datasheet",
+    "price": "99.90",
+    "rental_price_without_operator": null,
+    "rental_price_with_operator": null,
+    "warrannty": "12M",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": "10x20x30 cm",
+    "gross_weight": "2.5 kg",
+    "creation_date": "2026-03-28T16:58:25.126Z",
+    "update_date": "2026-03-28T16:58:25.126Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1002,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "930.3430-0",
+    "description": "CABEZAL DE PISTON SCHULZ CSI7,4 DE 1.5 HP 8.6 BAR",
+    "datasheet": "Potencia de motor: 1,5 HP (0,75 kW)\r\nDesplazamiento teórico (pcm): 7,4 CFM\r\nDesplazamiento teórico (l/m): 153 l/min\r\nMáxima presión de trabajo: 8,6 bar (125 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 1\r\nDimensiones: ancho/alto/largo: 150 × 240 × 175 mm",
+    "price": "212.31",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": "10x20x30 cm",
+    "gross_weight": "2.5 kg",
+    "creation_date": "2026-03-30T20:02:08.865Z",
+    "update_date": "2026-03-30T20:02:08.865Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1003,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "809.1114-0",
+    "description": "CABEZAL DE PISTON SCHULZ CSL20 PRATIC DE 5 HP 8.6 BAR",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión máxima de operación: 8,6 bar (125 psi)\r\nPresión mínima de operación: 6,2 bar (90 psi)\r\nRégimen de trabajo: Intermitente\r\nFrecuencia: 60 Hz\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nVolumen de aceite lubricante: 0,5 litros\r\nLubricado o libre de aceite: Lubricado\r\nConexión de descarga: NPT 1/4”\r\nDimensiones (empaquetado): 540 × 1085 × 1400 mm (ancho × alto × largo)",
+    "price": "727.50",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:34:57.225Z",
+    "update_date": "2026-03-30T20:34:57.225Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1004,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.3429-0",
+    "description": "COMPRESOR DE PISTON SCHULZ PRATIC AIR CSL20.1/100 DE 5 HP 8.6 BAR 220V/1PH/60HZ CON RUEDAS",
+    "datasheet": "Fase – Tensión: Monofásico – 230 V\r\nRégimen de operación: Intermitente\r\nTipo de motor: Abierto\r\nPotencia: 5 HP (3,8 kW)\r\nDesplazamiento de aire: 20 SCFM / 566 l/min\r\nPresión máxima de operación: 125 psi / 8,6 bar\r\nPresión mínima de operación: 90 psi / 6,2 bar\r\nFrecuencia: 60 Hz\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nVolumen del tanque de aire: 26,4 galones (≈ 100 litros)\r\nLubricado o libre de aceite: Lubricado\r\nLongitud del producto empaquetado: 510 mm\r\nAncho del producto empaquetado: 1.120 mm\r\nAltura del producto empaquetado: 890 mm\r\nPeso bruto: 93 kg\r\nPeso neto: 77 kg\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "1164.00",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:34:57.450Z",
+    "update_date": "2026-03-30T20:34:57.450Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1005,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "931.8058-0",
+    "description": "CABEZAL DE PISTON SCHULZ CSL10BR DE 2 HP 9.7 BAR",
+    "datasheet": "Potencia de motor: 2 HP (1,5 kW)\r\nDesplazamiento teórico (pcm): 10 CFM\r\nDesplazamiento teórico (l/m): 283 l/min\r\nMáxima presión de trabajo: 9,7 bar (140 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nDimensiones: ancho/alto/largo: 254 x 282  x 285 mm",
+    "price": "442.92",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:56.871Z",
+    "update_date": "2026-03-30T20:43:56.871Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1006,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "932.3329-0",
+    "description": "CABEZAL DE PISTON SCHULZ CSL15BR DE 3 HP 9.7 BAR",
+    "datasheet": "Potencia de motor: 3 HP (2,25 kW)\r\nDesplazamiento teórico (pcm): 15 CFM\r\nDesplazamiento teórico (l/m): 425 l/min\r\nMáxima presión de trabajo: 9,7 bar (140 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nDimensiones: ancho/alto/largo:  254 x 282  x 285 mm",
+    "price": "601.77",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:56.901Z",
+    "update_date": "2026-03-30T20:43:56.901Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1007,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "933.9393-0",
+    "description": "CABEZAL DE PISTON SCHULZ CSL20BR DE 5 HP 12 BAR",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nDimensiones: ancho/alto/largo:  224  x 430 x 413 mm",
+    "price": "995.70",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:56.927Z",
+    "update_date": "2026-03-30T20:43:56.927Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1008,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "933.9394-0",
+    "description": "CABEZAL DE PISTON SCHULZ CSL30BR DE 7.5 HP 12 BAR",
+    "datasheet": "Potencia de motor: 7,5 HP (5,5 kW)\r\nDesplazamiento teórico (pcm): 30 CFM\r\nDesplazamiento teórico (l/m): 850 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “L”\r\nDimensiones: ancho/alto/largo: 218  x 500 x 451   mm",
+    "price": "1355.61",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:56.953Z",
+    "update_date": "2026-03-30T20:43:56.953Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1009,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "933.9395-0",
+    "description": "CABEZAL DE PISTON SCHULZ CSL40BR DE 10 HP 12 BAR",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1133 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “L”\r\nDimensiones: ancho/alto/largo:  218  x 500 x 451   mm",
+    "price": "1487.61",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:56.979Z",
+    "update_date": "2026-03-30T20:43:56.979Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1010,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "934.7383-0",
+    "description": "CABEZAL DE PISTON SCHULZ CSLV60BR DE 15 HP 12 BAR",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 4 en “V”\r\nDimensiones: ancho/alto/largo: 600 x 800 x 700 mm",
+    "price": "2531.54",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.004Z",
+    "update_date": "2026-03-30T20:43:57.004Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1011,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "934.7456-0",
+    "description": "CABEZAL DE PISTON SCHULZ CSLV80BR DE 20 HP 12 BAR",
+    "datasheet": "Potencia de motor: 20 HP (22,5 kW)\r\nDesplazamiento teórico (pcm): 80 CFM\r\nDesplazamiento teórico (l/m): 2266 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 4 en “V”\r\nDimensiones: ancho/alto/largo:   600 x 800 x 700 mm",
+    "price": "2846.52",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.028Z",
+    "update_date": "2026-03-30T20:43:57.028Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1012,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "922.9297-0/ME",
+    "description": "CABEZAL DE PISTON SCHULZ MCSV20AUDAZ DE 5 HP 12 BAR",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi) \r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nDimensiones: ancho/alto/largo: 508  x 442 x 624 mm",
+    "price": "1272.16",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.052Z",
+    "update_date": "2026-03-30T20:43:57.052Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1013,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "932.7521-0",
+    "description": "CABEZAL DE PISTON SCHULZ MSV20MAX DE 5 HP 12 BAR",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión de trabajo máxima: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nDimensiones: ancho/alto/largo:  530 × 400 × 400 mm",
+    "price": "971.72",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.089Z",
+    "update_date": "2026-03-30T20:43:57.089Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1014,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "933.1407-0",
+    "description": "CABEZAL DE PISTON SCHULZ MSV30MAX DE 7.5 HP 12 BAR",
+    "datasheet": "Potencia de motor: 7,5 HP (5,5 kW)\r\nDesplazamiento teórico (pcm): 30 CFM\r\nDesplazamiento teórico (l/m): 850 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nDimensiones: ancho/alto/largo: 435 x 410 x 580 mm",
+    "price": "1406.56",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.129Z",
+    "update_date": "2026-03-30T20:43:57.129Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1015,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "933.8003-0",
+    "description": "CABEZAL DE PISTON SCHULZ MSV40MAX DE 10 HP 12 BAR",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nDimensiones: ancho/alto/largo:  435 x 410 x 580 mm",
+    "price": "1576.17",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.153Z",
+    "update_date": "2026-03-30T20:43:57.153Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1016,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "933.9388-0",
+    "description": "CABEZAL DE PISTON SCHULZ MSW60MAX DE 15 HP 12 BAR",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nDimensiones: ancho/alto/largo: 550 x 620 x 740 mm",
+    "price": "2597.20",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.173Z",
+    "update_date": "2026-03-30T20:43:57.173Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1017,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "934.7368-0",
+    "description": "CABEZAL DE PISTON SCHULZ MSWV80MAX DE 20 HP 12 BAR",
+    "datasheet": "Potencia de motor: 20 HP (15 kW)\r\nDesplazamiento teórico (pcm): 80 CFM\r\nDesplazamiento teórico (l/m): 2264 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 5 en “W”\r\nDimensiones: ancho/alto/largo: 650 x 780 x 960 mm",
+    "price": "3529.90",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.199Z",
+    "update_date": "2026-03-30T20:43:57.199Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1018,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "933.9303-0",
+    "description": "CABEZAL DE PISTON SCHULZ MSW40FORT DE 10 HP 12 BAR",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nDimensiones: ancho/alto/largo: 600 x 700 x 900 mm",
+    "price": "2537.19",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.221Z",
+    "update_date": "2026-03-30T20:43:57.221Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1019,
+  "fields": {
+    "type": 1,
+    "subcategory": 9,
+    "brand": 1,
+    "sku": "934.3453-0",
+    "description": "CABEZAL DE PISTON SCHULZ MSWV60FORT DE 15 HP 12 BAR",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1699 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 5 en “W”\r\nPolos del motor: 4\r\nDimensiones: ancho/alto/largo: 600 x 1000 x 960  mm",
+    "price": "3454.91",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.248Z",
+    "update_date": "2026-03-30T20:43:57.248Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1020,
+  "fields": {
+    "type": 1,
+    "subcategory": 10,
+    "brand": 1,
+    "sku": "931.1000-5",
+    "description": "CABEZAL DE PISTON LIBRE DE ACEITE SCHULZ MSV6 DE 1 HP 8.3 BAR",
+    "datasheet": "Potencia de motor: 1 HP (0,75 kW)\r\nDesplazamiento teórico (pcm): 5 – 6 CFM\r\nDesplazamiento teórico (l/m): 141 – 170 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “V”\r\nDimensiones: ancho/alto/largo:  330 x 230 x 440 mm",
+    "price": "700.00",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.304Z",
+    "update_date": "2026-03-30T20:43:57.304Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1021,
+  "fields": {
+    "type": 1,
+    "subcategory": 10,
+    "brand": 1,
+    "sku": "932.3383-0",
+    "description": "CABEZAL DE PISTON LIBRE DE ACEITE SCHULZ CSV15 DE 3 HP 8.3 BAR",
+    "datasheet": "Potencia de motor: 3 HP (2,2 kW)\r\nDesplazamiento teórico (pcm): 15 CFM\r\nDesplazamiento teórico (l/m): 425 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “V”\r\nDimensiones: ancho/alto/largo:  520 x 390 x 420 mm",
+    "price": "1353.21",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.330Z",
+    "update_date": "2026-03-30T20:43:57.330Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1022,
+  "fields": {
+    "type": 1,
+    "subcategory": 10,
+    "brand": 1,
+    "sku": "932.7537-0",
+    "description": "CABEZAL DE PISTON LIBRE DE ACEITE SCHULZ CSV20 DE 5 HP 8.3 BAR",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nDimensiones: ancho/alto/largo:  520 x 390 x 420 mm mm",
+    "price": "1410.80",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.351Z",
+    "update_date": "2026-03-30T20:43:57.351Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1023,
+  "fields": {
+    "type": 1,
+    "subcategory": 10,
+    "brand": 1,
+    "sku": "934.7387-0",
+    "description": "CABEZAL DE PISTON LIBRE DE ACEITE SCHULZ CSW40 DE 10 HP 8.3 BAR",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nPolos del motor: 2\r\nDimensiones: ancho/alto/largo:  900 x 580 x 732.4 mm",
+    "price": "4614.81",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.372Z",
+    "update_date": "2026-03-30T20:43:57.372Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1024,
+  "fields": {
+    "type": 1,
+    "subcategory": 10,
+    "brand": 1,
+    "sku": "934.7389-0",
+    "description": "CABEZAL DE PISTON LIBRE DE ACEITE SCHULZ CSW60 DE 15 HP 8.3 BAR",
+    "datasheet": "Potencia de motor: 15 HP (11 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nPolos del motor: 2\r\nDimensiones: ancho/alto/largo:  900 x 580 x 732.4 mm",
+    "price": "5079.77",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.394Z",
+    "update_date": "2026-03-30T20:43:57.394Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1025,
+  "fields": {
+    "type": 1,
+    "subcategory": 10,
+    "brand": 1,
+    "sku": "931.1308-0",
+    "description": "CABEZAL DE PISTON LIBRE DE ACEITE SCHULZ SILENCIOSO DE CSD5 1 HP 8.3 BAR",
+    "datasheet": "Potencia de motor: 1 HP (0,8 kW)\r\nDesplazamiento teórico (pcm): 5 CFM\r\nDesplazamiento teórico (l/m): 141 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2\r\nDimensiones: ancho/alto/largo:  210 x 340 x 345 mm",
+    "price": "546.38",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.418Z",
+    "update_date": "2026-03-30T20:43:57.418Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1026,
+  "fields": {
+    "type": 1,
+    "subcategory": 10,
+    "brand": 1,
+    "sku": "931.1311-0",
+    "description": "CABEZAL DE PISTON LIBRE DE ACEITE SCHULZ SILENCIOSO DE CSD9 1.5 HP 8.3 BAR",
+    "datasheet": "Potencia de motor: 1,5 HP (1,1 kW)\r\nDesplazamiento teórico (pcm): 9 CFM\r\nDesplazamiento teórico (l/m): 255 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2\r\nDimensiones: ancho/alto/largo: 260 x 390 x 400  mm",
+    "price": "906.73",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.444Z",
+    "update_date": "2026-03-30T20:43:57.444Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1027,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "921.3509-0/ME",
+    "description": "COMPRESOR DE PISTON SCHULZ PRATIC AIR CSI7,4/50 DE 1.5 HP 9.7 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor: 1,5 HP (0,75 kW)\r\nDesplazamiento teórico (pcm): 7,4 CFM\r\nDesplazamiento teórico (l/m): 153 l/min\r\nMáxima presión de trabajo: 8,6 bar (125 psi)\r\nVolumen de tanque: 46 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 1\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 38 kg\r\nPeso bruto: 43,5 kg\r\nDimensiones: ancho/alto/largo: 315 × 630 × 730 mm}\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "835.59",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.469Z",
+    "update_date": "2026-03-30T20:43:57.469Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1028,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8050-0",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL10BR/100 DE 2 HP 9.7 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor: 2 HP (1,5 kW)\r\nDesplazamiento teórico (pcm): 10 CFM\r\nDesplazamiento teórico (l/m): 283 l/min\r\nMáxima presión de trabajo: 9,7 bar (140 psi)\r\nVolumen de tanque: 100 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 73 kg\r\nPeso bruto: 91 kg\r\nDimensiones: ancho/alto/largo: 480 × 850 × 900 mm\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "1267.84",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.510Z",
+    "update_date": "2026-03-30T20:43:57.510Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1029,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8107-0",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL10BR/200 DE 2 HP 9.7 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor: 2 HP (1,5 kW)\r\nDesplazamiento teórico (pcm): 10 CFM\r\nDesplazamiento teórico (l/m): 283 l/min\r\nMáxima presión de trabajo: 9,7 bar (140 psi)\r\nVolumen de tanque: 200 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 – L\r\nControl: On/Off intermitente\r\nPeso neto: 82 kg\r\nPeso bruto: 108 kg\r\nDimensiones: ancho/alto/largo: 510 × 920 × 1060 mm\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "1465.80",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.534Z",
+    "update_date": "2026-03-30T20:43:57.534Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1030,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.3398-0",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL15BR/200 DE 3 HP 9.7 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor: 3 HP (2,25 kW)\r\nDesplazamiento teórico (pcm): 15 CFM\r\nDesplazamiento teórico (l/m): 425 l/min\r\nMáxima presión de trabajo: 9,7 bar (140 psi)\r\nVolumen de tanque: 200 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 86 kg\r\nPeso bruto: 112 kg\r\nDimensiones: ancho/alto/largo: 500 × 920 × 1100 mm\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "1689.34",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.556Z",
+    "update_date": "2026-03-30T20:43:57.556Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1031,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "921.3520-0/ME",
+    "description": "COMPRESOR DE PISTON SCHULZ PRACTIC AIR CSL20/200 DE 5 HP 8.6 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión máxima de operación: 8,6 bar (125 psi)\r\nPresión mínima de operación: 6,2 bar (90 psi)\r\nRégimen de trabajo: Intermitente\r\nFase – tensión: Trifásico 220V/3PH/60HZ\r\nFrecuencia: 60 Hz\r\nRotación del producto: 1325 rpm\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nVolumen del depósito de aire: 183,1 litros\r\nVolumen de aceite lubricante: 0,5 litros\r\nLubricado o libre de aceite: Lubricado\r\nConexión de descarga: NPT 1/4”\r\nDimensiones (empaquetado): 540 × 1085 × 1400 mm (ancho × alto × largo)\r\nPeso neto: 98,5 kg\r\nPeso bruto: 126,8 kg\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "1759.02",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.608Z",
+    "update_date": "2026-03-30T20:43:57.608Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1032,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "921.3520-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ PRACTIC AIR CSL20/200 DE 5 HP 8.6 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión máxima de operación: 8,6 bar (125 psi)\r\nPresión mínima de operación: 6,2 bar (90 psi)\r\nRégimen de trabajo: Intermitente\r\nFase – tensión: Trifásico 380V/3PH/60HZ\r\nFrecuencia: 60 Hz\r\nRotación del producto: 1325 rpm\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nVolumen del depósito de aire: 183,1 litros\r\nVolumen de aceite lubricante: 0,5 litros\r\nLubricado o libre de aceite: Lubricado\r\nConexión de descarga: NPT 1/4”\r\nDimensiones (empaquetado): 540 × 1085 × 1400 mm (ancho × alto × largo)\r\nPeso neto: 98,5 kg\r\nPeso bruto: 126,8 kg\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "1759.02",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.635Z",
+    "update_date": "2026-03-30T20:43:57.635Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1033,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "921.3520-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ PRACTIC AIR CSL20/200 DE 5 HP 8.6 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión máxima de operación: 8,6 bar (125 psi)\r\nPresión mínima de operación: 6,2 bar (90 psi)\r\nRégimen de trabajo: Intermitente\r\nFase – tensión: Trifásico 440V/3PH/60HZ\r\nFrecuencia: 60 Hz\r\nRotación del producto: 1325 rpm\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nVolumen del depósito de aire: 183,1 litros\r\nVolumen de aceite lubricante: 0,5 litros\r\nLubricado o libre de aceite: Lubricado\r\nConexión de descarga: NPT 1/4”\r\nDimensiones (empaquetado): 540 × 1085 × 1400 mm (ancho × alto × largo)\r\nPeso neto: 98,5 kg\r\nPeso bruto: 126,8 kg\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "1759.02",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.657Z",
+    "update_date": "2026-03-30T20:43:57.657Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1034,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8216-0",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL20BR/200 DE 5 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 200 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 129,5 kg\r\nPeso bruto: 177 kg\r\nDimensiones: ancho/alto/largo: 500 × 1020 × 1305 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "2430.55",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.682Z",
+    "update_date": "2026-03-30T20:43:57.682Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1035,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8216-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL20BR/200 DE 5 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 200 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 129,5 kg\r\nPeso bruto: 177 kg\r\nDimensiones: ancho/alto/largo: 500 × 1020 × 1305 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "2430.55",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.706Z",
+    "update_date": "2026-03-30T20:43:57.706Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1036,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8216-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL20BR/200 DE 5 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 200 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 129,5 kg\r\nPeso bruto: 177 kg\r\nDimensiones: ancho/alto/largo: 500 × 1020 × 1305 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "2430.55",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.730Z",
+    "update_date": "2026-03-30T20:43:57.730Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1037,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8211-0",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL30BR/250 DE 7.5 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 7,5 HP (5,5 kW)\r\nDesplazamiento teórico (pcm): 30 CFM\r\nDesplazamiento teórico (l/m): 850 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 192,5 kg\r\nPeso bruto: 263 kg\r\nDimensiones: ancho/alto/largo: 630 × 1160 × 1580 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "3617.54",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.757Z",
+    "update_date": "2026-03-30T20:43:57.757Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1038,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8211-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL30BR/250 DE 7.5 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 7,5 HP (5,5 kW)\r\nDesplazamiento teórico (pcm): 30 CFM\r\nDesplazamiento teórico (l/m): 850 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 192,5 kg\r\nPeso bruto: 263 kg\r\nDimensiones: ancho/alto/largo: 630 × 1160 × 1580 mm\r\nVolatje: 380V/3PH/60HZ",
+    "price": "3617.54",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.781Z",
+    "update_date": "2026-03-30T20:43:57.781Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1039,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8211-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL30BR/250 DE 7.5 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 7,5 HP (5,5 kW)\r\nDesplazamiento teórico (pcm): 30 CFM\r\nDesplazamiento teórico (l/m): 850 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 192,5 kg\r\nPeso bruto: 263 kg\r\nDimensiones: ancho/alto/largo: 630 × 1160 × 1580 mm\r\nVolatje: 440V/3PH/60HZ",
+    "price": "3617.54",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.801Z",
+    "update_date": "2026-03-30T20:43:57.801Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1040,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8221-0",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL40BR/250 DE 10 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1133 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 235 kg\r\nPeso bruto: 305 kg\r\nDimensiones: ancho/alto/largo: 630 × 1160 × 1570 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "4000.87",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.823Z",
+    "update_date": "2026-03-30T20:43:57.823Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1041,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8221-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL40BR/250 DE 10 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1133 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 235 kg\r\nPeso bruto: 305 kg\r\nDimensiones: ancho/alto/largo: 630 × 1160 × 1570 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "4000.87",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.858Z",
+    "update_date": "2026-03-30T20:43:57.858Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1042,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "931.8221-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ CSL40BR/250 DE 10 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1133 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “L”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 235 kg\r\nPeso bruto: 305 kg\r\nDimensiones: ancho/alto/largo: 630 × 1160 × 1570 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "4000.87",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.883Z",
+    "update_date": "2026-03-30T20:43:57.883Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1043,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.7402-0",
+    "description": "COMPRESOR DE PISTON SCHULZ CSLV60BR/350 DE 15 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 315 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 4 en “V”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 385 kg\r\nPeso bruto: 435 kg\r\nDimensiones: ancho/alto/largo: 650 × 1165 × 1880 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "5880.60",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.909Z",
+    "update_date": "2026-03-30T20:43:57.909Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1044,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.7402-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ CSLV60BR/350 DE 15 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 315 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 4 en “V”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 385 kg\r\nPeso bruto: 435 kg\r\nDimensiones: ancho/alto/largo: 650 × 1165 × 1880 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "5880.60",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.931Z",
+    "update_date": "2026-03-30T20:43:57.931Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1045,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.7402-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ CSLV60BR/350 DE 15 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 315 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 4 en “V”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 385 kg\r\nPeso bruto: 435 kg\r\nDimensiones: ancho/alto/largo: 650 × 1165 × 1880 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "5880.60",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.960Z",
+    "update_date": "2026-03-30T20:43:57.960Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1046,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.3530-0",
+    "description": "COMPRESOR DE PISTON SCHULZ CSLV80BR/350 DE 20 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 20 HP (22,5 kW)\r\nDesplazamiento teórico (pcm): 80 CFM\r\nDesplazamiento teórico (l/m): 2266 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 315 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 4 en “V”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 325 kg\r\nPeso bruto: 360 kg\r\nDimensiones: ancho/alto/largo: 640 × 1165 × 1880 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "7284.15",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:57.999Z",
+    "update_date": "2026-03-30T20:43:57.999Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1047,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.3530-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ CSLV80BR/350 DE 20 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 20 HP (22,5 kW)\r\nDesplazamiento teórico (pcm): 80 CFM\r\nDesplazamiento teórico (l/m): 2266 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 315 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 4 en “V”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 325 kg\r\nPeso bruto: 360 kg\r\nDimensiones: ancho/alto/largo: 640 × 1165 × 1880 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "7284.15",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.034Z",
+    "update_date": "2026-03-30T20:43:58.034Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1048,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.3530-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ CSLV80BR/350 DE 20 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 20 HP (22,5 kW)\r\nDesplazamiento teórico (pcm): 80 CFM\r\nDesplazamiento teórico (l/m): 2266 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 315 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 4 en “V”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 325 kg\r\nPeso bruto: 360 kg\r\nDimensiones: ancho/alto/largo: 640 × 1165 × 1880 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "7284.15",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.068Z",
+    "update_date": "2026-03-30T20:43:58.068Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1049,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.7554-0",
+    "description": "COMPRESOR DE PISTON SCHULZ MCSV20AUDAZ/200 DE 5 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi) \r\nVolumen de tanque: 200 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 4\r\nPeso neto: 107 kg\r\nPeso bruto: 145 kg\r\nDimensiones: ancho/alto/largo: 510 × 965 × 1355 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "2164.40",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.098Z",
+    "update_date": "2026-03-30T20:43:58.098Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1050,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.7554-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ MCSV20AUDAZ/200 DE 5 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi) \r\nVolumen de tanque: 200 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 4\r\nPeso neto: 107 kg\r\nPeso bruto: 145 kg\r\nDimensiones: ancho/alto/largo: 510 × 965 × 1355 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "2164.40",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.128Z",
+    "update_date": "2026-03-30T20:43:58.128Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1051,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.7554-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ MCSV20AUDAZ/200 DE 5 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi) \r\nVolumen de tanque: 200 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 4\r\nPeso neto: 107 kg\r\nPeso bruto: 145 kg\r\nDimensiones: ancho/alto/largo: 510 × 965 × 1355 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "2164.40",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.155Z",
+    "update_date": "2026-03-30T20:43:58.155Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1052,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.7287-0",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV20MAX/250 DE 5 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión de trabajo mínima: 9,3 bar (135 psi)\r\nPresión de trabajo máxima: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 170 kg\r\nPeso bruto: 221 kg\r\nDimensiones: ancho/alto/largo: 540 × 1020 × 1700 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "2784.20",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.177Z",
+    "update_date": "2026-03-30T20:43:58.177Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1053,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.7287-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV20MAX/250 DE 5 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión de trabajo mínima: 9,3 bar (135 psi)\r\nPresión de trabajo máxima: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 170 kg\r\nPeso bruto: 221 kg\r\nDimensiones: ancho/alto/largo: 540 × 1020 × 1700 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "2784.20",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.196Z",
+    "update_date": "2026-03-30T20:43:58.196Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1054,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.7287-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV20MAX/250 DE 5 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión de trabajo mínima: 9,3 bar (135 psi)\r\nPresión de trabajo máxima: 12 bar (175 psi)\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 170 kg\r\nPeso bruto: 221 kg\r\nDimensiones: ancho/alto/largo: 540 × 1020 × 1700 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "2784.20",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.217Z",
+    "update_date": "2026-03-30T20:43:58.217Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1055,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.7224-0",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV20MAX/220 DE 5 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión de trabajo mínima: 9,3 bar (135 psi)\r\nPresión de trabajo máxima: 12 bar (175 psi)\r\nVolumen de tanque: 220 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 170 kg\r\nPeso bruto: 221 kg\r\nDimensiones: ancho/alto/largo: 577 x 1880 x 820 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "3063.76",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.237Z",
+    "update_date": "2026-03-30T20:43:58.237Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1056,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.7224-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV20MAX/220 DE 5 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión de trabajo mínima: 9,3 bar (135 psi)\r\nPresión de trabajo máxima: 12 bar (175 psi)\r\nVolumen de tanque: 220 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 170 kg\r\nPeso bruto: 221 kg\r\nDimensiones: ancho/alto/largo: 577 x 1880 x 820 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "3063.76",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.263Z",
+    "update_date": "2026-03-30T20:43:58.263Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1057,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "932.7224-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV20MAX/220 DE 5 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nPresión de trabajo mínima: 9,3 bar (135 psi)\r\nPresión de trabajo máxima: 12 bar (175 psi)\r\nVolumen de tanque: 220 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 170 kg\r\nPeso bruto: 221 kg\r\nDimensiones: ancho/alto/largo: 577 x 1880 x 820 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "3063.76",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.296Z",
+    "update_date": "2026-03-30T20:43:58.296Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1058,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "933.1308-0",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV30MAX/350 DE 7.5 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 7,5 HP (5,5 kW)\r\nDesplazamiento teórico (pcm): 30 CFM\r\nDesplazamiento teórico (l/m): 850 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 353 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 250 kg\r\nPeso bruto: 320 kg\r\nDimensiones: ancho/alto/largo: 574 × 1105 × 1615 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "3968.75",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.322Z",
+    "update_date": "2026-03-30T20:43:58.322Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1059,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "933.1308-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV30MAX/350 DE 7.5 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 7,5 HP (5,5 kW)\r\nDesplazamiento teórico (pcm): 30 CFM\r\nDesplazamiento teórico (l/m): 850 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 353 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 250 kg\r\nPeso bruto: 320 kg\r\nDimensiones: ancho/alto/largo: 574 × 1105 × 1615 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "3968.75",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.353Z",
+    "update_date": "2026-03-30T20:43:58.353Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1060,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "933.1308-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV30MAX/350 DE 7.5 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 7,5 HP (5,5 kW)\r\nDesplazamiento teórico (pcm): 30 CFM\r\nDesplazamiento teórico (l/m): 850 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 353 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 250 kg\r\nPeso bruto: 320 kg\r\nDimensiones: ancho/alto/largo: 574 × 1105 × 1615 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "3968.75",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.377Z",
+    "update_date": "2026-03-30T20:43:58.377Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1061,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "933.7008-0",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV40MAX/350 DE 10 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 353 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 274 kg\r\nPeso bruto: 344 kg\r\nDimensiones: ancho/alto/largo: 570 × 1160 × 1660 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "4476.05",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.401Z",
+    "update_date": "2026-03-30T20:43:58.401Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1062,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "933.7008-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV40MAX/350 DE 10 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 353 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 274 kg\r\nPeso bruto: 344 kg\r\nDimensiones: ancho/alto/largo: 570 × 1160 × 1660 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "4476.05",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.423Z",
+    "update_date": "2026-03-30T20:43:58.423Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1063,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "933.7008-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ MSV40MAX/350 DE 10 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 353 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nControl: On-off intermitente\r\nPolos del motor: 2\r\nPeso neto: 274 kg\r\nPeso bruto: 344 kg\r\nDimensiones: ancho/alto/largo: 570 × 1160 × 1660 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "4476.05",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.449Z",
+    "update_date": "2026-03-30T20:43:58.449Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1064,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.3494-0",
+    "description": "COMPRESOR DE PISTON SCHULZ MSW60MAX/425 DE 15 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 364 kg\r\nPeso bruto: 450 kg\r\nDimensiones: ancho/alto/largo: 730 × 1300 × 1990 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "6530.39",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.473Z",
+    "update_date": "2026-03-30T20:43:58.473Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1065,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.3494-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ MSW60MAX/425 DE 15 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 364 kg\r\nPeso bruto: 450 kg\r\nDimensiones: ancho/alto/largo: 730 × 1300 × 1990 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "6530.39",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.501Z",
+    "update_date": "2026-03-30T20:43:58.501Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1066,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.3494-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ MSW60MAX/425 DE 15 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 364 kg\r\nPeso bruto: 450 kg\r\nDimensiones: ancho/alto/largo: 730 × 1300 × 1990 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "6530.39",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.522Z",
+    "update_date": "2026-03-30T20:43:58.522Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1067,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.7369-0",
+    "description": "COMPRESOR DE PISTON SCHULZ MSWV80MAX/425 DE 20 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 20 HP (15 kW)\r\nDesplazamiento teórico (pcm): 80 CFM\r\nDesplazamiento teórico (l/m): 2264 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 5 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 403 kg\r\nPeso bruto: 495 kg\r\nDimensiones: ancho/alto/largo: 650 × 1460 × 1990 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "7786.52",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.548Z",
+    "update_date": "2026-03-30T20:43:58.548Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1068,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.7369-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ MSWV80MAX/425 DE 20 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 20 HP (15 kW)\r\nDesplazamiento teórico (pcm): 80 CFM\r\nDesplazamiento teórico (l/m): 2264 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 5 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 403 kg\r\nPeso bruto: 495 kg\r\nDimensiones: ancho/alto/largo: 650 × 1460 × 1990 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "7786.52",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.577Z",
+    "update_date": "2026-03-30T20:43:58.577Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1069,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.7369-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ MSWV80MAX/425 DE 20 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 20 HP (15 kW)\r\nDesplazamiento teórico (pcm): 80 CFM\r\nDesplazamiento teórico (l/m): 2264 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 5 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 2\r\nPeso neto: 403 kg\r\nPeso bruto: 495 kg\r\nDimensiones: ancho/alto/largo: 650 × 1460 × 1990 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "7786.52",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.602Z",
+    "update_date": "2026-03-30T20:43:58.602Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1070,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "933.9311-0",
+    "description": "COMPRESOR DE PISTON SCHULZ MSW40FORT/425 DE 10 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 4\r\nPeso neto: 395 kg\r\nPeso bruto: 487 kg\r\nDimensiones: ancho/alto/largo: 650 × 1380 × 1990 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "5642.55",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.630Z",
+    "update_date": "2026-03-30T20:43:58.630Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1071,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "933.9311-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ MSW40FORT/425 DE 10 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 4\r\nPeso neto: 395 kg\r\nPeso bruto: 487 kg\r\nDimensiones: ancho/alto/largo: 650 × 1380 × 1990 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "5642.55",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.695Z",
+    "update_date": "2026-03-30T20:43:58.695Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1072,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "933.9311-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ MSW40FORT/425 DE 10 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 4\r\nPeso neto: 395 kg\r\nPeso bruto: 487 kg\r\nDimensiones: ancho/alto/largo: 650 × 1380 × 1990 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "5642.55",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.735Z",
+    "update_date": "2026-03-30T20:43:58.735Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1073,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.3466-0",
+    "description": "COMPRESOR DE PISTON SCHULZ MSW60FORT/425 DE 15 HP 12 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1699 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 5 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 4\r\nPeso neto: 395 kg\r\nPeso bruto: 487 kg\r\nDimensiones: ancho/alto/largo: 650 × 1680 × 1990 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "7300.54",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.787Z",
+    "update_date": "2026-03-30T20:43:58.787Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1074,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.3466-0.380",
+    "description": "COMPRESOR DE PISTON SCHULZ MSW60FORT/425 DE 15 HP 12 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1699 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 5 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 4\r\nPeso neto: 395 kg\r\nPeso bruto: 487 kg\r\nDimensiones: ancho/alto/largo: 650 × 1680 × 1990 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "7300.54",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.818Z",
+    "update_date": "2026-03-30T20:43:58.818Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1075,
+  "fields": {
+    "type": 1,
+    "subcategory": 1,
+    "brand": 1,
+    "sku": "934.3466-0.440",
+    "description": "COMPRESOR DE PISTON SCHULZ MSW60FORT/425 DE 15 HP 12 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 15 HP (11,3 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1699 l/min\r\nMáxima presión de trabajo: 12 bar (175 psi)\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 5 en “W”\r\nControl: On-off / Load-unload intermitente / continuo\r\nPolos del motor: 4\r\nPeso neto: 395 kg\r\nPeso bruto: 487 kg\r\nDimensiones: ancho/alto/largo: 650 × 1680 × 1990 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "7300.54",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.847Z",
+    "update_date": "2026-03-30T20:43:58.847Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1076,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "931.1232-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ MSV6/30 DE 1 HP 8.3 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor: 1 HP (0,75 kW)\r\nDesplazamiento teórico (pcm): 5 – 6 CFM\r\nDesplazamiento teórico (l/m): 141 – 170 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1445 / 1730 rpm\r\nVolumen de tanque: 30 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 4\r\nPeso neto: 42 kg\r\nPeso bruto: 54 kg\r\nDimensiones: ancho/alto/largo: 440 × 670 × 440 mm\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "990.00",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.873Z",
+    "update_date": "2026-03-30T20:43:58.873Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1077,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "930.9976-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ MSV12/100 DE 2 HP 8.3 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor: 2 × 1 HP (0,75 kW cada uno)\r\nDesplazamiento teórico (pcm): 10 – 12 CFM\r\nDesplazamiento teórico (l/m): 282 – 340 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1445 / 1730 rpm\r\nVolumen de tanque: 100 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 × 2 en “V”\r\nPolos del motor: 4\r\nPeso neto: 94 kg\r\nPeso bruto: 107 kg\r\nDimensiones: ancho/alto/largo: 480 × 780 × 900 mm\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "2477.27",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.907Z",
+    "update_date": "2026-03-30T20:43:58.907Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1078,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "932.3378-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSV15/250 DE 3 HP 8.3 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 3 HP (2,2 kW)\r\nDesplazamiento teórico (pcm): 15 CFM\r\nDesplazamiento teórico (l/m): 425 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 620 rpm\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 169 kg\r\nPeso bruto: 221 kg\r\nDimensiones: ancho/alto/largo: 540 × 1020 × 1700 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "3877.31",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.938Z",
+    "update_date": "2026-03-30T20:43:58.938Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1079,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "932.3378-0.380",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSV15/250 DE 3 HP 8.3 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 3 HP (2,2 kW)\r\nDesplazamiento teórico (pcm): 15 CFM\r\nDesplazamiento teórico (l/m): 425 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 620 rpm\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 169 kg\r\nPeso bruto: 221 kg\r\nDimensiones: ancho/alto/largo: 540 × 1020 × 1700 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "3877.31",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:58.979Z",
+    "update_date": "2026-03-30T20:43:58.979Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1080,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "932.3378-0.440",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSV15/250 DE 3 HP 8.3 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 3 HP (2,2 kW)\r\nDesplazamiento teórico (pcm): 15 CFM\r\nDesplazamiento teórico (l/m): 425 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 620 rpm\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 169 kg\r\nPeso bruto: 221 kg\r\nDimensiones: ancho/alto/largo: 540 × 1020 × 1700 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "3877.31",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.011Z",
+    "update_date": "2026-03-30T20:43:59.011Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1081,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "932.7548-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSV20/250 DE 5 HP 8.3 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1050 rpm\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 208 kg\r\nPeso bruto: 237 kg\r\nDimensiones: ancho/alto/largo: 540 x 1020 x 1700 mm\r\nVolotaje: 220V/3PH/60HZ",
+    "price": "4279.18",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.038Z",
+    "update_date": "2026-03-30T20:43:59.038Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1082,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "932.7548-0.380",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSV20/250 DE 5 HP 8.3 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1050 rpm\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 208 kg\r\nPeso bruto: 237 kg\r\nDimensiones: ancho/alto/largo: 540 x 1020 x 1700 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "4279.18",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.064Z",
+    "update_date": "2026-03-30T20:43:59.064Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1083,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "932.7548-0.440",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSV20/250 DE 5 HP 8.3 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1050 rpm\r\nVolumen de tanque: 261 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 208 kg\r\nPeso bruto: 237 kg\r\nDimensiones: ancho/alto/largo: 540 x 1020 x 1700 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "4279.18",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.090Z",
+    "update_date": "2026-03-30T20:43:59.090Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1084,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "932.7534-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSV20/220 DE 5 HP 8.3 BAR 220V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1050 rpm\r\nVolumen de tanque: 220 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 208 kg\r\nPeso bruto: 237 kg\r\nDimensiones: ancho/alto/largo: 540 x 1850 x 820 mm\r\nVolotaje: 220V/3PH/60HZ",
+    "price": "4598.18",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.120Z",
+    "update_date": "2026-03-30T20:43:59.120Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1085,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "932.7534-0.380",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSV20/220 DE 5 HP 8.3 BAR 380V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1050 rpm\r\nVolumen de tanque: 220 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 208 kg\r\nPeso bruto: 237 kg\r\nDimensiones: ancho/alto/largo: 540 x 1850 x 820 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "4598.18",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.152Z",
+    "update_date": "2026-03-30T20:43:59.152Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1086,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "932.7534-0.440",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSV20/220 DE 5 HP 8.3 BAR 440V/3PH/60HZ",
+    "datasheet": "Potencia de motor: 5 HP (3,7 kW)\r\nDesplazamiento teórico (pcm): 20 CFM\r\nDesplazamiento teórico (l/m): 566 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1050 rpm\r\nVolumen de tanque: 220 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 2 en “V”\r\nPolos del motor: 2\r\nPeso neto: 208 kg\r\nPeso bruto: 237 kg\r\nDimensiones: ancho/alto/largo: 540 x 1850 x 820 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "4598.18",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.182Z",
+    "update_date": "2026-03-30T20:43:59.182Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1087,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "924.7374-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSW40/420 DE 10 HP 8.3 BAR 220V/3PH/60HZ CON VARIADOR DE VELOCIDAD",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 600 rpm\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nPolos del motor: 2\r\nPeso neto: 460 kg\r\nPeso bruto: 510 kg\r\nDimensiones: ancho/alto/largo: 650 × 1260 × 1600 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "9564.38",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.208Z",
+    "update_date": "2026-03-30T20:43:59.208Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1088,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "924.7374-0.380",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSW40/420 DE 10 HP 8.3 BAR 380V/3PH/60HZ CON VARIADOR DE VELOCIDAD",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 600 rpm\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nPolos del motor: 2\r\nPeso neto: 460 kg\r\nPeso bruto: 510 kg\r\nDimensiones: ancho/alto/largo: 650 × 1260 × 1600 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "9564.38",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.235Z",
+    "update_date": "2026-03-30T20:43:59.235Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1089,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "924.7374-0.440",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSW40/420 DE 10 HP 8.3 BAR 440V/3PH/60HZ CON VARIADOR DE VELOCIDAD",
+    "datasheet": "Potencia de motor: 10 HP (7,5 kW)\r\nDesplazamiento teórico (pcm): 40 CFM\r\nDesplazamiento teórico (l/m): 1132 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 600 rpm\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nPolos del motor: 2\r\nPeso neto: 460 kg\r\nPeso bruto: 510 kg\r\nDimensiones: ancho/alto/largo: 650 × 1260 × 1600 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "9564.38",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.260Z",
+    "update_date": "2026-03-30T20:43:59.260Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1090,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "924.7376-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSW60/420 DE 15 HP 8.3 BAR 220V/3PH/60HZ CON VARIADOR DE VELOCIDAD",
+    "datasheet": "Potencia de motor: 15 HP (11 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 880 rpm\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nPolos del motor: 2\r\nPeso neto: 470 kg\r\nPeso bruto: 520 kg\r\nDimensiones: ancho/alto/largo: 650 × 1260 × 1600 mm\r\nVoltaje: 220V/3PH/60HZ",
+    "price": "12254.56",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.287Z",
+    "update_date": "2026-03-30T20:43:59.287Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1091,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "924.7376-0.380",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSW60/420 DE 15 HP 8.3 BAR 380V/3PH/60HZ CON VARIADOR DE VELOCIDAD",
+    "datasheet": "Potencia de motor: 15 HP (11 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 880 rpm\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nPolos del motor: 2\r\nPeso neto: 470 kg\r\nPeso bruto: 520 kg\r\nDimensiones: ancho/alto/largo: 650 × 1260 × 1600 mm\r\nVoltaje: 380V/3PH/60HZ",
+    "price": "12254.56",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.313Z",
+    "update_date": "2026-03-30T20:43:59.313Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1092,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "924.7376-0.440",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSW60/420 DE 15 HP 8.3 BAR 440V/3PH/60HZ CON VARIADOR DE VELOCIDAD",
+    "datasheet": "Potencia de motor: 15 HP (11 kW)\r\nDesplazamiento teórico (pcm): 60 CFM\r\nDesplazamiento teórico (l/m): 1700 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 880 rpm\r\nVolumen de tanque: 427 litros\r\nNúmero de etapas: 2\r\nNúmero de pistones: 3 en “W”\r\nPolos del motor: 2\r\nPeso neto: 470 kg\r\nPeso bruto: 520 kg\r\nDimensiones: ancho/alto/largo: 650 × 1260 × 1600 mm\r\nVoltaje: 440V/3PH/60HZ",
+    "price": "12254.56",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.351Z",
+    "update_date": "2026-03-30T20:43:59.351Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1093,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "931.1304-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSD5/30 DE 1 HP 8.3 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor: 1 HP (0,8 kW)\r\nDesplazamiento teórico (pcm): 5 CFM\r\nDesplazamiento teórico (l/m): 141 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1680 rpm\r\nVolumen de tanque: 29 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2\r\nPolos del motor: 4\r\nPeso neto: 21 kg\r\nPeso bruto: 33 kg\r\nDimensiones: ancho/alto/largo: 440 × 640 × 440 mm\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "909.61",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.382Z",
+    "update_date": "2026-03-30T20:43:59.382Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1094,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "931.1303-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSD9/30 DE 1.5 HP 8.3 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor: 1,5 HP (1,1 kW)\r\nDesplazamiento teórico (pcm): 9 CFM\r\nDesplazamiento teórico (l/m): 255 l/min\r\nMáxima presión de trabajo: 8,3 bar (120 psi)\r\nVelocidad de rotación (RPM): 1680 rpm\r\nVolumen de tanque: 29 litros\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2\r\nPolos del motor: 4\r\nPeso neto: 28 kg\r\nPeso bruto: 40 kg\r\nDimensiones: ancho/alto/largo: 440 × 710 × 440 mm\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "1191.51",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.409Z",
+    "update_date": "2026-03-30T20:43:59.409Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1095,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "931.1318-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSD18/100 DE 3 HP 8.3 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor: 2 × 1,5 HP (2 × 1,1 kW)\r\nDesplazamiento teórico: 18 pcm / 510 l/min\r\nPresión máxima de trabajo: 120 psi / 8,3 bar\r\nVelocidad de rotación: 1680 rpm\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 × 2\r\nVolumen del tanque: 100 litros\r\nPeso neto: 71,6 kg\r\nPeso bruto: 85,6 kg\r\nDimensiones (Ancho × Alto × Largo): 810 × 903 × 305 mm\r\nPolos: 4\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "2452.36",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.439Z",
+    "update_date": "2026-03-30T20:43:59.439Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1096,
+  "fields": {
+    "type": 1,
+    "subcategory": 11,
+    "brand": 1,
+    "sku": "924.7369-0",
+    "description": "COMPRESOR DE PISTON LIBRE DE ACEITE SCHULZ CSD27/200 DE 4.5 HP 8.3 BAR 220V/1PH/60HZ",
+    "datasheet": "Potencia de motor:  3× 1,5 HP (2 × 1,1 kW)\r\nDesplazamiento teórico: 27 pcm\r\nPresión máxima de trabajo: 120 psi / 8,3 bar\r\nVelocidad de rotación: 1680 rpm\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 × 2\r\nVolumen del tanque: 100 litros\r\nPeso bruto: 105,4 kg\r\nDimensiones (Ancho × Alto × Largo): 1630 x 1190 x 600 mm\r\nPolos: 4\r\nVoltaje: 220V/1PH/60HZ",
+    "price": "3179.82",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.484Z",
+    "update_date": "2026-03-30T20:43:59.484Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1097,
+  "fields": {
+    "type": 1,
+    "subcategory": 12,
+    "brand": 1,
+    "sku": "921.3521-0/ME",
+    "description": "COMPRESOR DE PISTON GASOLINERO SCHULZ CSL15PROGAS/80 DE 5.5 HP 9.7 BAR MOTOR: HONDA",
+    "datasheet": "Potencia de motor: 5,5 HP\r\nDesplazamiento teórico: 15 pcm / 425 l/min\r\nPresión máxima de trabajo: 140 psi / 9,7 bar\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 – L\r\nVolumen del tanque: 75,8 litros\r\nPeso neto: 75,8 kg\r\nPeso bruto: 77 kg\r\nDimensiones (Ancho × Alto × Largo): 470 × 810 × 840 mm\r\nControl: Carga/descarga continuo",
+    "price": "2054.53",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.522Z",
+    "update_date": "2026-03-30T20:43:59.522Z"
+  }
+},
+{
+  "model": "almacen.product",
+  "pk": 1098,
+  "fields": {
+    "type": 1,
+    "subcategory": 12,
+    "brand": 1,
+    "sku": "922.7797-0/ME",
+    "description": "COMPRESOR DE PISTON GASOLINERO SCHULZ CSL20PROGAS/200 DE 8 HP 9.7 BAR MOTOR: HONDA",
+    "datasheet": "Potencia de motor: 8 HP\r\nDesplazamiento teórico: 20 pcm / 566 l/min\r\nPresión máxima de trabajo: 140 psi / 9,7 bar\r\nNúmero de etapas: 1\r\nNúmero de pistones: 2 – L\r\nVolumen del tanque: 183 litros\r\nPeso neto: 117 kg\r\nPeso bruto: 157 kg\r\nDimensiones (Ancho × Alto × Largo): 450 × 1010 × 1280 mm\r\nControl: Carga/descarga continuo",
+    "price": "2185.99",
+    "rental_price_without_operator": "0.00",
+    "rental_price_with_operator": "0.00",
+    "warrannty": "12 meses",
+    "unit_measurement": 1,
+    "status": "ACTIVE",
+    "dimensions": null,
+    "gross_weight": null,
+    "creation_date": "2026-03-30T20:43:59.550Z",
+    "update_date": "2026-03-30T20:43:59.550Z"
+  }
+},
+{
+  "model": "almacen.productimage",
+  "pk": 3,
+  "fields": {
+    "name": "image",
+    "url": "https://res.cloudinary.com/dxwupfizt/image/upload/v1774721737/cleosys/products/tmys4zswtqcyua34kkvp.jpg",
+    "product": 1001,
+    "primary": false
+  }
+},
+{
+  "model": "almacen.productimage",
+  "pk": 4,
+  "fields": {
+    "name": "imagem_principal.webp",
+    "url": "https://res.cloudinary.com/dxwupfizt/image/upload/v1774894347/cleosys/products/zbnuvcmkoqopdvhnjflc.webp",
+    "product": 1001,
+    "primary": true
+  }
+},
+{
+  "model": "almacen.productimage",
+  "pk": 5,
+  "fields": {
+    "name": "Cabezal",
+    "url": "https://res.cloudinary.com/dxwupfizt/image/upload/v1774901020/cleosys/products/bwbjxdaqrnwnpazzxhig.webp",
+    "product": 1002,
+    "primary": true
+  }
+},
+{
+  "model": "almacen.productimage",
+  "pk": 6,
+  "fields": {
+    "name": "932.7550-0_1 (1).jpg",
+    "url": "https://res.cloudinary.com/dxwupfizt/image/upload/v1774929107/cleosys/products/dkuv1k0u3nubanmf52vf.jpg",
+    "product": 1049,
+    "primary": true
+  }
+},
+{
+  "model": "almacen.productimage",
+  "pk": 7,
+  "fields": {
+    "name": "venta-alquiler-compresores-aire-lima-leos-service-catalogo-50.jpg",
+    "url": "https://res.cloudinary.com/dxwupfizt/image/upload/v1774929813/cleosys/products/dqvzrju1s5ydj3fuibqi.jpg",
+    "product": 1020,
+    "primary": true
+  }
+},
+{
+  "model": "almacen.warehouse",
+  "pk": 1,
+  "fields": {
+    "supplier": 1,
+    "address": "AV. LA PAZ 1532 SAN MIGUEL"
+  }
+},
+{
+  "model": "almacen.warehouse",
+  "pk": 2,
+  "fields": {
+    "supplier": 2,
+    "address": "AV. NICOLAS DE PIEROLA VMT"
+  }
+},
+{
+  "model": "almacen.warehousemovements",
+  "pk": 1,
+  "fields": {
+    "warehouse": 1,
+    "product": 1001,
+    "cant": "1.00",
+    "movement_type": "ENTRADA",
+    "observation": 1,
+    "creation_date": "2026-03-30T19:38:02.203Z"
+  }
+},
+{
+  "model": "almacen.warehouseproduct",
+  "pk": 1,
+  "fields": {
+    "warehouse": 1,
+    "product": 1001,
+    "stock": 1,
+    "ubication": "SIN UBICACION",
+    "creation_date": "2026-03-30T19:38:02.215Z"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Company",
+    "content_type": [
+      "accounts",
+      "company"
+    ],
+    "codename": "add_company"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Company",
+    "content_type": [
+      "accounts",
+      "company"
+    ],
+    "codename": "change_company"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Company",
+    "content_type": [
+      "accounts",
+      "company"
+    ],
+    "codename": "delete_company"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Company",
+    "content_type": [
+      "accounts",
+      "company"
+    ],
+    "codename": "view_company"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add user profile",
+    "content_type": [
+      "accounts",
+      "userprofile"
+    ],
+    "codename": "add_userprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change user profile",
+    "content_type": [
+      "accounts",
+      "userprofile"
+    ],
+    "codename": "change_userprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete user profile",
+    "content_type": [
+      "accounts",
+      "userprofile"
+    ],
+    "codename": "delete_userprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view user profile",
+    "content_type": [
+      "accounts",
+      "userprofile"
+    ],
+    "codename": "view_userprofile"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add supplier",
+    "content_type": [
+      "core",
+      "supplier"
+    ],
+    "codename": "add_supplier"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change supplier",
+    "content_type": [
+      "core",
+      "supplier"
+    ],
+    "codename": "change_supplier"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete supplier",
+    "content_type": [
+      "core",
+      "supplier"
+    ],
+    "codename": "delete_supplier"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view supplier",
+    "content_type": [
+      "core",
+      "supplier"
+    ],
+    "codename": "view_supplier"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add client",
+    "content_type": [
+      "core",
+      "client"
+    ],
+    "codename": "add_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change client",
+    "content_type": [
+      "core",
+      "client"
+    ],
+    "codename": "change_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete client",
+    "content_type": [
+      "core",
+      "client"
+    ],
+    "codename": "delete_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view client",
+    "content_type": [
+      "core",
+      "client"
+    ],
+    "codename": "view_client"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add category product",
+    "content_type": [
+      "core",
+      "categoryproduct"
+    ],
+    "codename": "add_categoryproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change category product",
+    "content_type": [
+      "core",
+      "categoryproduct"
+    ],
+    "codename": "change_categoryproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete category product",
+    "content_type": [
+      "core",
+      "categoryproduct"
+    ],
+    "codename": "delete_categoryproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view category product",
+    "content_type": [
+      "core",
+      "categoryproduct"
+    ],
+    "codename": "view_categoryproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add type product",
+    "content_type": [
+      "core",
+      "typeproduct"
+    ],
+    "codename": "add_typeproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change type product",
+    "content_type": [
+      "core",
+      "typeproduct"
+    ],
+    "codename": "change_typeproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete type product",
+    "content_type": [
+      "core",
+      "typeproduct"
+    ],
+    "codename": "delete_typeproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view type product",
+    "content_type": [
+      "core",
+      "typeproduct"
+    ],
+    "codename": "view_typeproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add brand",
+    "content_type": [
+      "core",
+      "brand"
+    ],
+    "codename": "add_brand"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change brand",
+    "content_type": [
+      "core",
+      "brand"
+    ],
+    "codename": "change_brand"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete brand",
+    "content_type": [
+      "core",
+      "brand"
+    ],
+    "codename": "delete_brand"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view brand",
+    "content_type": [
+      "core",
+      "brand"
+    ],
+    "codename": "view_brand"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add subcategory product",
+    "content_type": [
+      "core",
+      "subcategoryproduct"
+    ],
+    "codename": "add_subcategoryproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change subcategory product",
+    "content_type": [
+      "core",
+      "subcategoryproduct"
+    ],
+    "codename": "change_subcategoryproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete subcategory product",
+    "content_type": [
+      "core",
+      "subcategoryproduct"
+    ],
+    "codename": "delete_subcategoryproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view subcategory product",
+    "content_type": [
+      "core",
+      "subcategoryproduct"
+    ],
+    "codename": "view_subcategoryproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add payment methods",
+    "content_type": [
+      "core",
+      "paymentmethods"
+    ],
+    "codename": "add_paymentmethods"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change payment methods",
+    "content_type": [
+      "core",
+      "paymentmethods"
+    ],
+    "codename": "change_paymentmethods"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete payment methods",
+    "content_type": [
+      "core",
+      "paymentmethods"
+    ],
+    "codename": "delete_paymentmethods"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view payment methods",
+    "content_type": [
+      "core",
+      "paymentmethods"
+    ],
+    "codename": "view_paymentmethods"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add unit measurement",
+    "content_type": [
+      "core",
+      "unitmeasurement"
+    ],
+    "codename": "add_unitmeasurement"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change unit measurement",
+    "content_type": [
+      "core",
+      "unitmeasurement"
+    ],
+    "codename": "change_unitmeasurement"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete unit measurement",
+    "content_type": [
+      "core",
+      "unitmeasurement"
+    ],
+    "codename": "delete_unitmeasurement"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view unit measurement",
+    "content_type": [
+      "core",
+      "unitmeasurement"
+    ],
+    "codename": "view_unitmeasurement"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Quotation Item",
+    "content_type": [
+      "ventas",
+      "quotationproduct"
+    ],
+    "codename": "add_quotationproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Quotation Item",
+    "content_type": [
+      "ventas",
+      "quotationproduct"
+    ],
+    "codename": "change_quotationproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Quotation Item",
+    "content_type": [
+      "ventas",
+      "quotationproduct"
+    ],
+    "codename": "delete_quotationproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Quotation Item",
+    "content_type": [
+      "ventas",
+      "quotationproduct"
+    ],
+    "codename": "view_quotationproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Client Contact",
+    "content_type": [
+      "ventas",
+      "clientcontact"
+    ],
+    "codename": "add_clientcontact"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Client Contact",
+    "content_type": [
+      "ventas",
+      "clientcontact"
+    ],
+    "codename": "change_clientcontact"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Client Contact",
+    "content_type": [
+      "ventas",
+      "clientcontact"
+    ],
+    "codename": "delete_clientcontact"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Client Contact",
+    "content_type": [
+      "ventas",
+      "clientcontact"
+    ],
+    "codename": "view_clientcontact"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Quotation",
+    "content_type": [
+      "ventas",
+      "quotation"
+    ],
+    "codename": "add_quotation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Quotation",
+    "content_type": [
+      "ventas",
+      "quotation"
+    ],
+    "codename": "change_quotation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Quotation",
+    "content_type": [
+      "ventas",
+      "quotation"
+    ],
+    "codename": "delete_quotation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Quotation",
+    "content_type": [
+      "ventas",
+      "quotation"
+    ],
+    "codename": "view_quotation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add product",
+    "content_type": [
+      "almacen",
+      "product"
+    ],
+    "codename": "add_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change product",
+    "content_type": [
+      "almacen",
+      "product"
+    ],
+    "codename": "change_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete product",
+    "content_type": [
+      "almacen",
+      "product"
+    ],
+    "codename": "delete_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view product",
+    "content_type": [
+      "almacen",
+      "product"
+    ],
+    "codename": "view_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add warehouse movements",
+    "content_type": [
+      "almacen",
+      "warehousemovements"
+    ],
+    "codename": "add_warehousemovements"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change warehouse movements",
+    "content_type": [
+      "almacen",
+      "warehousemovements"
+    ],
+    "codename": "change_warehousemovements"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete warehouse movements",
+    "content_type": [
+      "almacen",
+      "warehousemovements"
+    ],
+    "codename": "delete_warehousemovements"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view warehouse movements",
+    "content_type": [
+      "almacen",
+      "warehousemovements"
+    ],
+    "codename": "view_warehousemovements"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add product image",
+    "content_type": [
+      "almacen",
+      "productimage"
+    ],
+    "codename": "add_productimage"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change product image",
+    "content_type": [
+      "almacen",
+      "productimage"
+    ],
+    "codename": "change_productimage"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete product image",
+    "content_type": [
+      "almacen",
+      "productimage"
+    ],
+    "codename": "delete_productimage"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view product image",
+    "content_type": [
+      "almacen",
+      "productimage"
+    ],
+    "codename": "view_productimage"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add warehouse product",
+    "content_type": [
+      "almacen",
+      "warehouseproduct"
+    ],
+    "codename": "add_warehouseproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change warehouse product",
+    "content_type": [
+      "almacen",
+      "warehouseproduct"
+    ],
+    "codename": "change_warehouseproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete warehouse product",
+    "content_type": [
+      "almacen",
+      "warehouseproduct"
+    ],
+    "codename": "delete_warehouseproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view warehouse product",
+    "content_type": [
+      "almacen",
+      "warehouseproduct"
+    ],
+    "codename": "view_warehouseproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add product supplier",
+    "content_type": [
+      "almacen",
+      "productsupplier"
+    ],
+    "codename": "add_productsupplier"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change product supplier",
+    "content_type": [
+      "almacen",
+      "productsupplier"
+    ],
+    "codename": "change_productsupplier"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete product supplier",
+    "content_type": [
+      "almacen",
+      "productsupplier"
+    ],
+    "codename": "delete_productsupplier"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view product supplier",
+    "content_type": [
+      "almacen",
+      "productsupplier"
+    ],
+    "codename": "view_productsupplier"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add warehouse",
+    "content_type": [
+      "almacen",
+      "warehouse"
+    ],
+    "codename": "add_warehouse"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change warehouse",
+    "content_type": [
+      "almacen",
+      "warehouse"
+    ],
+    "codename": "change_warehouse"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete warehouse",
+    "content_type": [
+      "almacen",
+      "warehouse"
+    ],
+    "codename": "delete_warehouse"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view warehouse",
+    "content_type": [
+      "almacen",
+      "warehouse"
+    ],
+    "codename": "view_warehouse"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add logistic task",
+    "content_type": [
+      "logistica",
+      "logistictask"
+    ],
+    "codename": "add_logistictask"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change logistic task",
+    "content_type": [
+      "logistica",
+      "logistictask"
+    ],
+    "codename": "change_logistictask"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete logistic task",
+    "content_type": [
+      "logistica",
+      "logistictask"
+    ],
+    "codename": "delete_logistictask"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view logistic task",
+    "content_type": [
+      "logistica",
+      "logistictask"
+    ],
+    "codename": "view_logistictask"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add quotation sequence",
+    "content_type": [
+      "ventas",
+      "quotationsequence"
+    ],
+    "codename": "add_quotationsequence"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change quotation sequence",
+    "content_type": [
+      "ventas",
+      "quotationsequence"
+    ],
+    "codename": "change_quotationsequence"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete quotation sequence",
+    "content_type": [
+      "ventas",
+      "quotationsequence"
+    ],
+    "codename": "delete_quotationsequence"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view quotation sequence",
+    "content_type": [
+      "ventas",
+      "quotationsequence"
+    ],
+    "codename": "view_quotationsequence"
+  }
+},
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "admin",
+    "permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$W0STuyJQIOf31j2J1QKazA$gyplhcTDjYNLph9vcgztK5WsKYpt6dNthgsUlFTl+m0=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "thomascdp",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-25T16:59:10.193Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$7uY04y9sKVBsvbMs6BNrQR$U4RelhVnlowryGey7KZV9FiY+eJccpJXJPffN90+Pko=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "thomasleos",
+    "first_name": "Thomas",
+    "last_name": "Rios",
+    "email": "jrios@leos-service.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-03-25T16:59:55.845Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$mVStJ8hlwoLhXH62TWx1Mp$lM+c1fbAhcMbDVPXLRhGeOZKmmK3mAkPj15Fkzskm/4=",
+    "last_login": "2026-03-28T16:47:14.470Z",
+    "is_superuser": true,
+    "username": "thomasadmin",
+    "first_name": "",
+    "last_name": "",
+    "email": "thomasrv543@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-03-28T16:46:52.383Z",
+    "groups": [
+      [
+        "admin"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$ENhAz2EkBdC1jg9pQiYrJl$h2DhdpWhXnFcqdkvhRh2BClm0whOf7YkyiC6j4oRKcw=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "administrador",
+    "first_name": "ADMIINSTRADOR",
+    "last_name": "DE TODO",
+    "email": "administrador@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-03-30T03:36:00.362Z",
+    "groups": [
+      [
+        "admin"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "thomasadmin"
+    ],
+    "company": 1,
+    "role": "ADMIN",
+    "quotation_prefix": "ADM",
+    "cellphone": ""
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "administrador"
+    ],
+    "company": 1,
+    "role": "ADMIN",
+    "quotation_prefix": "ADM",
+    "cellphone": "960911916"
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "thomascdp"
+    ],
+    "company": 1,
+    "role": "VENTAS",
+    "quotation_prefix": "",
+    "cellphone": ""
+  }
+},
+{
+  "model": "accounts.userprofile",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "thomasleos"
+    ],
+    "company": 2,
+    "role": "VENTAS",
+    "quotation_prefix": "TRL",
+    "cellphone": "960911916"
+  }
+},
+{
+  "model": "ventas.clientcontact",
+  "pk": 1,
+  "fields": {
+    "contact_first_name": "Choclito",
+    "contact_last_name": "Sanchez",
+    "email": "choclito@gmail.com",
+    "phone": "999999999",
+    "client": 3,
+    "user": [
+      "administrador"
+    ],
+    "company": 1
+  }
+},
+{
+  "model": "ventas.clientcontact",
+  "pk": 2,
+  "fields": {
+    "contact_first_name": "Arturo",
+    "contact_last_name": "Maldonado",
+    "email": "arturito@gmail.com",
+    "phone": "999999999",
+    "client": 3,
+    "user": [
+      "thomascdp"
+    ],
+    "company": 1
+  }
+},
+{
+  "model": "ventas.clientcontact",
+  "pk": 3,
+  "fields": {
+    "contact_first_name": "Caquiña",
+    "contact_last_name": "Delgado",
+    "email": "cdelgado@gmail.com",
+    "phone": null,
+    "client": 3,
+    "user": [
+      "thomascdp"
+    ],
+    "company": 1
+  }
+},
+{
+  "model": "ventas.clientcontact",
+  "pk": 4,
+  "fields": {
+    "contact_first_name": "Choclito",
+    "contact_last_name": "Sanchez",
+    "email": "choclito@gmail.com",
+    "phone": "999999999",
+    "client": 3,
+    "user": [
+      "thomasleos"
+    ],
+    "company": 2
+  }
+},
+{
+  "model": "ventas.clientcontact",
+  "pk": 5,
+  "fields": {
+    "contact_first_name": "Papa",
+    "contact_last_name": "Conchan",
+    "email": "papaconchan@gmail.com",
+    "phone": "999999999",
+    "client": 4,
+    "user": [
+      "thomasleos"
+    ],
+    "company": 2
+  }
+},
+{
+  "model": "ventas.quotation",
+  "pk": 1,
+  "fields": {
+    "quotation_type": "VENTA",
+    "money": "PEN",
+    "exchange_rate": null,
+    "status": "PENDIENTE",
+    "client": 3,
+    "user": [
+      "administrador"
+    ],
+    "correlativo": "ADM-000001",
+    "discount": "258.98",
+    "final_price": "4920.69",
+    "delivery_time": 0,
+    "conditions": "ca",
+    "payment_methods": 1,
+    "works": "ca",
+    "see_sku": true,
+    "creation_date": "2026-03-30T23:06:07.016Z",
+    "update_date": "2026-03-30T23:06:07.016Z"
+  }
+},
+{
+  "model": "ventas.quotation",
+  "pk": 2,
+  "fields": {
+    "quotation_type": "VENTA",
+    "money": "PEN",
+    "exchange_rate": null,
+    "status": "PENDIENTE",
+    "client": 3,
+    "user": [
+      "administrador"
+    ],
+    "correlativo": "ADM-000002",
+    "discount": "14.98",
+    "final_price": "284.71",
+    "delivery_time": 15,
+    "conditions": "ENTREGA INMEDIATA",
+    "payment_methods": 1,
+    "works": "caaca",
+    "see_sku": true,
+    "creation_date": "2026-03-31T01:16:37.106Z",
+    "update_date": "2026-03-31T01:16:37.106Z"
+  }
+},
+{
+  "model": "ventas.quotation",
+  "pk": 3,
+  "fields": {
+    "quotation_type": "VENTA",
+    "money": "USD",
+    "exchange_rate": null,
+    "status": "PENDIENTE",
+    "client": 3,
+    "user": [
+      "administrador"
+    ],
+    "correlativo": "ADM-000003",
+    "discount": "1.00",
+    "final_price": "98.90",
+    "delivery_time": 15,
+    "conditions": "caca",
+    "payment_methods": 1,
+    "works": "caca",
+    "see_sku": false,
+    "creation_date": "2026-03-31T01:26:19.935Z",
+    "update_date": "2026-03-31T01:26:19.935Z"
+  }
+},
+{
+  "model": "ventas.quotation",
+  "pk": 4,
+  "fields": {
+    "quotation_type": "VENTA",
+    "money": "PEN",
+    "exchange_rate": "3.7500",
+    "status": "PENDIENTE",
+    "client": 3,
+    "user": [
+      "administrador"
+    ],
+    "correlativo": "ADM-000004",
+    "discount": "0.00",
+    "final_price": "3791.70",
+    "delivery_time": 0,
+    "conditions": "cac",
+    "payment_methods": 1,
+    "works": "cac",
+    "see_sku": true,
+    "creation_date": "2026-03-31T01:27:04.631Z",
+    "update_date": "2026-03-31T01:27:04.631Z"
+  }
+},
+{
+  "model": "ventas.quotation",
+  "pk": 5,
+  "fields": {
+    "quotation_type": "VENTA",
+    "money": "USD",
+    "exchange_rate": null,
+    "status": "PENDIENTE",
+    "client": 3,
+    "user": [
+      "thomasleos"
+    ],
+    "correlativo": "TRL-000001",
+    "discount": "0.00",
+    "final_price": "199.80",
+    "delivery_time": 0,
+    "conditions": "ll",
+    "payment_methods": 1,
+    "works": "ll",
+    "see_sku": false,
+    "creation_date": "2026-03-31T03:25:58.403Z",
+    "update_date": "2026-03-31T03:25:58.403Z"
+  }
+},
+{
+  "model": "ventas.quotation",
+  "pk": 6,
+  "fields": {
+    "quotation_type": "VENTA",
+    "money": "USD",
+    "exchange_rate": null,
+    "status": "PENDIENTE",
+    "client": 3,
+    "user": [
+      "thomasleos"
+    ],
+    "correlativo": "TRL-000002",
+    "discount": "0.00",
+    "final_price": "601.77",
+    "delivery_time": 0,
+    "conditions": "caca",
+    "payment_methods": 1,
+    "works": "",
+    "see_sku": false,
+    "creation_date": "2026-03-31T03:44:36.134Z",
+    "update_date": "2026-03-31T03:44:36.134Z"
+  }
+},
+{
+  "model": "ventas.quotation",
+  "pk": 7,
+  "fields": {
+    "quotation_type": "VENTA",
+    "money": "USD",
+    "exchange_rate": null,
+    "status": "PENDIENTE",
+    "client": 3,
+    "user": [
+      "thomasleos"
+    ],
+    "correlativo": "TRL-000003",
+    "discount": "143.22",
+    "final_price": "2721.18",
+    "delivery_time": 0,
+    "conditions": "Entrega en todo lima metropolitana",
+    "payment_methods": 1,
+    "works": "",
+    "see_sku": false,
+    "creation_date": "2026-03-31T03:52:29.504Z",
+    "update_date": "2026-03-31T03:52:29.504Z"
+  }
+},
+{
+  "model": "ventas.quotation",
+  "pk": 8,
+  "fields": {
+    "quotation_type": "VENTA",
+    "money": "USD",
+    "exchange_rate": null,
+    "status": "PENDIENTE",
+    "client": 3,
+    "user": [
+      "thomasleos"
+    ],
+    "correlativo": "TRL-000004",
+    "discount": "49.50",
+    "final_price": "940.50",
+    "delivery_time": 0,
+    "conditions": "Entrega almacenes de Lima",
+    "payment_methods": 1,
+    "works": "",
+    "see_sku": false,
+    "creation_date": "2026-03-31T23:40:12.774Z",
+    "update_date": "2026-03-31T23:40:12.774Z"
+  }
+},
+{
+  "model": "ventas.quotation",
+  "pk": 9,
+  "fields": {
+    "quotation_type": "VENTA",
+    "money": "USD",
+    "exchange_rate": null,
+    "status": "PENDIENTE",
+    "client": 4,
+    "user": [
+      "thomasleos"
+    ],
+    "correlativo": "TRL-000005",
+    "discount": "1590.05",
+    "final_price": "30210.95",
+    "delivery_time": 0,
+    "conditions": "Entrega en almacenes de lima",
+    "payment_methods": 1,
+    "works": "",
+    "see_sku": false,
+    "creation_date": "2026-03-31T23:54:02.098Z",
+    "update_date": "2026-03-31T23:54:02.098Z"
+  }
+}
+]

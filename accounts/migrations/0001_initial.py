@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Company',
                 'verbose_name_plural': 'Companies',
                 'db_table': 'company',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(

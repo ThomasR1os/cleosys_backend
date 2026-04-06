@@ -15,6 +15,12 @@ def user_profile(user) -> UserProfile | None:
     return getattr(user, "profile", None) or UserProfile.objects.filter(user=user).first()
 
 
+def company_id_for_user(user) -> int | None:
+    """Empresa del perfil del usuario; None si no hay perfil."""
+    p = user_profile(user)
+    return p.company_id if p else None
+
+
 def is_admin_access(user) -> bool:
     """Admin de app o superusuario: ve y modifica todo."""
     if not user or not user.is_authenticated:

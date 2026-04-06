@@ -1,16 +1,51 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from accounts.models import UserProfile
 from accounts.permissions import is_admin_access
 from .models import ClientContact, Quotation, QuotationProduct
 
+User = get_user_model()
+
+
+class ClientContactEncargadoSerializer(serializers.ModelSerializer):
+    """Vendedor asignado al contacto (visible para toda la empresa)."""
+
+    nombre = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ("id", "username", "first_name", "last_name", "nombre")
+
+    def get_nombre(self, obj: User) -> str:
+        fn = (obj.first_name or "").strip()
+        ln = (obj.last_name or "").strip()
+        if fn or ln:
+            return f"{fn} {ln}".strip()
+        un = (obj.username or "").strip()
+        if un:
+            return un
+        return str(obj.pk)
+
 
 class ClientContactSerializer(serializers.ModelSerializer):
     company = serializers.PrimaryKeyRelatedField(read_only=True)
+    encargado = ClientContactEncargadoSerializer(source="user", read_only=True)
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=False)
 
     class Meta:
         model = ClientContact
-        fields = "__all__"
+        fields = (
+            "id",
+            "contact_first_name",
+            "contact_last_name",
+            "email",
+            "phone",
+            "client",
+            "user",
+            "company",
+            "encargado",
+        )
 
     def _get_company_id_from_user(self, user_id: int):
         profile = UserProfile.objects.filter(user_id=user_id).first()
@@ -25,11 +60,19 @@ class ClientContactSerializer(serializers.ModelSerializer):
         instance = getattr(self, "instance", None)
         if request and not is_admin_access(request.user):
             if instance is None:
-                attrs["user_id"] = request.user.pk
+                attrs["user"] = request.user
             else:
-                attrs.pop("user_id", None)
-        user_id = attrs.get("user_id") or (instance.user_id if instance else None)
-        client_id = attrs.get("client_id") or (instance.client_id if instance else None)
+                attrs.pop("user", None)
+        u = attrs.get("user")
+        if u is not None and hasattr(u, "pk"):
+            user_id = u.pk
+        else:
+            user_id = instance.user_id if instance else None
+        c = attrs.get("client")
+        if c is not None and hasattr(c, "pk"):
+            client_id = c.pk
+        else:
+            client_id = instance.client_id if instance else None
         first_name = attrs.get("contact_first_name") or (instance.contact_first_name if instance else None)
         last_name = attrs.get("contact_last_name") or (instance.contact_last_name if instance else None)
         email = attrs.get("email") or (instance.email if instance else None)
@@ -60,14 +103,40 @@ class ClientContactSerializer(serializers.ModelSerializer):
                 )
         return attrs
 
+    @staticmethod
+    def _can_see_email_and_phone(request_user, instance: ClientContact) -> bool:
+        if not request_user or not request_user.is_authenticated:
+            return False
+        if request_user.is_superuser:
+            return True
+        if is_admin_access(request_user):
+            return True
+        return instance.user_id == request_user.id
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        request = self.context.get("request")
+        user = getattr(request, "user", None) if request else None
+        if user and not self._can_see_email_and_phone(user, instance):
+            data["email"] = None
+            data["phone"] = None
+        return data
+
     def create(self, validated_data):
-        company_id = self._get_company_id_from_user(validated_data["user_id"])
-        validated_data["company_id"] = company_id
+        uid = None
+        u = validated_data.get("user")
+        if u is not None:
+            uid = u.pk if hasattr(u, "pk") else u
+        elif validated_data.get("user_id") is not None:
+            uid = validated_data["user_id"]
+        if uid is None:
+            raise serializers.ValidationError({"user": "Este campo es requerido."})
+        validated_data["company_id"] = self._get_company_id_from_user(uid)
         return super().create(validated_data)
 
     def update(self, instance, validated_data):
-        target_user_id = validated_data.get("user_id", instance.user_id)
-        validated_data["company_id"] = self._get_company_id_from_user(target_user_id)
+        user_obj = validated_data.get("user", instance.user)
+        validated_data["company_id"] = self._get_company_id_from_user(user_obj.pk)
         return super().update(instance, validated_data)
 
 

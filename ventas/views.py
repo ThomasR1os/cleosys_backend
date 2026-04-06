@@ -1,6 +1,7 @@
 from rest_framework import permissions, viewsets
+from rest_framework.exceptions import PermissionDenied
 
-from accounts.permissions import is_admin_access
+from accounts.permissions import company_id_for_user, is_admin_access
 
 from .models import ClientContact, Quotation, QuotationProduct
 from .serializers import ClientContactSerializer, QuotationProductSerializer, QuotationSerializer
@@ -15,11 +16,28 @@ class ClientContactViewSet(BaseVentasViewSet):
     serializer_class = ClientContactSerializer
 
     def get_queryset(self):
-        qs = super().get_queryset()
+        qs = (
+            ClientContact.objects.select_related("user", "client", "company")
+            .all()
+            .order_by("id")
+        )
         user = self.request.user
-        if is_admin_access(user):
+        if user.is_superuser:
             return qs
-        return qs.filter(user=user)
+        company_id = company_id_for_user(user)
+        if company_id is None:
+            return qs.none()
+        return qs.filter(company_id=company_id)
+
+    def check_object_permissions(self, request, obj):
+        super().check_object_permissions(request, obj)
+        if request.method not in permissions.SAFE_METHODS:
+            if request.user.is_superuser or is_admin_access(request.user):
+                return
+            if obj.user_id != request.user.id:
+                raise PermissionDenied(
+                    detail="Solo el vendedor asignado o un administrador pueden modificar o eliminar este contacto."
+                )
 
     def perform_create(self, serializer):
         if is_admin_access(self.request.user):

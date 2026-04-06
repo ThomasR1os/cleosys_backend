@@ -1,6 +1,6 @@
 from rest_framework import permissions, viewsets
 
-from accounts.permissions import AlmacenWritePermission, is_admin_access
+from accounts.permissions import AlmacenWritePermission, company_id_for_user
 
 from .models import (
     Brand,
@@ -71,9 +71,13 @@ class ClientViewSet(BaseCoreViewSet):
     def get_queryset(self):
         qs = Client.objects.all().order_by("id")
         user = self.request.user
-        if is_admin_access(user):
+        if user.is_superuser:
             return qs
-        return qs.filter(contacts__user=user).distinct()
+        company_id = company_id_for_user(user)
+        if company_id is None:
+            return qs.none()
+        # Solo clientes con al menos un contacto registrado en la empresa del usuario.
+        return qs.filter(contacts__company_id=company_id).distinct()
 
     def perform_create(self, serializer):
         serializer.save()

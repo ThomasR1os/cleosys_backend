@@ -2,6 +2,9 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from .branding_defaults import DEFAULT_BRANDING_COLORS
+from .validators import normalize_hex_color
+
 
 class Company(models.Model):
     id = models.AutoField(primary_key=True)
@@ -30,6 +33,94 @@ class Company(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class CompanyBranding(models.Model):
+    """
+    Paleta PDF por compañía (1:1). Si no hay fila, la API devuelve defaults en branding_defaults.
+    """
+
+    company = models.OneToOneField(
+        Company,
+        on_delete=models.CASCADE,
+        related_name="branding",
+        primary_key=True,
+    )
+    primary = models.CharField(
+        max_length=7,
+        default=DEFAULT_BRANDING_COLORS["primary"],
+        help_text=_("Marca: títulos, cabecera de tabla, acentos."),
+    )
+    primary_light = models.CharField(
+        max_length=7,
+        default=DEFAULT_BRANDING_COLORS["primary_light"],
+        help_text=_("Fondos suaves (bloques resumen / totales)."),
+    )
+    muted = models.CharField(
+        max_length=7,
+        default=DEFAULT_BRANDING_COLORS["muted"],
+        help_text=_("Texto secundario / etiquetas."),
+    )
+    border = models.CharField(
+        max_length=7,
+        default=DEFAULT_BRANDING_COLORS["border"],
+        help_text=_("Bordes y líneas."),
+    )
+    table_stripe = models.CharField(
+        max_length=7,
+        default=DEFAULT_BRANDING_COLORS["table_stripe"],
+        help_text=_("Rayado de filas de productos."),
+    )
+    emphasis_bar = models.CharField(
+        max_length=7,
+        default=DEFAULT_BRANDING_COLORS["emphasis_bar"],
+        help_text=_("Barra oscura de totales; texto principal en varias zonas."),
+    )
+    text_body = models.CharField(
+        max_length=7,
+        default=DEFAULT_BRANDING_COLORS["text_body"],
+        help_text=_("Párrafos (ej. cuentas bancarias)."),
+    )
+    text_label = models.CharField(
+        max_length=7,
+        default=DEFAULT_BRANDING_COLORS["text_label"],
+        help_text=_("Etiquetas destacadas (ej. ficha técnica)."),
+    )
+    text_caption = models.CharField(
+        max_length=7,
+        default=DEFAULT_BRANDING_COLORS["text_caption"],
+        help_text=_("Texto secundario en cursiva (ficha técnica)."),
+    )
+    extensions = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text=_("Extensiones futuras (no sustituye los campos de color explícitos)."),
+    )
+
+    class Meta:
+        managed = True
+        db_table = "company_branding"
+        verbose_name = _("Company branding")
+        verbose_name_plural = _("Company brandings")
+
+    def clean(self) -> None:
+        for name in (
+            "primary",
+            "primary_light",
+            "muted",
+            "border",
+            "table_stripe",
+            "emphasis_bar",
+            "text_body",
+            "text_label",
+            "text_caption",
+        ):
+            normalized = normalize_hex_color(getattr(self, name))
+            setattr(self, name, normalized)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
 
 class UserProfile(models.Model):

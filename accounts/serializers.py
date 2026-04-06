@@ -4,7 +4,9 @@ from django.db import transaction
 from django.db.utils import OperationalError
 from rest_framework import serializers
 
-from .models import Company, UserProfile
+from .branding_defaults import COLOR_FIELD_NAMES, branding_payload_for_company
+from .models import Company, CompanyBranding, UserProfile
+from .validators import normalize_hex_color_drf
 from .permissions import can_edit_sensitive_profile_fields
 from .utils import get_or_create_profile_for_user
 
@@ -12,9 +14,52 @@ User = get_user_model()
 
 
 class CompanySerializer(serializers.ModelSerializer):
+    """`branding` siempre presente: valores persistidos o defaults (sin fila en DB)."""
+
+    branding = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Company
-        fields = ["id", "name", "logo_url", "bank_accounts"]
+        fields = ["id", "name", "logo_url", "bank_accounts", "branding"]
+
+    def get_branding(self, obj: Company) -> dict:
+        return branding_payload_for_company(obj)
+
+
+class CompanyBrandingPatchSerializer(serializers.ModelSerializer):
+    """PATCH /companies/{id}/branding/ — parcial; crea fila si no existe (vista)."""
+
+    class Meta:
+        model = CompanyBranding
+        fields = [
+            "primary",
+            "primary_light",
+            "muted",
+            "border",
+            "table_stripe",
+            "emphasis_bar",
+            "text_body",
+            "text_label",
+            "text_caption",
+            "extensions",
+        ]
+        extra_kwargs = {
+            **{name: {"required": False} for name in COLOR_FIELD_NAMES},
+            "extensions": {"required": False},
+        }
+
+    def validate_extensions(self, value):
+        if value is None:
+            return {}
+        if not isinstance(value, dict):
+            raise serializers.ValidationError("extensions debe ser un objeto JSON.")
+        return value
+
+    def validate(self, attrs: dict) -> dict:
+        for key in COLOR_FIELD_NAMES:
+            if key in attrs:
+                attrs[key] = normalize_hex_color_drf(attrs[key])
+        return attrs
 
 
 class UserSerializer(serializers.ModelSerializer):

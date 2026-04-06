@@ -6,13 +6,14 @@ from rest_framework.views import APIView
 
 from almacen.cloudinary_upload import upload_product_image
 
-from .models import Company, UserProfile
+from .models import Company, CompanyBranding, UserProfile
 from .permissions import AdminAccessPermission, AdminUserOrSelfPermission, is_admin_access
 from .serializers import (
     AdminSetPasswordSerializer,
     AdminUserListSerializer,
     AdminUserSelfPatchSerializer,
     AdminUserWriteSerializer,
+    CompanyBrandingPatchSerializer,
     CompanySerializer,
     RegisterSerializer,
     UserProfileSerializer,
@@ -88,9 +89,28 @@ class MeView(APIView):
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
-    queryset = Company.objects.all().order_by("id")
+    queryset = Company.objects.select_related("branding").all().order_by("id")
     serializer_class = CompanySerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    @action(
+        detail=True,
+        methods=["patch"],
+        url_path="branding",
+        permission_classes=[permissions.IsAuthenticated, AdminAccessPermission],
+    )
+    def branding(self, request, pk=None):
+        """
+        Actualiza solo la paleta PDF. Crea CompanyBranding en el primer PATCH si no existía.
+        Respuesta: mismo cuerpo que GET /companies/{id}/ (incluye branding completo).
+        """
+        company = self.get_object()
+        branding, _ = CompanyBranding.objects.get_or_create(company=company)
+        serializer = CompanyBrandingPatchSerializer(branding, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        company = Company.objects.select_related("branding").get(pk=company.pk)
+        return Response(CompanySerializer(company).data)
 
     @action(
         detail=True,

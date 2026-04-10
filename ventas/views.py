@@ -51,10 +51,15 @@ class QuotationViewSet(BaseVentasViewSet):
     serializer_class = QuotationSerializer
 
     def get_queryset(self):
-        qs = super().get_queryset()
-        if is_admin_access(self.request.user):
+        # `user` en select_related evita N+1 al serializar `user_detail` en listados.
+        qs = super().get_queryset().select_related("client", "user", "payment_methods")
+        user = self.request.user
+        if user.is_superuser:
             return qs
-        return qs.filter(user=self.request.user)
+        company_id = company_id_for_user(user)
+        if company_id is None:
+            return qs.none()
+        return qs.filter(user__profile__company_id=company_id)
 
     def perform_create(self, serializer):
         if is_admin_access(self.request.user):
@@ -68,7 +73,11 @@ class QuotationProductViewSet(BaseVentasViewSet):
     serializer_class = QuotationProductSerializer
 
     def get_queryset(self):
-        qs = super().get_queryset()
-        if is_admin_access(self.request.user):
+        qs = super().get_queryset().select_related("quotation__user")
+        user = self.request.user
+        if user.is_superuser:
             return qs
-        return qs.filter(quotation__user=self.request.user)
+        company_id = company_id_for_user(user)
+        if company_id is None:
+            return qs.none()
+        return qs.filter(quotation__user__profile__company_id=company_id)

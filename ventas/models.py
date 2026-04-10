@@ -175,7 +175,7 @@ class QuotationProduct(models.Model):
     quotation = models.ForeignKey(
         Quotation,
         db_column="quotation_id",
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name="items",
     )
     product = models.ForeignKey(

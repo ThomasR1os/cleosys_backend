@@ -2,14 +2,17 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from accounts.models import UserProfile
-from accounts.permissions import is_admin_access
+from accounts.permissions import company_id_for_user, is_admin_access
 from .models import ClientContact, Quotation, QuotationProduct
 
 User = get_user_model()
 
 
-class ClientContactEncargadoSerializer(serializers.ModelSerializer):
-    """Vendedor asignado al contacto (visible para toda la empresa)."""
+class UserPublicSummarySerializer(serializers.ModelSerializer):
+    """
+    Solo lectura: id, username, nombre y apellidos (mismo criterio que encargado en contactos).
+    No incluye email ni otros campos sensibles del modelo User.
+    """
 
     nombre = serializers.SerializerMethodField()
 
@@ -26,6 +29,10 @@ class ClientContactEncargadoSerializer(serializers.ModelSerializer):
         if un:
             return un
         return str(obj.pk)
+
+
+class ClientContactEncargadoSerializer(UserPublicSummarySerializer):
+    """Vendedor asignado al contacto (visible para toda la empresa)."""
 
 
 class ClientContactSerializer(serializers.ModelSerializer):
@@ -141,9 +148,32 @@ class ClientContactSerializer(serializers.ModelSerializer):
 
 
 class QuotationSerializer(serializers.ModelSerializer):
+    """`user` sigue siendo el id del FK; `user_detail` es aditivo y de solo lectura."""
+
+    user_detail = UserPublicSummarySerializer(source="user", read_only=True)
+
     class Meta:
         model = Quotation
-        fields = "__all__"
+        fields = (
+            "id",
+            "quotation_type",
+            "money",
+            "exchange_rate",
+            "status",
+            "client",
+            "user",
+            "user_detail",
+            "correlativo",
+            "discount",
+            "final_price",
+            "delivery_time",
+            "conditions",
+            "payment_methods",
+            "works",
+            "see_sku",
+            "creation_date",
+            "update_date",
+        )
         read_only_fields = ("correlativo",)
 
     def validate(self, attrs):
@@ -176,9 +206,18 @@ class QuotationProductSerializer(serializers.ModelSerializer):
 
     def validate_quotation(self, value):
         request = self.context.get("request")
-        if request and not is_admin_access(request.user):
-            if value.user_id != request.user.id:
-                raise serializers.ValidationError(
-                    "No puede asociar lineas a cotizaciones de otro usuario."
-                )
+        if not request or is_admin_access(request.user):
+            return value
+        if value.user_id == request.user.id:
+            return value
+        viewer_company = company_id_for_user(request.user)
+        if viewer_company is None:
+            raise serializers.ValidationError(
+                "No puede asociar lineas a cotizaciones de otro usuario."
+            )
+        owner = UserProfile.objects.filter(user_id=value.user_id).first()
+        if not owner or owner.company_id != viewer_company:
+            raise serializers.ValidationError(
+                "No puede asociar lineas a cotizaciones fuera de su compania."
+            )
         return value

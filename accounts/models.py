@@ -8,6 +8,11 @@ from .validators import normalize_hex_color
 
 class Company(models.Model):
     id = models.AutoField(primary_key=True)
+    ruc = models.TextField(
+        "RUC",
+        blank=True,
+        default="",
+    )
     name = models.CharField(max_length=100)
     logo_url = models.URLField(
         _("URL del logo (Cloudinary)"),

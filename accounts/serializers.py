@@ -20,7 +20,7 @@ class CompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ["id", "name", "logo_url", "bank_accounts", "branding"]
+        fields = ["id", "ruc", "name", "logo_url", "bank_accounts", "branding"]
 
     def get_branding(self, obj: Company) -> dict:
         return branding_payload_for_company(obj)

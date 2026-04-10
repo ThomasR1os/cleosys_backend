@@ -88,6 +88,14 @@ class Quotation(models.Model):
     )
     status = models.CharField(max_length=20, choices=QuotationStatus.choices)
     client = models.ForeignKey(Client, db_column="client_id", on_delete=models.PROTECT, related_name="quotations")
+    client_contact = models.ForeignKey(
+        "ClientContact",
+        db_column="client_contact_id",
+        on_delete=models.PROTECT,
+        related_name="quotations",
+        null=True,
+        blank=True,
+    )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, db_column="user_id", on_delete=models.PROTECT, related_name="quotations")
     correlativo = models.CharField(
         _("Correlativo"),

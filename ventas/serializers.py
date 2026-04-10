@@ -35,6 +35,22 @@ class ClientContactEncargadoSerializer(UserPublicSummarySerializer):
     """Vendedor asignado al contacto (visible para toda la empresa)."""
 
 
+class QuotationUserDetailSerializer(UserPublicSummarySerializer):
+    """Asesor de la cotización: nombre + correo y teléfono (perfil) para listado, detalle y PDF."""
+
+    cellphone = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ("id", "username", "first_name", "last_name", "nombre", "email", "cellphone")
+
+    def get_cellphone(self, obj: User) -> str:
+        profile = getattr(obj, "profile", None)
+        if profile is None:
+            profile = UserProfile.objects.filter(user_id=obj.pk).first()
+        return (profile.cellphone or "").strip() if profile else ""
+
+
 class ClientContactSerializer(serializers.ModelSerializer):
     company = serializers.PrimaryKeyRelatedField(read_only=True)
     encargado = ClientContactEncargadoSerializer(source="user", read_only=True)
@@ -147,10 +163,49 @@ class ClientContactSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class QuotationSerializer(serializers.ModelSerializer):
-    """`user` sigue siendo el id del FK; `user_detail` es aditivo y de solo lectura."""
+class QuotationClientContactReadSerializer(serializers.ModelSerializer):
+    """
+    Datos del contacto del cliente en la cotización.
+    Nombre siempre visible para quien ve la cotización; email y teléfono solo si el mismo
+    criterio que en client-contacts (admin, superusuario o vendedor asignado al contacto).
+    """
 
-    user_detail = UserPublicSummarySerializer(source="user", read_only=True)
+    nombre = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ClientContact
+        fields = ("id", "contact_first_name", "contact_last_name", "nombre", "email", "phone")
+
+    def get_nombre(self, obj: ClientContact) -> str:
+        fn = (obj.contact_first_name or "").strip()
+        ln = (obj.contact_last_name or "").strip()
+        if fn or ln:
+            return f"{fn} {ln}".strip()
+        return ""
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        request = self.context.get("request")
+        user = getattr(request, "user", None) if request else None
+        if user and not ClientContactSerializer._can_see_email_and_phone(user, instance):
+            data["email"] = None
+            data["phone"] = None
+        return data
+
+
+class QuotationSerializer(serializers.ModelSerializer):
+    """`user` sigue siendo el id del FK; `user_detail` incluye email y cellphone del asesor."""
+
+    user_detail = QuotationUserDetailSerializer(source="user", read_only=True)
+    client_contact = serializers.PrimaryKeyRelatedField(
+        queryset=ClientContact.objects.all(),
+        required=False,
+        allow_null=True,
+    )
+    client_contact_detail = QuotationClientContactReadSerializer(
+        source="client_contact",
+        read_only=True,
+    )
 
     class Meta:
         model = Quotation
@@ -161,6 +216,8 @@ class QuotationSerializer(serializers.ModelSerializer):
             "exchange_rate",
             "status",
             "client",
+            "client_contact",
+            "client_contact_detail",
             "user",
             "user_detail",
             "correlativo",
@@ -180,6 +237,22 @@ class QuotationSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         if self.instance is None and request and not is_admin_access(request.user):
             attrs["user_id"] = request.user.pk
+        client = attrs.get("client")
+        if client is None and self.instance is not None:
+            client = self.instance.client
+        cc = attrs.get("client_contact")
+        if cc is None and self.instance is not None:
+            cc = self.instance.client_contact
+        if cc is not None and client is not None and cc.client_id != client.pk:
+            raise serializers.ValidationError(
+                {"client_contact": "El contacto debe pertenecer al mismo cliente de la cotización."}
+            )
+        if cc is not None and request and not request.user.is_superuser:
+            cid = company_id_for_user(request.user)
+            if cid is not None and cc.company_id != cid:
+                raise serializers.ValidationError(
+                    {"client_contact": "El contacto no pertenece a su compañía."}
+                )
         if self.instance is None:
             uid = attrs.get("user_id")
             if uid is not None:
@@ -210,14 +283,6 @@ class QuotationProductSerializer(serializers.ModelSerializer):
             return value
         if value.user_id == request.user.id:
             return value
-        viewer_company = company_id_for_user(request.user)
-        if viewer_company is None:
-            raise serializers.ValidationError(
-                "No puede asociar lineas a cotizaciones de otro usuario."
-            )
-        owner = UserProfile.objects.filter(user_id=value.user_id).first()
-        if not owner or owner.company_id != viewer_company:
-            raise serializers.ValidationError(
-                "No puede asociar lineas a cotizaciones fuera de su compania."
-            )
-        return value
+        raise serializers.ValidationError(
+            "Solo puede añadir o editar líneas en cotizaciones propias (o como administrador)."
+        )

@@ -38,7 +38,7 @@ class Product(models.Model):
     )
     sku = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
-    datasheet = models.TextField()
+    datasheet = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     rental_price_without_operator = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True, db_column="rental_price_without_operator"
@@ -46,7 +46,7 @@ class Product(models.Model):
     rental_price_with_operator = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True, db_column="rental_price_with_operator"
     )
-    warrannty = models.CharField(max_length=20, db_column="warrannty")
+    warrannty = models.CharField(max_length=20, null=True, blank=True, db_column="warrannty")
     unit_measurement = models.ForeignKey(
         UnitMeasurement,
         db_column="unit_measurement_id",

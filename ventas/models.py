@@ -214,7 +214,7 @@ class QuotationProduct(models.Model):
             if not (self.line_description or "").strip():
                 self.line_description = p.description
             if not (self.line_datasheet or "").strip():
-                self.line_datasheet = p.datasheet
+                self.line_datasheet = p.datasheet or ""
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:

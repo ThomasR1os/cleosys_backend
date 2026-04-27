@@ -7,6 +7,14 @@ from .models import Product, ProductImage, ProductSupplier, Warehouse, Warehouse
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    warranty = serializers.CharField(
+        source="warrannty",
+        required=False,
+        allow_null=True,
+        allow_blank=True,
+        max_length=20,
+    )
+
     class Meta:
         model = Product
         fields = "__all__"

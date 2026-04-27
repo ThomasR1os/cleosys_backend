@@ -8,11 +8,20 @@ from .models import Product, ProductImage, ProductSupplier, Warehouse, Warehouse
 
 class ProductSerializer(serializers.ModelSerializer):
     warranty = serializers.CharField(
-        source="warrannty",
+        source="warranty",
         required=False,
         allow_null=True,
         allow_blank=True,
         max_length=20,
+    )
+    # Compatibilidad: frontend(s) antiguos aún envían `warrannty`.
+    warrannty = serializers.CharField(
+        source="warranty",
+        required=False,
+        allow_null=True,
+        allow_blank=True,
+        max_length=20,
+        write_only=True,
     )
 
     class Meta:
@@ -54,7 +63,7 @@ class WarehouseMovementsSerializer(serializers.ModelSerializer):
             product=product,
             defaults={
                 "stock": 0,
-                "ubication": "SIN UBICACION",
+                "location": "SIN UBICACION",
             },
         )
         qty_delta = WarehouseMovementsSerializer._qty_to_int(delta)

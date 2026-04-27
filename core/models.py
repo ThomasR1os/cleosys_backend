@@ -11,7 +11,7 @@ class Supplier(models.Model):
     type = models.CharField(max_length=20, choices=SupplierType.choices, db_column="type")
     ruc = models.CharField(max_length=50)
     name = models.CharField(max_length=100)
-    adress = models.CharField(max_length=100)
+    address = models.CharField(max_length=100, db_column="address")
     contact = models.CharField(max_length=100)
     email = models.CharField(max_length=250)
     phone = models.CharField(max_length=100)
@@ -82,14 +82,14 @@ class TypeProduct(models.Model):
 class UnitMeasurement(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    abreviation = models.CharField(max_length=3, db_column="abreviation")
+    abbreviation = models.CharField(max_length=3, db_column="abbreviation")
 
     class Meta:
         managed = True
         db_table = "unit_measurement"
 
     def __str__(self) -> str:
-        return f"{self.name} ({self.abreviation})"
+        return f"{self.name} ({self.abbreviation})"
 
 
 class Client(models.Model):

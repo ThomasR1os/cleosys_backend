@@ -46,7 +46,7 @@ class Product(models.Model):
     rental_price_with_operator = models.DecimalField(
         max_digits=10, decimal_places=2, null=True, blank=True, db_column="rental_price_with_operator"
     )
-    warrannty = models.CharField(max_length=20, null=True, blank=True, db_column="warrannty")
+    warranty = models.CharField(max_length=20, null=True, blank=True, db_column="warranty")
     unit_measurement = models.ForeignKey(
         UnitMeasurement,
         db_column="unit_measurement_id",
@@ -164,7 +164,7 @@ class WarehouseProduct(models.Model):
         related_name="warehouse_stocks",
     )
     stock = models.IntegerField(default=0)
-    ubication = models.CharField(max_length=250)
+    location = models.CharField(max_length=250, db_column="location")
     creation_date = models.DateTimeField(default=timezone.now, db_column="creation_date")
 
     class Meta:

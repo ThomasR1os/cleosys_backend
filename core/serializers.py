@@ -35,6 +35,15 @@ class ClientContactWriteSerializer(serializers.ModelSerializer):
 
 
 class SupplierSerializer(serializers.ModelSerializer):
+    # Compatibilidad: API antigua usaba `adress` (typo).
+    adress = serializers.CharField(
+        source="address",
+        required=False,
+        allow_blank=True,
+        max_length=100,
+        write_only=True,
+    )
+
     class Meta:
         model = Supplier
         fields = "__all__"
@@ -65,6 +74,15 @@ class TypeProductSerializer(serializers.ModelSerializer):
 
 
 class UnitMeasurementSerializer(serializers.ModelSerializer):
+    # Compatibilidad: API antigua usaba `abreviation` (typo).
+    abreviation = serializers.CharField(
+        source="abbreviation",
+        required=False,
+        allow_blank=True,
+        max_length=3,
+        write_only=True,
+    )
+
     class Meta:
         model = UnitMeasurement
         fields = "__all__"

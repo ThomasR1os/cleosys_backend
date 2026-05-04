@@ -9,3 +9,4 @@ django-cors-headers>=4.6
 beautifulsoup4>=4.12
 lxml>=5.0
 playwright>=1.49
+gunicorn>=23.0

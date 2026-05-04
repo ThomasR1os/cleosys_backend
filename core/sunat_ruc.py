@@ -7,7 +7,11 @@ Se automatiza el flujo con Playwright (Chromium) para reproducir el navegador.
 
 from __future__ import annotations
 
+import atexit
+import os
 import re
+import threading
+import time
 from typing import Any
 
 from bs4 import BeautifulSoup
@@ -15,6 +19,23 @@ from bs4 import BeautifulSoup
 SUNAT_CONSULTA_URL = (
     "https://e-consultaruc.sunat.gob.pe/cl-ti-itmrconsruc/FrameCriterioBusquedaWeb.jsp"
 )
+_DEFAULT_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+)
+
+# Cache en memoria (por proceso) para acelerar consultas repetidas.
+# Nota: en producción con múltiples workers, cada worker tendrá su propio cache.
+_CACHE_TTL_S = 12 * 60 * 60  # 12 horas
+_cache_lock = threading.Lock()
+_ruc_cache: dict[str, tuple[float, dict[str, Any]]] = {}
+
+
+def _playwright_timeout_ms() -> int:
+    raw = os.environ.get("SUNAT_PLAYWRIGHT_TIMEOUT_MS", "").strip()
+    if raw.isdigit():
+        return max(5_000, min(int(raw), 120_000))
+    return 60_000
 
 
 class SunatConsultaError(Exception):
@@ -130,38 +151,149 @@ def parse_sunat_result_html(html: str) -> dict[str, Any]:
     }
 
 
-def fetch_ruc_with_playwright(ruc: str, *, timeout_ms: int = 90_000) -> dict[str, Any]:
+class _PlaywrightBrowser:
+    """
+    Reusa un navegador Chromium por proceso para evitar el overhead de arrancar
+    Playwright/Chromium en cada request.
+    """
+
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self._started = False
+        self._playwright = None
+        self._browser = None
+
+    def _ensure_started(self) -> None:
+        if self._started:
+            return
+        from playwright.sync_api import sync_playwright
+
+        try:
+            self._playwright = sync_playwright().start()
+            # En Docker / PaaS hace falta --no-sandbox; --disable-dev-shm-usage evita caídas por /dev/shm pequeño.
+            self._browser = self._playwright.chromium.launch(
+                headless=True,
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--no-sandbox",
+                    "--disable-setuid-sandbox",
+                    "--disable-dev-shm-usage",
+                ],
+            )
+            self._started = True
+        except Exception as e:
+            err = str(e).lower()
+            if "executable doesn't exist" in err or "browserType.launch" in err:
+                raise SunatConsultaError(
+                    "Chromium no está disponible en el servidor. Instale los browsers de Playwright "
+                    "(p. ej. `playwright install chromium`) y en Linux las dependencias del sistema "
+                    "(`playwright install-deps`) o despliegue con la imagen Docker oficial de Playwright."
+                ) from e
+            raise
+
+    def close(self) -> None:
+        with self._lock:
+            if not self._started:
+                return
+            try:
+                if self._browser:
+                    self._browser.close()
+            finally:
+                if self._playwright:
+                    self._playwright.stop()
+                self._browser = None
+                self._playwright = None
+                self._started = False
+
+    def fetch_html(self, ruc: str, *, timeout_ms: int) -> str:
+        # Serializamos por lock: evita pelear por recursos del browser en dev server.
+        # En prod puedes escalar con workers/procesos.
+        with self._lock:
+            self._ensure_started()
+            assert self._browser is not None
+            ctx = self._browser.new_context(
+                user_agent=_DEFAULT_UA,
+                locale="es-PE",
+                viewport={"width": 1280, "height": 720},
+            )
+            # Bloquear recursos pesados acelera bastante (CSS, imágenes, fuentes).
+            def _route_handler(route):
+                rt = route.request.resource_type
+                if rt in {"image", "stylesheet", "font", "media"}:
+                    return route.abort()
+                return route.continue_()
+
+            ctx.route("**/*", _route_handler)
+            page = ctx.new_page()
+            try:
+                page.goto(SUNAT_CONSULTA_URL, wait_until="domcontentloaded", timeout=timeout_ms)
+                page.fill("#txtRuc", ruc.strip())
+                # A veces un overlay (divCarga) intercepta el click; disparar el handler vía JS es más estable/rápido.
+                page.evaluate("document.querySelector('#btnAceptar')?.click()")
+                # Mejor que networkidle: esperamos el elemento específico del resultado.
+                page.wait_for_selector("div.panel-heading", timeout=timeout_ms)
+                # Aseguramos que el heading sea el esperado (evita devolver criterio).
+                page.wait_for_function(
+                    "document.body && document.body.innerText.includes('Resultado de la Búsqueda')",
+                    timeout=timeout_ms,
+                )
+                return page.content()
+            finally:
+                ctx.close()
+
+
+_pw_browser = _PlaywrightBrowser()
+atexit.register(_pw_browser.close)
+
+
+def _cache_get(ruc: str) -> dict[str, Any] | None:
+    now = time.time()
+    with _cache_lock:
+        hit = _ruc_cache.get(ruc)
+        if not hit:
+            return None
+        ts, data = hit
+        if now - ts > _CACHE_TTL_S:
+            _ruc_cache.pop(ruc, None)
+            return None
+        return data
+
+
+def _cache_set(ruc: str, data: dict[str, Any]) -> None:
+    with _cache_lock:
+        _ruc_cache[ruc] = (time.time(), data)
+
+
+def fetch_ruc_with_playwright(ruc: str, *, timeout_ms: int | None = None) -> dict[str, Any]:
     """
     Abre la consulta SUNAT en Chromium, envía el RUC y devuelve el dict parseado.
-    Requiere: pip install playwright && playwright install chromium
+    Requiere: pip install playwright && playwright install chromium (y en Linux, dependencias del sistema).
+
+    ``timeout_ms`` por defecto se toma de SUNAT_PLAYWRIGHT_TIMEOUT_MS (o 60000 ms).
     """
-    from playwright.sync_api import sync_playwright
+    if timeout_ms is None:
+        timeout_ms = _playwright_timeout_ms()
 
     if not validate_ruc_checksum(ruc):
         raise SunatConsultaError("El número de RUC no es válido (formato o dígito verificador).")
 
-    with sync_playwright() as p:
-        browser = p.chromium.launch(
-            headless=True,
-            args=["--disable-blink-features=AutomationControlled"],
-        )
-        try:
-            ctx = browser.new_context(
-                user_agent=(
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                    "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-                ),
-                locale="es-PE",
-                viewport={"width": 1280, "height": 720},
-            )
-            page = ctx.new_page()
-            page.goto(SUNAT_CONSULTA_URL, wait_until="domcontentloaded", timeout=timeout_ms)
-            page.fill("#txtRuc", ruc.strip())
-            page.click("#btnAceptar")
-            page.wait_for_load_state("networkidle", timeout=timeout_ms)
-            html = page.content()
-            ctx.close()
-        finally:
-            browser.close()
+    ruc = ruc.strip()
+    cached = _cache_get(ruc)
+    if cached is not None:
+        return cached
 
-    return parse_sunat_result_html(html)
+    try:
+        html = _pw_browser.fetch_html(ruc, timeout_ms=timeout_ms)
+    except SunatConsultaError:
+        raise
+    except Exception as e:
+        if "Timeout" in type(e).__name__ or "timeout" in str(e).lower():
+            raise SunatConsultaError(
+                "Tiempo de espera agotado al consultar SUNAT. Revise la red del servidor, "
+                "aumente SUNAT_PLAYWRIGHT_TIMEOUT_MS o el límite de tiempo del hosting (p. ej. Render)."
+            ) from e
+        raise
+
+    data = parse_sunat_result_html(html)
+    _cache_set(ruc, data)
+    return data

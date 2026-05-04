@@ -1,0 +1,10 @@
+# Opcional: blueprint Render (ajuste nombre de servicio y variables según su proyecto).
+services:
+  - type: web
+    name: cleosys-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: SUNAT_PLAYWRIGHT_TIMEOUT_MS
+        value: "28000"

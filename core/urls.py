@@ -7,6 +7,8 @@ from .views import (
     ClientViewSet,
     PaymentMethodsViewSet,
     SubcategoryProductViewSet,
+    SunatRucConsultaView,
+    SunatRucIdentificacionView,
     SupplierViewSet,
     TypeProductViewSet,
     UnitMeasurementViewSet,
@@ -23,6 +25,12 @@ router.register(r"clients", ClientViewSet, basename="client")
 router.register(r"payment-methods", PaymentMethodsViewSet, basename="payment-methods")
 
 urlpatterns = [
+    path(
+        "sunat/ruc/identificacion/",
+        SunatRucIdentificacionView.as_view(),
+        name="sunat-ruc-identificacion",
+    ),
+    path("sunat/ruc/", SunatRucConsultaView.as_view(), name="sunat-ruc-consulta"),
     path("", include(router.urls)),
 ]
 

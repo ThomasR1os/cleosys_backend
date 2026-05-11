@@ -1,9 +1,11 @@
 import logging
 
+from django.db.models import Exists, OuterRef
 from rest_framework import permissions, viewsets, views
 from rest_framework.response import Response
 
-from accounts.permissions import AlmacenWritePermission, company_id_for_user
+from accounts.permissions import AlmacenWritePermission, company_id_for_user, is_admin_access
+from ventas.models import ClientContact
 
 from .models import (
     Brand,
@@ -88,16 +90,44 @@ class ClientViewSet(BaseCoreViewSet):
     queryset = Client.objects.all().order_by("id")
     serializer_class = ClientSerializer
 
+    def _annotate_is_mine(self, qs):
+        """
+        Marca cada cliente con `is_mine_anno=True` si el usuario tiene al menos un
+        ClientContact asignado en ese cliente. Evita N+1 en el serializer.
+        """
+        user = self.request.user
+        if not user or not user.is_authenticated:
+            return qs
+        return qs.annotate(
+            is_mine_anno=Exists(
+                ClientContact.objects.filter(client=OuterRef("pk"), user=user)
+            )
+        )
+
     def get_queryset(self):
         qs = Client.objects.all().order_by("id")
         user = self.request.user
         if user.is_superuser:
-            return qs
+            return self._annotate_is_mine(qs)
         company_id = company_id_for_user(user)
         if company_id is None:
             return qs.none()
-        # Solo clientes con al menos un contacto registrado en la empresa del usuario.
-        return qs.filter(contacts__company_id=company_id).distinct()
+        # Siempre acotado a la empresa del usuario; el parámetro `scope` no puede escapar de eso.
+        company_qs = qs.filter(contacts__company_id=company_id).distinct()
+        # Admin de aplicación: ve todos los clientes de su empresa, en cualquier acción.
+        if is_admin_access(user):
+            return self._annotate_is_mine(company_qs)
+        # `scope=company` solo amplía el LISTADO; retrieve/update/destroy siguen siendo "míos".
+        if (
+            self.action == "list"
+            and self.request.query_params.get("scope") == "company"
+        ):
+            return self._annotate_is_mine(company_qs)
+        # Comportamiento por defecto: solo clientes con al menos un contacto asignado al usuario.
+        mine_qs = qs.filter(
+            contacts__company_id=company_id, contacts__user=user
+        ).distinct()
+        return self._annotate_is_mine(mine_qs)
 
     def perform_create(self, serializer):
         serializer.save()

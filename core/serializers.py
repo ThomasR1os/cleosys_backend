@@ -92,9 +92,11 @@ class ClientSerializer(serializers.ModelSerializer):
     """
     - POST: acepta `contact` obligatorio (cliente + primer contacto / vendedor en una operación).
     - El vendedor es el usuario del contacto (`contact.user`); por defecto quien crea el registro.
+    - `is_mine`: indica si el usuario autenticado tiene al menos un contacto asignado en este cliente.
     """
 
     contact = ClientContactWriteSerializer(write_only=True, required=False)
+    is_mine = serializers.SerializerMethodField()
 
     class Meta:
         model = Client
@@ -103,12 +105,25 @@ class ClientSerializer(serializers.ModelSerializer):
             "ruc",
             "name",
             "contact",
+            "is_mine",
         )
+        read_only_fields = ("is_mine",)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if self.instance is None:
             self.fields["contact"].required = True
+
+    def get_is_mine(self, obj: Client) -> bool:
+        # Usa la anotación del queryset (ClientViewSet._annotate_is_mine) si está disponible.
+        annotated = getattr(obj, "is_mine_anno", None)
+        if annotated is not None:
+            return bool(annotated)
+        request = self.context.get("request")
+        user = getattr(request, "user", None) if request else None
+        if not user or not user.is_authenticated:
+            return False
+        return ClientContact.objects.filter(client=obj, user=user).exists()
 
     def validate_ruc(self, value: str) -> str:
         v = (value or "").strip()

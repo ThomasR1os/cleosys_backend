@@ -2,6 +2,7 @@ import re
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db import models, transaction
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -76,9 +77,26 @@ class Quotation(models.Model):
         PENDIENTE = "PENDIENTE", _("Pendiente")
         RECHAZADA = "RECHAZADA", _("Rechazada")
 
+    class RentalUnit(models.TextChoices):
+        DIAS = "DIAS", _("Días")
+        MES = "MES", _("Mes")
+
     id = models.AutoField(primary_key=True)
     quotation_type = models.CharField(max_length=20, choices=QuotationType.choices, db_column="type")
     money = models.CharField(max_length=5, choices=QuotationMoney.choices, db_column="money")
+    rental_unit = models.CharField(
+        max_length=4,
+        choices=RentalUnit.choices,
+        null=True,
+        blank=True,
+        db_column="rental_unit",
+    )
+    rental_quantity = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(1)],
+        db_column="rental_quantity",
+    )
     exchange_rate = models.DecimalField(
         max_digits=12,
         decimal_places=4,

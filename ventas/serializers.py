@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from accounts.models import UserProfile
 from accounts.permissions import company_id_for_user, is_admin_access
+from core.models import Client
 from .models import ClientContact, Quotation, QuotationProduct
 
 User = get_user_model()
@@ -193,10 +194,19 @@ class QuotationClientContactReadSerializer(serializers.ModelSerializer):
         return data
 
 
+class QuotationClientReadSerializer(serializers.ModelSerializer):
+    """Resumen del cliente embebido en la cotización (visible para toda la empresa)."""
+
+    class Meta:
+        model = Client
+        fields = ("id", "ruc", "name")
+
+
 class QuotationSerializer(serializers.ModelSerializer):
     """`user` sigue siendo el id del FK; `user_detail` incluye email y cellphone del asesor."""
 
     user_detail = QuotationUserDetailSerializer(source="user", read_only=True)
+    client_detail = QuotationClientReadSerializer(source="client", read_only=True)
     client_contact = serializers.PrimaryKeyRelatedField(
         queryset=ClientContact.objects.all(),
         required=False,
@@ -214,8 +224,11 @@ class QuotationSerializer(serializers.ModelSerializer):
             "quotation_type",
             "money",
             "exchange_rate",
+            "rental_unit",
+            "rental_quantity",
             "status",
             "client",
+            "client_detail",
             "client_contact",
             "client_contact_detail",
             "user",
@@ -263,6 +276,34 @@ class QuotationSerializer(serializers.ModelSerializer):
                             "user": "Configure el prefijo de cotizaciones (iniciales) en el perfil del usuario antes de crear cotizaciones."
                         }
                     )
+
+        qtype = attrs.get("quotation_type") or (
+            self.instance.quotation_type if self.instance else None
+        )
+        ru = attrs.get(
+            "rental_unit",
+            getattr(self.instance, "rental_unit", None) if self.instance else None,
+        )
+        rq = attrs.get(
+            "rental_quantity",
+            getattr(self.instance, "rental_quantity", None) if self.instance else None,
+        )
+        if qtype == Quotation.QuotationType.ALQUILER:
+            if ru in (None, ""):
+                raise serializers.ValidationError(
+                    {"rental_unit": "Requerido cuando quotation_type es ALQUILER."}
+                )
+            if rq is None:
+                raise serializers.ValidationError(
+                    {"rental_quantity": "Requerido cuando quotation_type es ALQUILER."}
+                )
+            if rq < 1:
+                raise serializers.ValidationError(
+                    {"rental_quantity": "Debe ser >= 1."}
+                )
+        else:
+            attrs["rental_unit"] = None
+            attrs["rental_quantity"] = None
         return attrs
 
     def update(self, instance, validated_data):

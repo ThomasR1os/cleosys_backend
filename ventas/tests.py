@@ -339,6 +339,20 @@ class ProformaRequestAPITests(APITestCase):
         self.assertIsNone(res.data["quotation_correlativo"])
         self.assertIsNotNone(res.data["entered_at"])
         self.assertIsNone(res.data["quoted_at"])
+        self.assertEqual(res.data["status"], ProformaRequest.Status.PENDIENTE)
+
+    def test_patch_status_by_assigned_advisor(self) -> None:
+        self.client.force_authenticate(self.creator)
+        cre = self.client.post("/api/ventas/proforma-requests/", self._payload(), format="json")
+        pr_id = cre.data["id"]
+        self.client.force_authenticate(self.advisor)
+        res = self.client.patch(
+            f"/api/ventas/proforma-requests/{pr_id}/",
+            {"status": ProformaRequest.Status.APROBADA},
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data["status"], ProformaRequest.Status.APROBADA)
 
     def test_create_rejects_client_without_company_contact(self) -> None:
         orphan = Client.objects.create(ruc="00000000000", name="Sin contacto empresa")

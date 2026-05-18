@@ -257,6 +257,12 @@ class ProformaRequest(models.Model):
         SERVICIOS = "SERVICIOS", _("Servicios")
         ALQUILERES = "ALQUILERES", _("Alquileres")
 
+    class Status(models.TextChoices):
+        APROBADA = "APROBADA", _("Aprobada")
+        PENDIENTE = "PENDIENTE", _("Pendiente")
+        RECHAZADA = "RECHAZADA", _("Rechazada")
+        SIN_RESPUESTA = "SIN_RESPUESTA", _("Sin respuesta")
+
     id = models.AutoField(primary_key=True)
     company = models.ForeignKey(
         Company,
@@ -289,6 +295,13 @@ class ProformaRequest(models.Model):
         db_column="proforma_type",
     )
     description = models.TextField(_("Descripción"))
+    status = models.CharField(
+        _("Estado"),
+        max_length=20,
+        choices=Status.choices,
+        default=Status.PENDIENTE,
+        db_column="status",
+    )
     quotation = models.ForeignKey(
         Quotation,
         db_column="quotation_id",

@@ -352,6 +352,7 @@ class ProformaRequestSerializer(serializers.ModelSerializer):
             "entry_channel",
             "proforma_type",
             "description",
+            "status",
             "quotation",
             "quotation_correlativo",
             "entered_at",

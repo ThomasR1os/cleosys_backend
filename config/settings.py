@@ -50,6 +50,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "cleosys-backend.onrender.com",
+    "cleosys-backend-1.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
@@ -178,6 +179,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://cleosys-backend.onrender.com",
+    "https://cleosys-backend-1.onrender.com",
     "https://0e5c45b9.cleosys-fronted.pages.dev",
 ]
 

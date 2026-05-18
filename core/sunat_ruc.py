@@ -8,6 +8,7 @@ Se automatiza el flujo con Playwright (Chromium) para reproducir el navegador.
 from __future__ import annotations
 
 import atexit
+import concurrent.futures
 import os
 import re
 import threading
@@ -242,8 +243,25 @@ class _PlaywrightBrowser:
                 ctx.close()
 
 
+# Playwright sync usa asyncio por debajo; si corre en el hilo de Gunicorn, el ORM de Django
+# falla después con SynchronousOnlyOperation. Todo Chromium va en un hilo dedicado.
 _pw_browser = _PlaywrightBrowser()
-atexit.register(_pw_browser.close)
+_pw_executor = concurrent.futures.ThreadPoolExecutor(
+    max_workers=1,
+    thread_name_prefix="sunat-playwright",
+)
+
+
+def _fetch_html_in_playwright_thread(ruc: str, *, timeout_ms: int) -> str:
+    return _pw_browser.fetch_html(ruc, timeout_ms=timeout_ms)
+
+
+def _shutdown_playwright_pool() -> None:
+    _pw_browser.close()
+    _pw_executor.shutdown(wait=False, cancel_futures=True)
+
+
+atexit.register(_shutdown_playwright_pool)
 
 
 def _cache_get(ruc: str) -> dict[str, Any] | None:
@@ -282,8 +300,17 @@ def fetch_ruc_with_playwright(ruc: str, *, timeout_ms: int | None = None) -> dic
     if cached is not None:
         return cached
 
+    wait_s = timeout_ms / 1000.0 + 45.0
     try:
-        html = _pw_browser.fetch_html(ruc, timeout_ms=timeout_ms)
+        future = _pw_executor.submit(
+            _fetch_html_in_playwright_thread, ruc, timeout_ms=timeout_ms
+        )
+        html = future.result(timeout=wait_s)
+    except concurrent.futures.TimeoutError as e:
+        raise SunatConsultaError(
+            "Tiempo de espera agotado al consultar SUNAT. Revise la red del servidor, "
+            "aumente SUNAT_PLAYWRIGHT_TIMEOUT_MS o el límite de tiempo del hosting (p. ej. Render)."
+        ) from e
     except SunatConsultaError:
         raise
     except Exception as e:

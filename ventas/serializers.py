@@ -4,7 +4,7 @@ from rest_framework import serializers
 from accounts.models import UserProfile
 from accounts.permissions import company_id_for_user, is_admin_access
 from core.models import Client
-from .models import ClientContact, Quotation, QuotationProduct
+from .models import ClientContact, ProformaRequest, Quotation, QuotationProduct
 
 User = get_user_model()
 
@@ -103,17 +103,22 @@ class ClientContactSerializer(serializers.ModelSerializer):
 
         if user_id and client_id and first_name and last_name:
             company_id = self._get_company_id_from_user(user_id)
+            fn_key = (first_name or "").strip()
+            ln_key = (last_name or "").strip()
             qs_name = ClientContact.objects.filter(
                 company_id=company_id,
                 client_id=client_id,
-                contact_first_name=first_name,
-                contact_last_name=last_name,
+                contact_first_name__iexact=fn_key,
+                contact_last_name__iexact=ln_key,
             )
             qs_email = ClientContact.objects.filter(
                 company_id=company_id,
                 client_id=client_id,
-                email=email,
             )
+            if email and str(email).strip():
+                qs_email = qs_email.filter(email__iexact=str(email).strip())
+            else:
+                qs_email = qs_email.none()
             if instance is not None:
                 qs_name = qs_name.exclude(pk=instance.pk)
                 qs_email = qs_email.exclude(pk=instance.pk)
@@ -327,3 +332,108 @@ class QuotationProductSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError(
             "Solo puede añadir o editar líneas en cotizaciones propias (o como administrador)."
         )
+
+
+class ProformaRequestSerializer(serializers.ModelSerializer):
+    company = serializers.PrimaryKeyRelatedField(read_only=True)
+    client_detail = QuotationClientReadSerializer(source="client", read_only=True)
+    assigned_user_detail = UserPublicSummarySerializer(source="assigned_user", read_only=True)
+    quotation_correlativo = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProformaRequest
+        fields = (
+            "id",
+            "company",
+            "client",
+            "client_detail",
+            "assigned_user",
+            "assigned_user_detail",
+            "entry_channel",
+            "proforma_type",
+            "description",
+            "quotation",
+            "quotation_correlativo",
+            "entered_at",
+            "quoted_at",
+        )
+        extra_kwargs = {
+            "quotation": {"allow_null": True, "required": False},
+        }
+        read_only_fields = ("entered_at", "quoted_at")
+
+    def get_quotation_correlativo(self, obj: ProformaRequest) -> str | None:
+        if not obj.quotation_id:
+            return None
+        return obj.quotation.correlativo if obj.quotation else None
+
+    def _company_id_for_validation(self) -> int | None:
+        if self.instance is not None:
+            return self.instance.company_id
+        cid = self.context.get("company_id")
+        if cid is not None:
+            return cid
+        request = self.context.get("request")
+        if request and getattr(request, "user", None) and request.user.is_authenticated:
+            return company_id_for_user(request.user)
+        return None
+
+    def _validate_assigned_user_company(self, user_obj, company_id: int) -> None:
+        if not UserProfile.objects.filter(user=user_obj, company_id=company_id).exists():
+            raise serializers.ValidationError(
+                {"assigned_user": "El asesor debe pertenecer a la misma compañía que la solicitud."}
+            )
+
+    def _validate_client_belongs_to_company(self, client_obj, company_id: int) -> None:
+        if not ClientContact.objects.filter(company_id=company_id, client_id=client_obj.pk).exists():
+            raise serializers.ValidationError(
+                {
+                    "client": "El cliente no está vinculado a su compañía (agregue un contacto para ese cliente)."
+                }
+            )
+
+    def _validate_quotation_matches(self, quotation_obj, company_id: int, client_obj) -> None:
+        prof = UserProfile.objects.filter(user_id=quotation_obj.user_id).first()
+        q_company = prof.company_id if prof else None
+        if q_company != company_id:
+            raise serializers.ValidationError(
+                {"quotation": "La cotización no pertenece a la misma compañía que la solicitud."}
+            )
+        if quotation_obj.client_id != client_obj.pk:
+            raise serializers.ValidationError(
+                {"quotation": "La cotización debe ser del mismo cliente que la solicitud."}
+            )
+
+    def validate(self, attrs):
+        company_id = self._company_id_for_validation()
+        if company_id is None:
+            raise serializers.ValidationError(
+                {"company": "Su usuario no tiene empresa asignada; no puede gestionar solicitudes de proforma."}
+            )
+
+        assigned = attrs.get("assigned_user")
+        if assigned is None and self.instance is not None:
+            assigned = self.instance.assigned_user
+
+        client_obj = attrs.get("client")
+        if client_obj is None and self.instance is not None:
+            client_obj = self.instance.client
+
+        if assigned is not None:
+            self._validate_assigned_user_company(assigned, company_id)
+
+        if client_obj is not None:
+            self._validate_client_belongs_to_company(client_obj, company_id)
+
+        quotation_obj = None
+        if "quotation" in attrs:
+            quotation_obj = attrs["quotation"]
+            if quotation_obj is None:
+                return attrs
+        elif self.instance is not None:
+            quotation_obj = self.instance.quotation
+
+        if quotation_obj is not None and client_obj is not None:
+            self._validate_quotation_matches(quotation_obj, company_id, client_obj)
+
+        return attrs

@@ -7,7 +7,7 @@ from rest_framework.test import APITestCase
 
 from accounts.models import Company, UserProfile
 from core.models import Client, PaymentMethods
-from ventas.models import ClientContact, Quotation
+from ventas.models import ClientContact, ProformaRequest, Quotation
 
 User = get_user_model()
 
@@ -256,3 +256,315 @@ class QuotationUserDetailAPITests(APITestCase):
             1,
             msg="Se esperaba una sola lectura de auth_user al serializar varias cotizaciones con user precargado.",
         )
+
+
+class ProformaRequestAPITests(APITestCase):
+    def setUp(self) -> None:
+        # Usar compañías del seed (0002_seed_companies); evita colisión de PK con secuencias en PostgreSQL.
+        self.company_a = Company.objects.get(pk=1)
+        self.company_b = Company.objects.get(pk=2)
+        self.client_a = Client.objects.create(ruc="55511122211", name="Cliente Proforma")
+        self.client_b_only = Client.objects.create(ruc="99988877701", name="Cliente solo B")
+        self.pm = PaymentMethods.objects.create(name="Efectivo")
+
+        self.creator = User.objects.create_user(username="prof_creator", password="pass12345")
+        UserProfile.objects.create(
+            user=self.creator,
+            company=self.company_a,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="PFC",
+        )
+        self.advisor = User.objects.create_user(username="prof_advisor", password="pass12345")
+        UserProfile.objects.create(
+            user=self.advisor,
+            company=self.company_a,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="PFA",
+        )
+        self.admin_a = User.objects.create_user(username="prof_admin_a", password="pass12345")
+        UserProfile.objects.create(
+            user=self.admin_a,
+            company=self.company_a,
+            role=UserProfile.Role.ADMIN,
+            quotation_prefix="PAM",
+        )
+        self.peer_a = User.objects.create_user(username="prof_peer_a", password="pass12345")
+        UserProfile.objects.create(
+            user=self.peer_a,
+            company=self.company_a,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="PPA",
+        )
+        self.user_b = User.objects.create_user(username="prof_user_b", password="pass12345")
+        UserProfile.objects.create(
+            user=self.user_b,
+            company=self.company_b,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="PFB",
+        )
+
+        ClientContact.objects.create(
+            contact_first_name="Lead",
+            contact_last_name="Uno",
+            client=self.client_a,
+            user=self.creator,
+            company=self.company_a,
+        )
+        ClientContact.objects.create(
+            contact_first_name="Lead",
+            contact_last_name="B",
+            client=self.client_b_only,
+            user=self.user_b,
+            company=self.company_b,
+        )
+
+    def _payload(self, **kwargs):
+        base = {
+            "client": self.client_a.pk,
+            "assigned_user": self.advisor.pk,
+            "entry_channel": ProformaRequest.EntryChannel.WHATSAPP,
+            "proforma_type": ProformaRequest.ProformaType.MAQUINARIA,
+            "description": "Requiere cotización excavadora",
+        }
+        base.update(kwargs)
+        return base
+
+    def test_create_success(self) -> None:
+        self.client.force_authenticate(self.creator)
+        res = self.client.post("/api/ventas/proforma-requests/", self._payload(), format="json")
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data["company"], self.company_a.pk)
+        self.assertEqual(res.data["assigned_user"], self.advisor.pk)
+        self.assertIsNone(res.data["quotation"])
+        self.assertIsNone(res.data["quotation_correlativo"])
+        self.assertIsNotNone(res.data["entered_at"])
+        self.assertIsNone(res.data["quoted_at"])
+
+    def test_create_rejects_client_without_company_contact(self) -> None:
+        orphan = Client.objects.create(ruc="00000000000", name="Sin contacto empresa")
+        self.client.force_authenticate(self.creator)
+        res = self.client.post(
+            "/api/ventas/proforma-requests/",
+            self._payload(client=orphan.pk),
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("client", res.data)
+
+    def test_create_rejects_assigned_user_other_company(self) -> None:
+        self.client.force_authenticate(self.creator)
+        res = self.client.post(
+            "/api/ventas/proforma-requests/",
+            self._payload(assigned_user=self.user_b.pk),
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("assigned_user", res.data)
+
+    def test_list_scoped_other_company_empty(self) -> None:
+        self.client.force_authenticate(self.creator)
+        cre = self.client.post("/api/ventas/proforma-requests/", self._payload(), format="json")
+        self.assertEqual(cre.status_code, status.HTTP_201_CREATED)
+        pr_id = cre.data["id"]
+
+        self.client.force_authenticate(self.user_b)
+        res = self.client.get("/api/ventas/proforma-requests/")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, [])
+
+        detail = self.client.get(f"/api/ventas/proforma-requests/{pr_id}/")
+        self.assertEqual(detail.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_peer_in_same_company_can_list_but_not_patch(self) -> None:
+        self.client.force_authenticate(self.creator)
+        cre = self.client.post("/api/ventas/proforma-requests/", self._payload(), format="json")
+        pr_id = cre.data["id"]
+
+        self.client.force_authenticate(self.peer_a)
+        res = self.client.get("/api/ventas/proforma-requests/")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn(pr_id, [row["id"] for row in res.data])
+
+        patch_res = self.client.patch(
+            f"/api/ventas/proforma-requests/{pr_id}/",
+            {"description": "Cambio prohibido"},
+            format="json",
+        )
+        self.assertEqual(patch_res.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_assignable_users_same_company(self) -> None:
+        self.client.force_authenticate(self.peer_a)
+        res = self.client.get("/api/ventas/proforma-requests/assignable-users/")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        ids = {row["id"] for row in res.data}
+        self.assertGreaterEqual(ids, {self.creator.pk, self.advisor.pk, self.peer_a.pk})
+
+    def test_patch_link_quotation_by_advisor(self) -> None:
+        self.client.force_authenticate(self.creator)
+        cre = self.client.post("/api/ventas/proforma-requests/", self._payload(), format="json")
+        pr_id = cre.data["id"]
+
+        q = Quotation.objects.create(
+            quotation_type=Quotation.QuotationType.VENTA,
+            money=Quotation.QuotationMoney.PEN,
+            status=Quotation.QuotationStatus.PENDIENTE,
+            client=self.client_a,
+            user=self.advisor,
+            discount=0,
+            final_price=100,
+            delivery_time=1,
+            payment_methods=self.pm,
+            see_sku=False,
+        )
+
+        self.client.force_authenticate(self.advisor)
+        patch_res = self.client.patch(
+            f"/api/ventas/proforma-requests/{pr_id}/",
+            {"quotation": q.pk},
+            format="json",
+        )
+        self.assertEqual(patch_res.status_code, status.HTTP_200_OK)
+        self.assertEqual(patch_res.data["quotation"], q.pk)
+        self.assertEqual(patch_res.data["quotation_correlativo"], q.correlativo)
+        self.assertIsNotNone(patch_res.data["quoted_at"])
+
+    def test_patch_unlink_quotation_clears_quoted_at(self) -> None:
+        self.client.force_authenticate(self.creator)
+        cre = self.client.post("/api/ventas/proforma-requests/", self._payload(), format="json")
+        pr_id = cre.data["id"]
+
+        q = Quotation.objects.create(
+            quotation_type=Quotation.QuotationType.VENTA,
+            money=Quotation.QuotationMoney.PEN,
+            status=Quotation.QuotationStatus.PENDIENTE,
+            client=self.client_a,
+            user=self.advisor,
+            discount=0,
+            final_price=100,
+            delivery_time=1,
+            payment_methods=self.pm,
+            see_sku=False,
+        )
+
+        self.client.force_authenticate(self.advisor)
+        link = self.client.patch(
+            f"/api/ventas/proforma-requests/{pr_id}/",
+            {"quotation": q.pk},
+            format="json",
+        )
+        self.assertEqual(link.status_code, status.HTTP_200_OK)
+        self.assertIsNotNone(link.data["quoted_at"])
+
+        unlink = self.client.patch(
+            f"/api/ventas/proforma-requests/{pr_id}/",
+            {"quotation": None},
+            format="json",
+        )
+        self.assertEqual(unlink.status_code, status.HTTP_200_OK)
+        self.assertIsNone(unlink.data["quotation"])
+        self.assertIsNone(unlink.data["quoted_at"])
+
+    def test_patch_quotation_rejects_mismatched_client(self) -> None:
+        self.client.force_authenticate(self.creator)
+        cre = self.client.post("/api/ventas/proforma-requests/", self._payload(), format="json")
+        pr_id = cre.data["id"]
+
+        other_client = Client.objects.create(ruc="77777777701", name="Otro cliente")
+        ClientContact.objects.create(
+            contact_first_name="x",
+            contact_last_name="y",
+            client=other_client,
+            user=self.advisor,
+            company=self.company_a,
+        )
+        q = Quotation.objects.create(
+            quotation_type=Quotation.QuotationType.VENTA,
+            money=Quotation.QuotationMoney.PEN,
+            status=Quotation.QuotationStatus.PENDIENTE,
+            client=other_client,
+            user=self.advisor,
+            discount=0,
+            final_price=10,
+            delivery_time=1,
+            payment_methods=self.pm,
+            see_sku=False,
+        )
+
+        self.client.force_authenticate(self.advisor)
+        patch_res = self.client.patch(
+            f"/api/ventas/proforma-requests/{pr_id}/",
+            {"quotation": q.pk},
+            format="json",
+        )
+        self.assertEqual(patch_res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("quotation", patch_res.data)
+
+    def test_admin_can_patch_without_being_assignee(self) -> None:
+        self.client.force_authenticate(self.creator)
+        cre = self.client.post("/api/ventas/proforma-requests/", self._payload(), format="json")
+        pr_id = cre.data["id"]
+
+        self.client.force_authenticate(self.admin_a)
+        patch_res = self.client.patch(
+            f"/api/ventas/proforma-requests/{pr_id}/",
+            {"description": "Nota administrador"},
+            format="json",
+        )
+        self.assertEqual(patch_res.status_code, status.HTTP_200_OK)
+        self.assertEqual(patch_res.data["description"], "Nota administrador")
+
+
+class ClientContactDuplicateInsensitiveTests(APITestCase):
+    """Nombre/apellido y email duplicados no deben pasar por diferencias solo de mayúsculas."""
+
+    def setUp(self) -> None:
+        self.company = Company.objects.get(pk=1)
+        self.client_obj = Client.objects.create(ruc="88877766655", name="Cliente Dup Test")
+        self.user = User.objects.create_user(username="cc_dup_user", password="pass12345")
+        UserProfile.objects.create(
+            user=self.user,
+            company=self.company,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="CCD",
+        )
+
+    def test_rejects_same_name_different_case(self) -> None:
+        self.client.force_authenticate(self.user)
+        base = {
+            "contact_first_name": "Oscar",
+            "contact_last_name": "Jara",
+            "email": "",
+            "phone": "",
+            "client": self.client_obj.pk,
+        }
+        first = self.client.post("/api/ventas/client-contacts/", base, format="json")
+        self.assertEqual(first.status_code, status.HTTP_201_CREATED)
+        dup = self.client.post(
+            "/api/ventas/client-contacts/",
+            {**base, "contact_first_name": "oscar", "contact_last_name": "jara"},
+            format="json",
+        )
+        self.assertEqual(dup.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_rejects_same_email_different_case(self) -> None:
+        self.client.force_authenticate(self.user)
+        base = {
+            "contact_first_name": "Ana",
+            "contact_last_name": "Pérez",
+            "email": "Logistica@Servimine.pe",
+            "phone": "",
+            "client": self.client_obj.pk,
+        }
+        first = self.client.post("/api/ventas/client-contacts/", base, format="json")
+        self.assertEqual(first.status_code, status.HTTP_201_CREATED)
+        dup = self.client.post(
+            "/api/ventas/client-contacts/",
+            {
+                **base,
+                "contact_first_name": "Ana",
+                "contact_last_name": "Gomez",
+                "email": "logistica@servimine.pe",
+            },
+            format="json",
+        )
+        self.assertEqual(dup.status_code, status.HTTP_400_BAD_REQUEST)

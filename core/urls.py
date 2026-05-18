@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     BrandViewSet,
     CategoryProductViewSet,
+    ClientLookupByRucView,
     ClientViewSet,
     PaymentMethodsViewSet,
     SubcategoryProductViewSet,
@@ -25,6 +26,11 @@ router.register(r"clients", ClientViewSet, basename="client")
 router.register(r"payment-methods", PaymentMethodsViewSet, basename="payment-methods")
 
 urlpatterns = [
+    path(
+        "clients/lookup-by-ruc/",
+        ClientLookupByRucView.as_view(),
+        name="client-lookup-by-ruc",
+    ),
     path(
         "sunat/ruc/identificacion/",
         SunatRucIdentificacionView.as_view(),

@@ -1,11 +1,23 @@
+from django.contrib.auth import get_user_model
 from django.db.models import QuerySet
 from rest_framework import permissions, viewsets
-from rest_framework.exceptions import PermissionDenied
+from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.response import Response
 
 from accounts.permissions import company_id_for_user, is_admin_access
 
-from .models import ClientContact, Quotation, QuotationProduct
-from .serializers import ClientContactSerializer, QuotationProductSerializer, QuotationSerializer
+from .models import ClientContact, ProformaRequest, Quotation, QuotationProduct
+from .serializers import (
+    ClientContactSerializer,
+    ProformaRequestSerializer,
+    QuotationProductSerializer,
+    QuotationSerializer,
+    UserPublicSummarySerializer,
+)
+
+
+User = get_user_model()
 
 
 def filter_quotation_queryset_for_user(qs: QuerySet[Quotation], user) -> QuerySet[Quotation]:
@@ -119,3 +131,62 @@ class QuotationProductViewSet(BaseVentasViewSet):
                 raise PermissionDenied(
                     detail="Solo el vendedor de la cotización o un administrador pueden modificar sus líneas."
                 )
+
+
+class ProformaRequestViewSet(BaseVentasViewSet):
+    queryset = ProformaRequest.objects.select_related(
+        "company", "client", "assigned_user", "quotation"
+    ).order_by("-entered_at", "-id")
+    serializer_class = ProformaRequestSerializer
+
+    def get_queryset(self):
+        qs = (
+            ProformaRequest.objects.select_related(
+                "company", "client", "assigned_user", "quotation",
+            )
+            .order_by("-entered_at", "-id")
+        )
+        user = self.request.user
+        if user.is_superuser:
+            return qs
+        cid = company_id_for_user(user)
+        if cid is None:
+            return qs.none()
+        return qs.filter(company_id=cid)
+
+    def get_serializer_context(self):
+        ctx = super().get_serializer_context()
+        ctx["company_id"] = company_id_for_user(self.request.user)
+        return ctx
+
+    def perform_create(self, serializer):
+        cid = company_id_for_user(self.request.user)
+        if cid is None:
+            raise ValidationError(
+                {
+                    "company": "Su usuario no tiene empresa asignada; no puede crear solicitudes de proforma."
+                }
+            )
+        serializer.save(company_id=cid)
+
+    def check_object_permissions(self, request, obj):
+        super().check_object_permissions(request, obj)
+        if request.method not in permissions.SAFE_METHODS:
+            if request.user.is_superuser or is_admin_access(request.user):
+                return
+            if obj.assigned_user_id != request.user.id:
+                raise PermissionDenied(
+                    detail="Solo el asesor asignado o un administrador pueden modificar o eliminar esta solicitud."
+                )
+
+    @action(detail=False, methods=["get"], url_path="assignable-users")
+    def assignable_users(self, request):
+        cid = company_id_for_user(request.user)
+        if cid is None:
+            return Response([])
+        users = (
+            User.objects.filter(profile__company_id=cid)
+            .select_related("profile")
+            .order_by("id")
+        )
+        return Response(UserPublicSummarySerializer(users, many=True).data)

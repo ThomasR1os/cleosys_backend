@@ -237,3 +237,106 @@ class QuotationProduct(models.Model):
 
     def __str__(self) -> str:
         return f"Quotation #{self.quotation_id} - product:{self.product_id}"
+
+
+class ProformaRequest(models.Model):
+    """
+    Solicitud / requerimiento de proforma antes de tener cotización formal.
+    La cotización se vincula opcionalmente cuando el asesor la genera.
+    """
+
+    class EntryChannel(models.TextChoices):
+        META = "META", _("META")
+        GOOGLE_ADS = "GOOGLE_ADS", _("Google Ads")
+        WHATSAPP = "WHATSAPP", _("WhatsApp")
+        EMAIL = "EMAIL", _("Email")
+
+    class ProformaType(models.TextChoices):
+        MAQUINARIA = "MAQUINARIA", _("Maquinaria")
+        REPUESTOS = "REPUESTOS", _("Repuestos")
+        SERVICIOS = "SERVICIOS", _("Servicios")
+        ALQUILERES = "ALQUILERES", _("Alquileres")
+
+    id = models.AutoField(primary_key=True)
+    company = models.ForeignKey(
+        Company,
+        db_column="company_id",
+        on_delete=models.PROTECT,
+        related_name="proforma_requests",
+    )
+    client = models.ForeignKey(
+        Client,
+        db_column="client_id",
+        on_delete=models.PROTECT,
+        related_name="proforma_requests",
+    )
+    assigned_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        db_column="assigned_user_id",
+        on_delete=models.PROTECT,
+        related_name="proforma_requests_assigned",
+    )
+    entry_channel = models.CharField(
+        _("Medio de entrada"),
+        max_length=20,
+        choices=EntryChannel.choices,
+        db_column="entry_channel",
+    )
+    proforma_type = models.CharField(
+        _("Tipo de proforma"),
+        max_length=20,
+        choices=ProformaType.choices,
+        db_column="proforma_type",
+    )
+    description = models.TextField(_("Descripción"))
+    quotation = models.ForeignKey(
+        Quotation,
+        db_column="quotation_id",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="proforma_requests",
+    )
+    entered_at = models.DateTimeField(
+        _("Fecha de ingreso"),
+        default=timezone.now,
+        editable=False,
+        db_column="entered_at",
+    )
+    quoted_at = models.DateTimeField(
+        _("Fecha de cotización"),
+        null=True,
+        blank=True,
+        db_column="quoted_at",
+        help_text=_("Momento en que se vinculó una cotización (primera vez o nuevo vínculo)."),
+    )
+
+    class Meta:
+        managed = True
+        db_table = "proforma_request"
+        verbose_name = _("Proforma Request")
+        verbose_name_plural = _("Proforma Requests")
+        indexes = [
+            models.Index(fields=["company_id"], name="proforma_req_company_idx"),
+            models.Index(fields=["entered_at"], name="proforma_req_entered_idx"),
+        ]
+
+    def save(self, *args, **kwargs):
+        if self._state.adding:
+            if self.quotation_id:
+                self.quoted_at = timezone.now()
+            super().save(*args, **kwargs)
+            return
+
+        old_q_id = (
+            ProformaRequest.objects.filter(pk=self.pk).values_list("quotation_id", flat=True).first()
+        )
+        new_q_id = self.quotation_id
+        if new_q_id is None:
+            self.quoted_at = None
+        elif old_q_id != new_q_id:
+            self.quoted_at = timezone.now()
+        super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return f"ProformaRequest #{self.id} ({self.get_proforma_type_display()})"

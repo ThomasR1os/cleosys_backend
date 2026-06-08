@@ -6,8 +6,9 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from accounts.models import Company, UserProfile
+from almacen.models import Product
 from core.models import Client, PaymentMethods
-from ventas.models import ClientContact, ProformaRequest, Quotation
+from ventas.models import ClientContact, ProformaRequest, Quotation, QuotationProduct
 
 User = get_user_model()
 
@@ -39,7 +40,7 @@ class QuotationUserDetailSerializerTests(TestCase):
             user=seller,
             discount=0,
             final_price=50,
-            delivery_time=3,
+            delivery_time="3 días",
             payment_methods=pm,
             see_sku=False,
         )
@@ -93,7 +94,7 @@ class QuotationUserDetailAPITests(APITestCase):
             user=self.seller,
             discount=0,
             final_price=200,
-            delivery_time=5,
+            delivery_time="5 días",
             payment_methods=self.pm,
             see_sku=True,
         )
@@ -426,7 +427,7 @@ class ProformaRequestAPITests(APITestCase):
             user=self.advisor,
             discount=0,
             final_price=100,
-            delivery_time=1,
+            delivery_time="1 día",
             payment_methods=self.pm,
             see_sku=False,
         )
@@ -455,7 +456,7 @@ class ProformaRequestAPITests(APITestCase):
             user=self.advisor,
             discount=0,
             final_price=100,
-            delivery_time=1,
+            delivery_time="1 día",
             payment_methods=self.pm,
             see_sku=False,
         )
@@ -499,7 +500,7 @@ class ProformaRequestAPITests(APITestCase):
             user=self.advisor,
             discount=0,
             final_price=10,
-            delivery_time=1,
+            delivery_time="1 día",
             payment_methods=self.pm,
             see_sku=False,
         )
@@ -582,3 +583,221 @@ class ClientContactDuplicateInsensitiveTests(APITestCase):
             format="json",
         )
         self.assertEqual(dup.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class QuotationProductDeliveryTimeTests(APITestCase):
+    def setUp(self) -> None:
+        self.company = Company.objects.create(name="Delivery Time Co")
+        self.client_obj = Client.objects.create(ruc="20100000001", name="Cliente DT")
+        self.pm = PaymentMethods.objects.create(name="Transferencia DT")
+        self.seller = User.objects.create_user(username="seller_dt", password="pass12345")
+        UserProfile.objects.create(
+            user=self.seller,
+            company=self.company,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="DTT",
+        )
+        self.product_a = Product.objects.create(
+            type_id=1,
+            subcategory_id=1,
+            brand_id=1,
+            sku="SKU-DT-A",
+            description="Producto A",
+            price=100,
+            warranty="6 meses",
+            unit_measurement_id=1,
+            status=Product.ProductStatus.ACTIVE,
+        )
+        self.product_b = Product.objects.create(
+            type_id=1,
+            subcategory_id=1,
+            brand_id=1,
+            sku="SKU-DT-B",
+            description="Producto B",
+            price=200,
+            unit_measurement_id=1,
+            status=Product.ProductStatus.ACTIVE,
+        )
+
+    def _create_quotation(self, quotation_type: str, delivery_time: str = "10 días") -> Quotation:
+        return Quotation.objects.create(
+            quotation_type=quotation_type,
+            money=Quotation.QuotationMoney.PEN,
+            status=Quotation.QuotationStatus.PENDIENTE,
+            client=self.client_obj,
+            user=self.seller,
+            discount=0,
+            final_price=300,
+            delivery_time=delivery_time,
+            payment_methods=self.pm,
+            see_sku=True,
+        )
+
+    def test_venta_lines_expose_distinct_delivery_time(self) -> None:
+        q = self._create_quotation(Quotation.QuotationType.VENTA, delivery_time="10 días")
+        self.client.force_authenticate(self.seller)
+
+        res_a = self.client.post(
+            "/api/ventas/quotation-products/",
+            {
+                "quotation": q.pk,
+                "product": self.product_a.pk,
+                "cant": 1,
+                "product_price": "100.00",
+                "delivery_time": "5 días",
+            },
+            format="json",
+        )
+        self.assertEqual(res_a.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res_a.data["delivery_time"], "5 días")
+        self.assertEqual(res_a.data["line_warranty"], "6 meses")
+
+        res_b = self.client.post(
+            "/api/ventas/quotation-products/",
+            {
+                "quotation": q.pk,
+                "product": self.product_b.pk,
+                "cant": 1,
+                "product_price": "200.00",
+                "delivery_time": "15 días hábiles",
+            },
+            format="json",
+        )
+        self.assertEqual(res_b.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res_b.data["delivery_time"], "15 días hábiles")
+
+        list_res = self.client.get(f"/api/ventas/quotation-products/?quotation={q.pk}")
+        self.assertEqual(list_res.status_code, status.HTTP_200_OK)
+        by_product = {row["product"]: row["delivery_time"] for row in list_res.data}
+        self.assertEqual(by_product[self.product_a.pk], "5 días")
+        self.assertEqual(by_product[self.product_b.pk], "15 días hábiles")
+
+    def test_venta_line_requires_delivery_time(self) -> None:
+        q = self._create_quotation(Quotation.QuotationType.VENTA)
+        self.client.force_authenticate(self.seller)
+        res = self.client.post(
+            "/api/ventas/quotation-products/",
+            {
+                "quotation": q.pk,
+                "product": self.product_a.pk,
+                "cant": 1,
+                "product_price": "100.00",
+            },
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("delivery_time", res.data)
+
+    def test_servicio_line_allows_missing_delivery_time(self) -> None:
+        q = self._create_quotation(Quotation.QuotationType.SERVICIO, delivery_time="30 días")
+        self.client.force_authenticate(self.seller)
+        res = self.client.post(
+            "/api/ventas/quotation-products/",
+            {
+                "quotation": q.pk,
+                "product": self.product_a.pk,
+                "cant": 1,
+                "product_price": "100.00",
+            },
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data["delivery_time"], "30 días")
+
+        detail_res = self.client.get(f"/api/ventas/quotations/{q.pk}/")
+        self.assertEqual(detail_res.status_code, status.HTTP_200_OK)
+        self.assertEqual(detail_res.data["delivery_time"], "30 días")
+
+    def test_line_warranty_can_be_updated(self) -> None:
+        q = self._create_quotation(Quotation.QuotationType.VENTA)
+        self.client.force_authenticate(self.seller)
+        create_res = self.client.post(
+            "/api/ventas/quotation-products/",
+            {
+                "quotation": q.pk,
+                "product": self.product_a.pk,
+                "cant": 1,
+                "product_price": "100.00",
+                "delivery_time": "Inmediato",
+                "line_warranty": "18 meses",
+            },
+            format="json",
+        )
+        self.assertEqual(create_res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(create_res.data["line_warranty"], "18 meses")
+
+        patch_res = self.client.patch(
+            f"/api/ventas/quotation-products/{create_res.data['id']}/",
+            {"line_warranty": "24 meses"},
+            format="json",
+        )
+        self.assertEqual(patch_res.status_code, status.HTTP_200_OK)
+        self.assertEqual(patch_res.data["line_warranty"], "24 meses")
+
+
+class QuotationProductDeliveryTimeModelTests(TestCase):
+    def setUp(self) -> None:
+        self.company = Company.objects.create(name="Delivery Model Co")
+        self.client_obj = Client.objects.create(ruc="20100000002", name="Cliente Model")
+        self.pm = PaymentMethods.objects.create(name="Contado Model")
+        self.seller = User.objects.create_user(username="seller_model", password="pass12345")
+        UserProfile.objects.create(
+            user=self.seller,
+            company=self.company,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="MDL",
+        )
+        self.product = Product.objects.create(
+            type_id=1,
+            subcategory_id=1,
+            brand_id=1,
+            sku="SKU-MODEL",
+            description="Producto model",
+            price=50,
+            unit_measurement_id=1,
+            status=Product.ProductStatus.ACTIVE,
+        )
+
+    def test_save_defaults_delivery_time_from_quotation(self) -> None:
+        q = Quotation.objects.create(
+            quotation_type=Quotation.QuotationType.VENTA,
+            money=Quotation.QuotationMoney.PEN,
+            status=Quotation.QuotationStatus.PENDIENTE,
+            client=self.client_obj,
+            user=self.seller,
+            discount=0,
+            final_price=50,
+            delivery_time="7 días",
+            payment_methods=self.pm,
+            see_sku=False,
+        )
+        line = QuotationProduct.objects.create(
+            quotation=q,
+            product=self.product,
+            cant=1,
+            product_price=50,
+        )
+        self.assertEqual(line.delivery_time, "7 días")
+
+    def test_save_defaults_line_warranty_from_product(self) -> None:
+        self.product.warranty = "12 meses"
+        self.product.save(update_fields=["warranty"])
+        q = Quotation.objects.create(
+            quotation_type=Quotation.QuotationType.VENTA,
+            money=Quotation.QuotationMoney.PEN,
+            status=Quotation.QuotationStatus.PENDIENTE,
+            client=self.client_obj,
+            user=self.seller,
+            discount=0,
+            final_price=50,
+            delivery_time="7 días",
+            payment_methods=self.pm,
+            see_sku=False,
+        )
+        line = QuotationProduct.objects.create(
+            quotation=q,
+            product=self.product,
+            cant=1,
+            product_price=50,
+        )
+        self.assertEqual(line.line_warranty, "12 meses")

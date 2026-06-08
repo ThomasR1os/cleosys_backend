@@ -333,6 +333,20 @@ class QuotationProductSerializer(serializers.ModelSerializer):
             "Solo puede añadir o editar líneas en cotizaciones propias (o como administrador)."
         )
 
+    def validate(self, attrs):
+        quotation = attrs.get("quotation")
+        if quotation is None and self.instance is not None:
+            quotation = self.instance.quotation
+        delivery_time = attrs.get("delivery_time")
+        if delivery_time is None and self.instance is not None and "delivery_time" not in attrs:
+            delivery_time = self.instance.delivery_time
+        if quotation is not None and quotation.quotation_type == Quotation.QuotationType.VENTA:
+            if not (delivery_time or "").strip():
+                raise serializers.ValidationError(
+                    {"delivery_time": "Requerido cuando la cotización es de tipo VENTA."}
+                )
+        return attrs
+
 
 class ProformaRequestSerializer(serializers.ModelSerializer):
     company = serializers.PrimaryKeyRelatedField(read_only=True)

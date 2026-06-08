@@ -124,7 +124,7 @@ class Quotation(models.Model):
 
     discount = models.DecimalField(max_digits=10, decimal_places=2)
     final_price = models.DecimalField(max_digits=10, decimal_places=2)
-    delivery_time = models.IntegerField(db_column="delivery_time")
+    delivery_time = models.CharField(max_length=100, db_column="delivery_time")
     conditions = models.TextField(null=True, blank=True)
     payment_methods = models.ForeignKey(
         PaymentMethods,
@@ -217,6 +217,13 @@ class QuotationProduct(models.Model):
     line_sku = models.CharField(max_length=100, blank=True, default="")
     line_description = models.CharField(max_length=250, blank=True, default="")
     line_datasheet = models.TextField(blank=True, default="")
+    line_warranty = models.CharField(max_length=20, blank=True, default="")
+    delivery_time = models.CharField(
+        max_length=100,
+        blank=True,
+        default="",
+        db_column="delivery_time",
+    )
 
     class Meta:
         managed = True
@@ -225,14 +232,23 @@ class QuotationProduct(models.Model):
         verbose_name_plural = _("Quotation Items")
 
     def save(self, *args, **kwargs):
-        if self._state.adding and self.product_id:
-            p = self.product
-            if not (self.line_sku or "").strip():
-                self.line_sku = p.sku
-            if not (self.line_description or "").strip():
-                self.line_description = p.description
-            if not (self.line_datasheet or "").strip():
-                self.line_datasheet = p.datasheet or ""
+        if self._state.adding:
+            if self.product_id:
+                p = self.product
+                if not (self.line_sku or "").strip():
+                    self.line_sku = p.sku
+                if not (self.line_description or "").strip():
+                    self.line_description = p.description
+                if not (self.line_datasheet or "").strip():
+                    self.line_datasheet = p.datasheet or ""
+                if not (self.line_warranty or "").strip():
+                    self.line_warranty = p.warranty or ""
+            if not (self.delivery_time or "").strip() and self.quotation_id:
+                q = self.quotation if hasattr(self, "quotation") and self.quotation_id else None
+                if q is None:
+                    q = Quotation.objects.filter(pk=self.quotation_id).first()
+                if q is not None:
+                    self.delivery_time = q.delivery_time or ""
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:

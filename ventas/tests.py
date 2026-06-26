@@ -528,6 +528,17 @@ class ProformaRequestAPITests(APITestCase):
         self.assertEqual(patch_res.status_code, status.HTTP_200_OK)
         self.assertEqual(patch_res.data["description"], "Nota administrador")
 
+    def test_creator_can_assign_proforma_to_peer_advisor(self) -> None:
+        self.client.force_authenticate(self.creator)
+        res = self.client.post(
+            "/api/ventas/proforma-requests/",
+            self._payload(assigned_user=self.advisor.pk),
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data["assigned_user"], self.advisor.pk)
+        self.assertEqual(res.data["assigned_user_detail"]["id"], self.advisor.pk)
+
 
 class ClientContactDuplicateInsensitiveTests(APITestCase):
     """Nombre/apellido y email duplicados no deben pasar por diferencias solo de mayúsculas."""
@@ -542,6 +553,30 @@ class ClientContactDuplicateInsensitiveTests(APITestCase):
             role=UserProfile.Role.VENTAS,
             quotation_prefix="CCD",
         )
+        self.peer = User.objects.create_user(username="cc_peer_adv", password="pass12345")
+        UserProfile.objects.create(
+            user=self.peer,
+            company=self.company,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="CCP",
+        )
+
+    def test_ventas_can_create_contact_for_peer_in_same_company(self) -> None:
+        self.client.force_authenticate(self.user)
+        res = self.client.post(
+            "/api/ventas/client-contacts/",
+            {
+                "contact_first_name": "Lead",
+                "contact_last_name": "Peer",
+                "email": "",
+                "phone": "",
+                "client": self.client_obj.pk,
+                "user": self.peer.pk,
+            },
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(res.data["user"], self.peer.pk)
 
     def test_rejects_same_name_different_case(self) -> None:
         self.client.force_authenticate(self.user)

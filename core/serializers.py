@@ -3,7 +3,7 @@ from django.db import IntegrityError, transaction
 from rest_framework import serializers
 
 from accounts.models import UserProfile
-from accounts.permissions import is_admin_access
+from accounts.permissions import resolve_contact_owner_user
 from ventas.models import ClientContact
 
 from .models import (
@@ -162,10 +162,10 @@ class ClientSerializer(serializers.ModelSerializer):
         serializer_cc.is_valid(raise_exception=True)
         vd = dict(serializer_cc.validated_data)
         contact_user = vd.pop("user", None)
-        if contact_user is None:
-            contact_user = request.user if request else None
-        elif request and not is_admin_access(request.user):
-            contact_user = request.user
+        if request is not None:
+            contact_user = resolve_contact_owner_user(request, contact_user)
+        elif contact_user is None:
+            contact_user = None
         if contact_user is None:
             raise serializers.ValidationError(
                 {"contact": "No se pudo determinar el vendedor del contacto."}

@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from accounts.models import UserProfile
-from accounts.permissions import company_id_for_user, is_admin_access
+from accounts.permissions import company_id_for_user, is_admin_access, resolve_contact_owner_user
 from core.models import Client
 from .models import ClientContact, ProformaRequest, Quotation, QuotationProduct
 
@@ -82,11 +82,11 @@ class ClientContactSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         request = self.context.get("request")
         instance = getattr(self, "instance", None)
-        if request and not is_admin_access(request.user):
+        if request is not None:
             if instance is None:
-                attrs["user"] = request.user
-            else:
-                attrs.pop("user", None)
+                attrs["user"] = resolve_contact_owner_user(request, attrs.get("user"))
+            elif "user" in attrs:
+                attrs["user"] = resolve_contact_owner_user(request, attrs.get("user"))
         u = attrs.get("user")
         if u is not None and hasattr(u, "pk"):
             user_id = u.pk

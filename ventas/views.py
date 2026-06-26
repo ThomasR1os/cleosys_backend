@@ -78,10 +78,7 @@ class ClientContactViewSet(BaseVentasViewSet):
                 )
 
     def perform_create(self, serializer):
-        if is_admin_access(self.request.user):
-            serializer.save()
-        else:
-            serializer.save(user_id=self.request.user.pk)
+        serializer.save()
 
 
 class QuotationViewSet(BaseVentasViewSet):

@@ -4,9 +4,12 @@ Superusuarios Django se tratan como acceso total (equivalente a ADMIN).
 """
 from __future__ import annotations
 
+from django.contrib.auth import get_user_model
 from rest_framework import permissions
 
 from accounts.models import UserProfile
+
+User = get_user_model()
 
 
 def user_profile(user) -> UserProfile | None:
@@ -21,6 +24,11 @@ def company_id_for_user(user) -> int | None:
     return p.company_id if p else None
 
 
+def user_in_company(user_id: int, company_id: int) -> bool:
+    """True si el usuario tiene perfil en la empresa indicada."""
+    return UserProfile.objects.filter(user_id=user_id, company_id=company_id).exists()
+
+
 def is_admin_access(user) -> bool:
     """Admin de app o superusuario: ve y modifica todo."""
     if not user or not user.is_authenticated:
@@ -29,6 +37,34 @@ def is_admin_access(user) -> bool:
         return True
     p = user_profile(user)
     return p is not None and p.role == UserProfile.Role.ADMIN
+
+
+def resolve_contact_owner_user(request, requested_user=None):
+    """
+    Vendedor del contacto al crear o reasignar.
+    - Sin `requested_user`: quien crea la operación.
+    - Admin: cualquier usuario indicado.
+    - Ventas (u otro no admin): puede derivar a otro usuario de la misma empresa
+      (misma regla que assignable-users en solicitudes de proforma).
+    """
+    actor = request.user
+    if requested_user is None:
+        return actor
+    target_id = requested_user.pk if hasattr(requested_user, "pk") else int(requested_user)
+    if is_admin_access(actor):
+        if hasattr(requested_user, "pk"):
+            return requested_user
+        return User.objects.get(pk=target_id)
+    company_id = company_id_for_user(actor)
+    if (
+        company_id is not None
+        and target_id != actor.pk
+        and user_in_company(target_id, company_id)
+    ):
+        if hasattr(requested_user, "pk"):
+            return requested_user
+        return User.objects.get(pk=target_id)
+    return actor
 
 
 def can_edit_sensitive_profile_fields(user) -> bool:

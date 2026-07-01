@@ -355,6 +355,60 @@ class ProformaRequestAPITests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data["status"], ProformaRequest.Status.APROBADA)
 
+    def _create_linked_proforma_with_quotation(self):
+        self.client.force_authenticate(self.creator)
+        cre = self.client.post("/api/ventas/proforma-requests/", self._payload(), format="json")
+        pr_id = cre.data["id"]
+        q = Quotation.objects.create(
+            quotation_type=Quotation.QuotationType.VENTA,
+            money=Quotation.QuotationMoney.PEN,
+            status=Quotation.QuotationStatus.PENDIENTE,
+            client=self.client_a,
+            user=self.advisor,
+            discount=0,
+            final_price=100,
+            delivery_time="1 día",
+            payment_methods=self.pm,
+            see_sku=False,
+        )
+        self.client.force_authenticate(self.advisor)
+        link = self.client.patch(
+            f"/api/ventas/proforma-requests/{pr_id}/",
+            {"quotation": q.pk},
+            format="json",
+        )
+        self.assertEqual(link.status_code, status.HTTP_200_OK)
+        return pr_id, q
+
+    def test_patch_status_syncs_linked_quotation(self) -> None:
+        pr_id, q = self._create_linked_proforma_with_quotation()
+        for proforma_status, quotation_status in (
+            (ProformaRequest.Status.APROBADA, Quotation.QuotationStatus.APROBADA),
+            (ProformaRequest.Status.RECHAZADA, Quotation.QuotationStatus.RECHAZADA),
+            (ProformaRequest.Status.PENDIENTE, Quotation.QuotationStatus.PENDIENTE),
+        ):
+            with self.subTest(status=proforma_status):
+                res = self.client.patch(
+                    f"/api/ventas/proforma-requests/{pr_id}/",
+                    {"status": proforma_status},
+                    format="json",
+                )
+                self.assertEqual(res.status_code, status.HTTP_200_OK)
+                self.assertEqual(res.data["status"], proforma_status)
+                q.refresh_from_db()
+                self.assertEqual(q.status, quotation_status)
+
+    def test_patch_sin_respuesta_does_not_change_quotation_status(self) -> None:
+        pr_id, q = self._create_linked_proforma_with_quotation()
+        res = self.client.patch(
+            f"/api/ventas/proforma-requests/{pr_id}/",
+            {"status": ProformaRequest.Status.SIN_RESPUESTA},
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        q.refresh_from_db()
+        self.assertEqual(q.status, Quotation.QuotationStatus.PENDIENTE)
+
     def test_create_rejects_client_without_company_contact(self) -> None:
         orphan = Client.objects.create(ruc="00000000000", name="Sin contacto empresa")
         self.client.force_authenticate(self.creator)

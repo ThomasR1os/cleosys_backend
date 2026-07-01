@@ -350,6 +350,24 @@ class ProformaRequest(models.Model):
             models.Index(fields=["entered_at"], name="proforma_req_entered_idx"),
         ]
 
+    _QUOTATION_SYNC_STATUSES = frozenset({
+        Status.APROBADA,
+        Status.PENDIENTE,
+        Status.RECHAZADA,
+    })
+
+    def _sync_quotation_status_if_needed(self, old_status: str) -> None:
+        if old_status == self.status:
+            return
+        if self.status not in self._QUOTATION_SYNC_STATUSES:
+            return
+        if not self.quotation_id:
+            return
+        Quotation.objects.filter(pk=self.quotation_id).update(
+            status=self.status,
+            update_date=timezone.now(),
+        )
+
     def save(self, *args, **kwargs):
         if self._state.adding:
             if self.quotation_id:
@@ -357,15 +375,17 @@ class ProformaRequest(models.Model):
             super().save(*args, **kwargs)
             return
 
-        old_q_id = (
-            ProformaRequest.objects.filter(pk=self.pk).values_list("quotation_id", flat=True).first()
-        )
+        old = ProformaRequest.objects.filter(pk=self.pk).values("quotation_id", "status").first()
+        old_q_id = old["quotation_id"] if old else None
+        old_status = old["status"] if old else None
         new_q_id = self.quotation_id
         if new_q_id is None:
             self.quoted_at = None
         elif old_q_id != new_q_id:
             self.quoted_at = timezone.now()
         super().save(*args, **kwargs)
+        if old_status is not None:
+            self._sync_quotation_status_if_needed(old_status)
 
     def __str__(self) -> str:
         return f"ProformaRequest #{self.id} ({self.get_proforma_type_display()})"

@@ -28,6 +28,76 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+MAX_BULK_PRODUCTS = 500
+
+
+class ProductBulkUpsertItemSerializer(serializers.Serializer):
+    sku = serializers.CharField(max_length=100)
+    description = serializers.CharField(max_length=250, required=False, allow_blank=True)
+    category = serializers.IntegerField(required=False, allow_null=True)
+    subcategory = serializers.IntegerField(required=False, allow_null=True)
+    type = serializers.IntegerField(required=False, allow_null=True)
+    brand = serializers.IntegerField(required=False, allow_null=True)
+    unit_measurement = serializers.IntegerField(required=False, allow_null=True)
+    datasheet = serializers.CharField(required=False, allow_null=True, allow_blank=True)
+    price = serializers.DecimalField(
+        max_digits=10, decimal_places=2, required=False, allow_null=True
+    )
+    rental_price_without_operator = serializers.DecimalField(
+        max_digits=10, decimal_places=2, required=False, allow_null=True
+    )
+    rental_price_with_operator = serializers.DecimalField(
+        max_digits=10, decimal_places=2, required=False, allow_null=True
+    )
+    warranty = serializers.CharField(
+        max_length=20, required=False, allow_null=True, allow_blank=True
+    )
+    warrannty = serializers.CharField(
+        max_length=20, required=False, allow_null=True, allow_blank=True, write_only=True
+    )
+    status = serializers.ChoiceField(
+        choices=Product.ProductStatus.choices, required=False
+    )
+    dimensions = serializers.CharField(
+        max_length=100, required=False, allow_null=True, allow_blank=True
+    )
+    gross_weight = serializers.CharField(
+        max_length=100, required=False, allow_null=True, allow_blank=True
+    )
+
+    def validate_sku(self, value: str) -> str:
+        sku = value.strip()
+        if not sku:
+            raise serializers.ValidationError("SKU vacío.")
+        return sku
+
+    def validate(self, attrs):
+        if "warrannty" in attrs:
+            if "warranty" not in attrs:
+                attrs["warranty"] = attrs["warrannty"]
+            attrs.pop("warrannty", None)
+        return attrs
+
+
+class ProductBulkUpsertRequestSerializer(serializers.Serializer):
+    mode = serializers.ChoiceField(
+        choices=["upsert", "create_only", "update_only"],
+        default="upsert",
+        required=False,
+    )
+    partial_update = serializers.BooleanField(default=True, required=False)
+    items = ProductBulkUpsertItemSerializer(many=True)
+
+    def validate_items(self, value):
+        if not value:
+            raise serializers.ValidationError("items no puede estar vacío.")
+        if len(value) > MAX_BULK_PRODUCTS:
+            raise serializers.ValidationError(
+                f"Máximo {MAX_BULK_PRODUCTS} items por petición."
+            )
+        return value
+
+
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage

@@ -8,9 +8,11 @@ from rest_framework.views import APIView
 
 from accounts.permissions import AlmacenWritePermission
 
+from .bulk_products import bulk_upsert_products
 from .cloudinary_upload import upload_product_image
 from .models import Product, ProductImage, ProductSupplier, Warehouse, WarehouseMovements, WarehouseProduct
 from .serializers import (
+    ProductBulkUpsertRequestSerializer,
     ProductImageSerializer,
     ProductSerializer,
     ProductSupplierSerializer,
@@ -42,6 +44,17 @@ class ProductViewSet(BaseAlmacenViewSet):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+    @action(detail=False, methods=["post"], url_path="bulk-upsert")
+    def bulk_upsert(self, request):
+        serializer = ProductBulkUpsertRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        result = bulk_upsert_products(
+            mode=serializer.validated_data["mode"],
+            partial_update=serializer.validated_data["partial_update"],
+            items=serializer.validated_data["items"],
+        )
+        return Response(result, status=status.HTTP_200_OK)
 
 
 class ProductImageViewSet(BaseAlmacenViewSet):

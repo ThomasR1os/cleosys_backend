@@ -36,7 +36,7 @@ class Product(models.Model):
         on_delete=models.PROTECT,
         related_name="products",
     )
-    sku = models.CharField(max_length=100)
+    sku = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=250)
     datasheet = models.TextField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)

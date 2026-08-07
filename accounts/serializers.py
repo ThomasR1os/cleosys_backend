@@ -5,7 +5,7 @@ from django.db.utils import OperationalError
 from rest_framework import serializers
 
 from .branding_defaults import COLOR_FIELD_NAMES, branding_payload_for_company
-from .models import Company, CompanyBranding, UserProfile
+from .models import Company, CompanyBranding, CompanyEmailSettings, UserProfile
 from .validators import normalize_hex_color_drf
 from .permissions import can_edit_sensitive_profile_fields
 from .utils import get_or_create_profile_for_user
@@ -62,6 +62,75 @@ class CompanyBrandingPatchSerializer(serializers.ModelSerializer):
         return attrs
 
 
+class CompanyEmailSettingsSerializer(serializers.ModelSerializer):
+    """GET/PATCH SMTP por compañía. Nunca expone la password en claro."""
+
+    password = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    password_configured = serializers.SerializerMethodField(read_only=True)
+    default_cc = serializers.ListField(
+        child=serializers.EmailField(),
+        required=False,
+        allow_empty=True,
+    )
+
+    class Meta:
+        model = CompanyEmailSettings
+        fields = [
+            "host",
+            "port",
+            "use_tls",
+            "use_ssl",
+            "username",
+            "password",
+            "password_configured",
+            "from_email",
+            "from_name",
+            "default_cc",
+            "is_active",
+            "updated_at",
+        ]
+        read_only_fields = ["updated_at", "password_configured"]
+        extra_kwargs = {
+            "host": {"required": False, "allow_blank": True},
+            "port": {"required": False},
+            "use_tls": {"required": False},
+            "use_ssl": {"required": False},
+            "username": {"required": False, "allow_blank": True},
+            "from_email": {"required": False, "allow_blank": True},
+            "from_name": {"required": False, "allow_blank": True},
+            "is_active": {"required": False},
+        }
+
+    def get_password_configured(self, obj: CompanyEmailSettings) -> bool:
+        return obj.password_configured
+
+    def validate_default_cc(self, value):
+        if value is None:
+            return []
+        result: list[str] = []
+        seen: set[str] = set()
+        for item in value:
+            email = str(item or "").strip()
+            key = email.lower()
+            if email and key not in seen:
+                seen.add(key)
+                result.append(email)
+        return result
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop("password", None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        if password is not None and str(password).strip() != "":
+            instance.set_password(str(password))
+        instance.save()
+        return instance
+
+
+class CompanyEmailTestSerializer(serializers.Serializer):
+    to = serializers.EmailField()
+
+
 class UserSerializer(serializers.ModelSerializer):
     cellphone = serializers.SerializerMethodField()
 
@@ -106,7 +175,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "quotation_prefix",
             "role",
             "cellphone",
+            "email_display_name",
+            "reply_to_email",
+            "signature_url",
         ]
+        read_only_fields = ["signature_url"]
 
     def validate_quotation_prefix(self, value: str) -> str:
         if value is None or value == "":

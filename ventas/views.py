@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet
-from rest_framework import permissions, viewsets
+from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.response import Response
@@ -8,10 +8,12 @@ from rest_framework.response import Response
 from accounts.permissions import company_id_for_user, is_admin_access
 
 from .models import ClientContact, ProformaRequest, Quotation, QuotationProduct
+from .quotation_email import SmtpSendError, send_quotation_email
 from .serializers import (
     ClientContactSerializer,
     ProformaRequestSerializer,
     QuotationProductSerializer,
+    QuotationSendEmailSerializer,
     QuotationSerializer,
     UserPublicSummarySerializer,
 )
@@ -102,10 +104,39 @@ class QuotationViewSet(BaseVentasViewSet):
     def check_object_permissions(self, request, obj):
         super().check_object_permissions(request, obj)
         if request.method not in permissions.SAFE_METHODS:
+            # send-email: cualquiera de la compañía que pueda ver la cotización
+            if getattr(self, "action", None) == "send_email":
+                return
             if not can_edit_quotation(request, obj):
                 raise PermissionDenied(
                     detail="Solo el vendedor que creó la cotización o un administrador pueden modificarla o eliminarla."
                 )
+
+    @action(detail=True, methods=["post"], url_path="send-email")
+    def send_email(self, request, pk=None):
+        quotation = self.get_object()
+        serializer = QuotationSendEmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        try:
+            result = send_quotation_email(
+                quotation=quotation,
+                sender=request.user,
+                to=data.get("to"),
+                cc=data.get("cc"),
+                subject=data.get("subject"),
+                message=data.get("message") or "",
+                html_message=data.get("html_message") or None,
+                signature_url=data.get("signature_url") or None,
+                pdf_base64=data["pdf_base64"],
+                pdf_filename=data.get("pdf_filename"),
+            )
+        except SmtpSendError as exc:
+            payload = {"detail": f"Error al enviar el correo: {exc}"}
+            if exc.log_id:
+                payload["log_id"] = exc.log_id
+            return Response(payload, status=status.HTTP_502_BAD_GATEWAY)
+        return Response(result, status=status.HTTP_200_OK)
 
 
 class QuotationProductViewSet(BaseVentasViewSet):

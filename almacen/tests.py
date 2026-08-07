@@ -30,6 +30,12 @@ class ProductBulkUpsertAPITests(APITestCase):
             company=self.company,
             role=UserProfile.Role.VENTAS,
         )
+        self.logistica = User.objects.create_user(username="logistica_bulk", password="pass12345")
+        UserProfile.objects.create(
+            user=self.logistica,
+            company=self.company,
+            role=UserProfile.Role.LOGISTICA,
+        )
 
         # Maestros sembrados por core.0002_seed_catalog
         self.category = CategoryProduct.objects.get(pk=1)
@@ -257,3 +263,10 @@ class ProductBulkUpsertAPITests(APITestCase):
             BULK_URL, {"items": [self._base_create_item("X")]}, format="json"
         )
         self.assertEqual(forbidden.status_code, status.HTTP_403_FORBIDDEN)
+
+        self.client.force_authenticate(self.logistica)
+        allowed = self.client.post(
+            BULK_URL, {"items": [self._base_create_item("LOG-001")]}, format="json"
+        )
+        self.assertEqual(allowed.status_code, status.HTTP_200_OK, allowed.data)
+        self.assertEqual(allowed.data["created"], 1)

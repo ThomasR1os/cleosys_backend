@@ -4,16 +4,21 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from rest_framework.exceptions import PermissionDenied
+
 from almacen.cloudinary_upload import upload_product_image
 
-from .models import Company, CompanyBranding, UserProfile
-from .permissions import AdminAccessPermission, AdminUserOrSelfPermission, is_admin_access
+from .email_sending import send_with_company_smtp
+from .models import Company, CompanyBranding, CompanyEmailSettings, UserProfile
+from .permissions import AdminAccessPermission, AdminUserOrSelfPermission, company_id_for_user, is_admin_access
 from .serializers import (
     AdminSetPasswordSerializer,
     AdminUserListSerializer,
     AdminUserSelfPatchSerializer,
     AdminUserWriteSerializer,
     CompanyBrandingPatchSerializer,
+    CompanyEmailSettingsSerializer,
+    CompanyEmailTestSerializer,
     CompanySerializer,
     RegisterSerializer,
     UserProfileSerializer,
@@ -88,6 +93,57 @@ class MeView(APIView):
         return self.patch(request)
 
 
+def _me_payload(user, profile):
+    return {
+        "user": UserSerializer(user).data,
+        "profile": UserProfileSerializer(profile).data if profile else None,
+    }
+
+
+class MeSignatureUploadView(APIView):
+    """
+    POST multipart/form-data: file (imagen de firma).
+    Sube a Cloudinary en cleosys/companies/{company_id}/users/{user_id} y guarda signature_url.
+    """
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        upload = request.FILES.get("file")
+        if not upload:
+            return Response(
+                {"detail": "Falta el campo file (multipart)."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        profile = get_or_create_my_profile(request)
+        folder = f"cleosys/companies/{profile.company_id}/users/{request.user.pk}"
+        try:
+            result = upload_product_image(upload, folder=folder)
+        except RuntimeError as e:
+            return Response({"detail": str(e)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        except Exception as e:
+            return Response(
+                {"detail": f"Error al subir a Cloudinary: {e}"},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+        secure_url = result.get("secure_url") or result.get("url")
+        if not secure_url:
+            return Response(
+                {"detail": "Cloudinary no devolvió URL."},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+        profile.signature_url = str(secure_url)[:500]
+        profile.save(update_fields=["signature_url"])
+        profile.refresh_from_db()
+        return Response(_me_payload(request.user, profile))
+
+    def delete(self, request):
+        profile = get_or_create_my_profile(request)
+        profile.signature_url = ""
+        profile.save(update_fields=["signature_url"])
+        return Response(_me_payload(request.user, profile))
+
+
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.select_related("branding").all().order_by("id")
     serializer_class = CompanySerializer
@@ -148,6 +204,77 @@ class CompanyViewSet(viewsets.ModelViewSet):
         company.logo_url = str(secure_url)[:500]
         company.save(update_fields=["logo_url"])
         return Response(CompanySerializer(company).data)
+
+    def _ensure_admin_company_access(self, request, company: Company) -> None:
+        if request.user.is_superuser:
+            return
+        cid = company_id_for_user(request.user)
+        if cid is None or cid != company.pk:
+            raise PermissionDenied(
+                detail="Solo puede gestionar el correo saliente de su propia empresa."
+            )
+
+    @action(
+        detail=True,
+        methods=["get", "patch"],
+        url_path="email-settings",
+        permission_classes=[permissions.IsAuthenticated, AdminAccessPermission],
+    )
+    def email_settings(self, request, pk=None):
+        company = self.get_object()
+        self._ensure_admin_company_access(request, company)
+        settings_obj, _ = CompanyEmailSettings.objects.get_or_create(company=company)
+        if request.method == "GET":
+            return Response(CompanyEmailSettingsSerializer(settings_obj).data)
+        serializer = CompanyEmailSettingsSerializer(
+            settings_obj, data=request.data, partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        settings_obj.refresh_from_db()
+        return Response(CompanyEmailSettingsSerializer(settings_obj).data)
+
+    @action(
+        detail=True,
+        methods=["post"],
+        url_path="email-settings/test",
+        permission_classes=[permissions.IsAuthenticated, AdminAccessPermission],
+    )
+    def email_settings_test(self, request, pk=None):
+        company = self.get_object()
+        self._ensure_admin_company_access(request, company)
+        body = CompanyEmailTestSerializer(data=request.data)
+        body.is_valid(raise_exception=True)
+        try:
+            settings_obj = CompanyEmailSettings.objects.get(company=company)
+        except CompanyEmailSettings.DoesNotExist:
+            return Response(
+                {"detail": "Configure primero el SMTP de la empresa."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if not settings_obj.host or not settings_obj.from_email:
+            return Response(
+                {"detail": "host y from_email son obligatorios para probar el envío."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if not settings_obj.password_configured:
+            return Response(
+                {"detail": "Configure la contraseña SMTP antes de probar."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            send_with_company_smtp(
+                settings_obj,
+                to=[body.validated_data["to"]],
+                subject=f"Prueba SMTP — {company.name}",
+                body="Este es un correo de prueba de la configuración SMTP de Cleosys.",
+            )
+        except Exception as exc:
+            return Response(
+                {"detail": f"Error al enviar: {exc}"},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+        return Response({"status": "sent", "to": [body.validated_data["to"]]})
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):

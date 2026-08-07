@@ -318,6 +318,25 @@ class QuotationSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
+class QuotationSendEmailSerializer(serializers.Serializer):
+    to = serializers.ListField(
+        child=serializers.EmailField(),
+        required=False,
+        allow_empty=True,
+    )
+    cc = serializers.ListField(
+        child=serializers.EmailField(),
+        required=False,
+        allow_empty=True,
+    )
+    subject = serializers.CharField(required=False, allow_blank=True, max_length=255)
+    message = serializers.CharField(required=False, allow_blank=True)
+    html_message = serializers.CharField(required=False, allow_blank=True)
+    signature_url = serializers.URLField(required=False, allow_blank=True)
+    pdf_base64 = serializers.CharField()
+    pdf_filename = serializers.CharField(required=False, allow_blank=True, max_length=255)
+
+
 class QuotationProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuotationProduct

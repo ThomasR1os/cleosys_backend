@@ -139,6 +139,31 @@ class AlmacenWritePermission(permissions.BasePermission):
         return p.role in (UserProfile.Role.ALMACEN, UserProfile.Role.ADMIN)
 
 
+class ProductWritePermission(permissions.BasePermission):
+    """
+    GET/HEAD/OPTIONS: cualquier usuario autenticado.
+    POST/PUT/PATCH/DELETE: ALMACEN, LOGISTICA, ADMIN o superusuario.
+    """
+
+    message = "Solo almacén, logística o administradores pueden modificar productos."
+
+    def has_permission(self, request, view):
+        if not request.user or not request.user.is_authenticated:
+            return False
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if request.user.is_superuser:
+            return True
+        p = user_profile(request.user)
+        if not p:
+            return False
+        return p.role in (
+            UserProfile.Role.ALMACEN,
+            UserProfile.Role.LOGISTICA,
+            UserProfile.Role.ADMIN,
+        )
+
+
 class LogisticaWritePermission(permissions.BasePermission):
     """
     Lectura: autenticados. Escritura: LOGISTICA, ADMIN o superusuario.

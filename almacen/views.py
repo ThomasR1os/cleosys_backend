@@ -6,7 +6,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from accounts.permissions import AlmacenWritePermission
+from accounts.permissions import AlmacenWritePermission, ProductWritePermission
 
 from .bulk_products import bulk_upsert_products
 from .cloudinary_upload import upload_product_image
@@ -29,6 +29,7 @@ class BaseAlmacenViewSet(viewsets.ModelViewSet):
 class ProductViewSet(BaseAlmacenViewSet):
     queryset = Product.objects.all().order_by("id")
     serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticated, ProductWritePermission]
 
     def destroy(self, request, *args, **kwargs):
         try:

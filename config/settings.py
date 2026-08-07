@@ -38,6 +38,10 @@ CLOUDINARY_CLOUD_NAME = _env_strip("CLOUDINARY_CLOUD_NAME")
 CLOUDINARY_API_KEY = _env_strip("CLOUDINARY_API_KEY")
 CLOUDINARY_API_SECRET = _env_strip("CLOUDINARY_API_SECRET")
 
+# Clave Fernet (url-safe base64) o cualquier string para cifrar passwords SMTP por compañía.
+# Si está vacío se deriva de SECRET_KEY.
+EMAIL_CREDENTIALS_KEY = _env_strip("EMAIL_CREDENTIALS_KEY")
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/

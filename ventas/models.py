@@ -389,3 +389,39 @@ class ProformaRequest(models.Model):
 
     def __str__(self) -> str:
         return f"ProformaRequest #{self.id} ({self.get_proforma_type_display()})"
+
+
+class QuotationEmailLog(models.Model):
+    class Status(models.TextChoices):
+        SENT = "SENT", _("Sent")
+        FAILED = "FAILED", _("Failed")
+
+    id = models.AutoField(primary_key=True)
+    quotation = models.ForeignKey(
+        Quotation,
+        on_delete=models.CASCADE,
+        related_name="email_logs",
+        db_column="quotation_id",
+    )
+    sent_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="quotation_emails_sent",
+        db_column="sent_by_id",
+    )
+    to_emails = models.TextField(help_text=_("Lista de destinatarios separados por coma."))
+    cc_emails = models.TextField(blank=True, default="")
+    subject = models.CharField(max_length=255)
+    status = models.CharField(max_length=20, choices=Status.choices)
+    error_message = models.TextField(blank=True, default="")
+    created_at = models.DateTimeField(default=timezone.now, db_column="created_at")
+
+    class Meta:
+        managed = True
+        db_table = "quotation_email_log"
+        ordering = ["-created_at", "-id"]
+
+    def __str__(self) -> str:
+        return f"Email {self.status} quotation={self.quotation_id}"

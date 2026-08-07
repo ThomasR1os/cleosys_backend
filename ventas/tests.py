@@ -890,3 +890,201 @@ class QuotationProductDeliveryTimeModelTests(TestCase):
             product_price=50,
         )
         self.assertEqual(line.line_warranty, "12 meses")
+
+
+class QuotationSendEmailAPITests(APITestCase):
+    def setUp(self) -> None:
+        import base64
+
+        from accounts.models import CompanyEmailSettings
+        from ventas.models import QuotationEmailLog
+
+        self.CompanyEmailSettings = CompanyEmailSettings
+        self.QuotationEmailLog = QuotationEmailLog
+        self.pdf_b64 = base64.b64encode(b"%PDF-1.4 fake").decode("ascii")
+
+        self.company = Company.objects.create(name="Send Email Co")
+        self.other_company = Company.objects.create(name="Other Send Co")
+        self.client_obj = Client.objects.create(ruc="20999888777", name="Cliente Mail")
+        self.pm = PaymentMethods.objects.create(name="Transferencia Mail")
+
+        self.seller = User.objects.create_user(
+            username="seller_mail",
+            password="pass12345",
+            email="seller@empresa.com",
+        )
+        UserProfile.objects.create(
+            user=self.seller,
+            company=self.company,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="SEM",
+            reply_to_email="seller-reply@empresa.com",
+        )
+        self.peer = User.objects.create_user(username="peer_mail", password="pass12345")
+        UserProfile.objects.create(
+            user=self.peer,
+            company=self.company,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="PEE",
+        )
+        self.other_user = User.objects.create_user(username="other_mail", password="pass12345")
+        UserProfile.objects.create(
+            user=self.other_user,
+            company=self.other_company,
+            role=UserProfile.Role.VENTAS,
+            quotation_prefix="OTH",
+        )
+
+        self.contact = ClientContact.objects.create(
+            company=self.company,
+            client=self.client_obj,
+            user=self.seller,
+            contact_first_name="Ana",
+            contact_last_name="Cliente",
+            email="ana@cliente.com",
+        )
+        self.quotation = Quotation.objects.create(
+            quotation_type=Quotation.QuotationType.VENTA,
+            money=Quotation.QuotationMoney.PEN,
+            status=Quotation.QuotationStatus.PENDIENTE,
+            client=self.client_obj,
+            client_contact=self.contact,
+            user=self.seller,
+            discount=0,
+            final_price=100,
+            delivery_time="5 días",
+            payment_methods=self.pm,
+            see_sku=True,
+        )
+
+    def _configure_smtp(self, *, active: bool = True) -> None:
+        settings_obj, _ = self.CompanyEmailSettings.objects.get_or_create(company=self.company)
+        settings_obj.host = "smtp.example.com"
+        settings_obj.port = 587
+        settings_obj.use_tls = True
+        settings_obj.username = "noreply@empresa.com"
+        settings_obj.set_password("smtp-pass")
+        settings_obj.from_email = "noreply@empresa.com"
+        settings_obj.from_name = "Cotizaciones"
+        settings_obj.default_cc = ["gerencia@empresa.com", "archivo@empresa.com"]
+        settings_obj.is_active = active
+        settings_obj.save()
+
+    def test_send_without_smtp_returns_400(self) -> None:
+        self.client.force_authenticate(self.seller)
+        url = f"/api/ventas/quotations/{self.quotation.pk}/send-email/"
+        res = self.client.post(
+            url,
+            {"message": "Hola", "pdf_base64": self.pdf_b64},
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_send_success_mocked_and_log(self) -> None:
+        from unittest.mock import patch
+
+        self._configure_smtp()
+        self.client.force_authenticate(self.seller)
+        url = f"/api/ventas/quotations/{self.quotation.pk}/send-email/"
+        with patch("ventas.quotation_email.send_with_company_smtp") as mock_send:
+            res = self.client.post(
+                url,
+                {
+                    "message": "Adjunto cotización",
+                    "pdf_base64": self.pdf_b64,
+                    "subject": "Cotización SEM",
+                },
+                format="json",
+            )
+        self.assertEqual(res.status_code, status.HTTP_200_OK, res.data)
+        self.assertEqual(res.data["status"], "sent")
+        self.assertEqual(res.data["to"], ["ana@cliente.com"])
+        self.assertEqual(res.data["from_email"], "seller-reply@empresa.com")
+        self.assertEqual(
+            res.data["cc"],
+            ["gerencia@empresa.com", "archivo@empresa.com"],
+        )
+        mock_send.assert_called_once()
+        kwargs = mock_send.call_args.kwargs
+        self.assertEqual(kwargs["reply_to"], ["seller-reply@empresa.com"])
+        self.assertEqual(kwargs["from_email"], "seller-reply@empresa.com")
+        self.assertEqual(kwargs["to"], ["ana@cliente.com"])
+        self.assertEqual(
+            kwargs["cc"],
+            ["gerencia@empresa.com", "archivo@empresa.com"],
+        )
+        self.assertEqual(kwargs["bcc"], ["seller-reply@empresa.com"])
+        self.assertIsNone(kwargs.get("html_body"))
+        log = self.QuotationEmailLog.objects.get(pk=res.data["log_id"])
+        self.assertEqual(log.status, self.QuotationEmailLog.Status.SENT)
+        self.assertEqual(log.to_emails, "ana@cliente.com")
+
+    def test_send_with_html_message(self) -> None:
+        from unittest.mock import patch
+
+        self._configure_smtp()
+        self.client.force_authenticate(self.seller)
+        url = f"/api/ventas/quotations/{self.quotation.pk}/send-email/"
+        html = '<div>Hola<br/><img src="https://res.cloudinary.com/x/firma.png"/></div>'
+        with patch("ventas.quotation_email.send_with_company_smtp") as mock_send:
+            res = self.client.post(
+                url,
+                {
+                    "message": "Hola",
+                    "html_message": html,
+                    "signature_url": "https://res.cloudinary.com/x/firma.png",
+                    "pdf_base64": self.pdf_b64,
+                },
+                format="json",
+            )
+        self.assertEqual(res.status_code, status.HTTP_200_OK, res.data)
+        self.assertTrue(res.data["html"])
+        self.assertEqual(mock_send.call_args.kwargs["html_body"], html)
+
+    def test_send_builds_html_from_signature_url(self) -> None:
+        from unittest.mock import patch
+
+        self._configure_smtp()
+        self.client.force_authenticate(self.seller)
+        url = f"/api/ventas/quotations/{self.quotation.pk}/send-email/"
+        with patch("ventas.quotation_email.send_with_company_smtp") as mock_send:
+            res = self.client.post(
+                url,
+                {
+                    "message": "Linea 1\nLinea 2",
+                    "signature_url": "https://res.cloudinary.com/x/firma.png",
+                    "pdf_base64": self.pdf_b64,
+                },
+                format="json",
+            )
+        self.assertEqual(res.status_code, status.HTTP_200_OK, res.data)
+        html_body = mock_send.call_args.kwargs["html_body"]
+        self.assertIn("https://res.cloudinary.com/x/firma.png", html_body)
+        self.assertIn("<img", html_body)
+        self.assertIn("Linea 1<br/>Linea 2", html_body)
+
+    def test_peer_can_send_same_company(self) -> None:
+        from unittest.mock import patch
+
+        self._configure_smtp()
+        self.client.force_authenticate(self.peer)
+        url = f"/api/ventas/quotations/{self.quotation.pk}/send-email/"
+        with patch("ventas.quotation_email.send_with_company_smtp"):
+            res = self.client.post(
+                url,
+                {"to": ["otro@cliente.com"], "pdf_base64": self.pdf_b64, "message": "x"},
+                format="json",
+            )
+        self.assertEqual(res.status_code, status.HTTP_200_OK, res.data)
+        self.assertEqual(res.data["to"], ["otro@cliente.com"])
+
+    def test_other_company_forbidden(self) -> None:
+        self._configure_smtp()
+        self.client.force_authenticate(self.other_user)
+        url = f"/api/ventas/quotations/{self.quotation.pk}/send-email/"
+        res = self.client.post(
+            url,
+            {"pdf_base64": self.pdf_b64, "message": "x"},
+            format="json",
+        )
+        self.assertIn(res.status_code, (status.HTTP_403_FORBIDDEN, status.HTTP_404_NOT_FOUND))

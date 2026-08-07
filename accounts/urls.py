@@ -1,7 +1,15 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import AdminUserViewSet, CompanyViewSet, MeView, MyProfileView, RegisterView, UserProfileViewSet
+from .views import (
+    AdminUserViewSet,
+    CompanyViewSet,
+    MeSignatureUploadView,
+    MeView,
+    MyProfileView,
+    RegisterView,
+    UserProfileViewSet,
+)
 
 router = DefaultRouter()
 router.register(r"companies", CompanyViewSet, basename="company")
@@ -12,6 +20,7 @@ urlpatterns = [
     path("", include(router.urls)),
     path("auth/register/", RegisterView.as_view(), name="register"),
     path("auth/me/", MeView.as_view(), name="me"),
+    path("auth/me/signature/", MeSignatureUploadView.as_view(), name="me-signature"),
     path("auth/profile/", MyProfileView.as_view(), name="my-profile"),
 ]
 

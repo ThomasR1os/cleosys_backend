@@ -192,3 +192,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://0e5c45b9.cleosys-fronted.pages.dev",
     "https://cleosys-fronted.pages.dev",
 ]
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 15 * 1024 * 1024  # 15 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 15 * 1024 * 1024

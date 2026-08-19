@@ -1,5 +1,5 @@
 """
-Roles: ALMACEN, VENTAS, LOGISTICA, ADMIN (perfil).
+Roles: ALMACEN, VENTAS, LOGISTICA, SERVICIOS, ADMIN (perfil).
 Superusuarios Django se tratan como acceso total (equivalente a ADMIN).
 """
 from __future__ import annotations
@@ -182,3 +182,23 @@ class LogisticaWritePermission(permissions.BasePermission):
         if not p:
             return False
         return p.role in (UserProfile.Role.LOGISTICA, UserProfile.Role.ADMIN)
+
+
+class ServiciosWritePermission(permissions.BasePermission):
+    """
+    Lectura: autenticados. Escritura: SERVICIOS, ADMIN o superusuario.
+    """
+
+    message = "Solo personal de servicios o administradores pueden modificar este recurso."
+
+    def has_permission(self, request, view):
+        if not request.user or not request.user.is_authenticated:
+            return False
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        if request.user.is_superuser:
+            return True
+        p = user_profile(request.user)
+        if not p:
+            return False
+        return p.role in (UserProfile.Role.SERVICIOS, UserProfile.Role.ADMIN)

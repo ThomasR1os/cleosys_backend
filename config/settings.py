@@ -55,6 +55,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "cleosys-backend.onrender.com",
     "cleosys-backend-1.onrender.com",
+    "93.127.132.190",
     "localhost",
     "127.0.0.1",
 ]
@@ -77,6 +78,7 @@ INSTALLED_APPS = [
     'ventas',
     'almacen',
     'logistica',
+    'servicios',
 ]
 
 MIDDLEWARE = [
@@ -185,6 +187,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://cleosys-backend.onrender.com",
     "https://cleosys-backend-1.onrender.com",
     "https://0e5c45b9.cleosys-fronted.pages.dev",
+    "http://93.127.132.190",
 ]
 
 # Frontend (Cloudflare Pages) → API en Render / local

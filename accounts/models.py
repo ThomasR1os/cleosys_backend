@@ -196,6 +196,7 @@ class UserProfile(models.Model):
         ALMACEN = "ALMACEN", _("Almacén")
         VENTAS = "VENTAS", _("Ventas")
         LOGISTICA = "LOGISTICA", _("Logística")
+        SERVICIOS = "SERVICIOS", _("Servicios")
         ADMIN = "ADMIN", _("Administrador")
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile")

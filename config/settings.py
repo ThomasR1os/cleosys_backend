@@ -55,6 +55,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "cleosys-backend.onrender.com",
     "cleosys-backend-1.onrender.com",
+    "api.compresoresdelperu.com.pe",
     "93.127.132.190",
     "localhost",
     "127.0.0.1",
@@ -186,12 +187,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 CSRF_TRUSTED_ORIGINS = [
     "https://cleosys-backend.onrender.com",
     "https://cleosys-backend-1.onrender.com",
+    "https://api.compresoresdelperu.com.pe",
+    "https://sis.compresoresdelperu.com.pe",
+    "https://sis.leos-service.com.pe",
     "https://0e5c45b9.cleosys-fronted.pages.dev",
     "http://93.127.132.190",
 ]
 
-# Frontend (Cloudflare Pages) → API en Render / local
+# Frontend (producción + Cloudflare Pages) → API
 CORS_ALLOWED_ORIGINS = [
+    "https://sis.compresoresdelperu.com.pe",
+    "https://sis.leos-service.com.pe",
     "https://0e5c45b9.cleosys-fronted.pages.dev",
     "https://cleosys-fronted.pages.dev",
 ]

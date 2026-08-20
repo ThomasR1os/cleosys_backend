@@ -189,7 +189,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://cleosys-backend-1.onrender.com",
     "https://api.compresoresdelperu.com.pe",
     "https://sis.compresoresdelperu.com.pe",
-    "https://sis.leos-service.com.pe",
+    "https://sis.leos-service.com",
+    "https://cleosys-fronted.pages.dev",
     "https://0e5c45b9.cleosys-fronted.pages.dev",
     "http://93.127.132.190",
 ]
@@ -197,9 +198,9 @@ CSRF_TRUSTED_ORIGINS = [
 # Frontend (producción + Cloudflare Pages) → API
 CORS_ALLOWED_ORIGINS = [
     "https://sis.compresoresdelperu.com.pe",
-    "https://sis.leos-service.com.pe",
-    "https://0e5c45b9.cleosys-fronted.pages.dev",
+    "https://sis.leos-service.com",
     "https://cleosys-fronted.pages.dev",
+    "https://0e5c45b9.cleosys-fronted.pages.dev",
 ]
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 15 * 1024 * 1024  # 15 MB

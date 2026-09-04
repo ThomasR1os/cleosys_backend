@@ -67,6 +67,40 @@ class SubcategoryProduct(models.Model):
         return self.name
 
 
+class SubcategoryRecommendedPart(models.Model):
+    """Partes recomendadas a inspeccionar por subcategoría de producto/máquina."""
+
+    id = models.AutoField(primary_key=True)
+    subcategory = models.ForeignKey(
+        SubcategoryProduct,
+        db_column="subcategory_id",
+        on_delete=models.CASCADE,
+        related_name="recommended_parts",
+    )
+    name = models.CharField(max_length=150)
+    description = models.TextField(blank=True, default="")
+    sort_order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        managed = True
+        db_table = "subcategory_recommended_parts"
+        verbose_name = _("Subcategory recommended part")
+        verbose_name_plural = _("Subcategory recommended parts")
+        ordering = ["sort_order", "id"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["subcategory", "name"],
+                name="uq_recommended_part_name_per_subcategory",
+            ),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.subcategory_id}: {self.name}"
+
+
 class TypeProduct(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)

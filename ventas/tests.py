@@ -1022,46 +1022,78 @@ class QuotationSendEmailAPITests(APITestCase):
     def test_send_with_html_message(self) -> None:
         from unittest.mock import patch
 
+        png = (
+            b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01"
+            b"\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89"
+            b"\x00\x00\x00\nIDATx\x9cc\x00\x01\x00\x00\x05\x00\x01"
+            b"\r\n-\xb4\x00\x00\x00\x00IEND\xaeB`\x82"
+        )
         self._configure_smtp()
         self.client.force_authenticate(self.seller)
         url = f"/api/ventas/quotations/{self.quotation.pk}/send-email/"
         html = '<div>Hola<br/><img src="https://res.cloudinary.com/x/firma.png"/></div>'
-        with patch("ventas.quotation_email.send_with_company_smtp") as mock_send:
-            res = self.client.post(
-                url,
-                {
-                    "message": "Hola",
-                    "html_message": html,
-                    "signature_url": "https://res.cloudinary.com/x/firma.png",
-                    "pdf_base64": self.pdf_b64,
-                },
-                format="json",
-            )
+        with patch(
+            "accounts.email_inline.fetch_remote_image",
+            return_value=(png, "image/png"),
+        ):
+            with patch("ventas.quotation_email.send_with_company_smtp") as mock_send:
+                res = self.client.post(
+                    url,
+                    {
+                        "message": "Hola",
+                        "html_message": html,
+                        "signature_url": "https://res.cloudinary.com/x/firma.png",
+                        "pdf_base64": self.pdf_b64,
+                    },
+                    format="json",
+                )
         self.assertEqual(res.status_code, status.HTTP_200_OK, res.data)
         self.assertTrue(res.data["html"])
-        self.assertEqual(mock_send.call_args.kwargs["html_body"], html)
+        html_body = mock_send.call_args.kwargs["html_body"]
+        self.assertIn("cid:firma_vendedor", html_body)
+        self.assertNotIn("https://res.cloudinary.com/x/firma.png", html_body)
+        self.assertNotIn("data:image", html_body)
+        inline = mock_send.call_args.kwargs["inline_images"]
+        self.assertEqual(len(inline), 1)
+        self.assertEqual(inline[0].cid, "firma_vendedor")
+        self.assertEqual(inline[0].mimetype, "image/png")
+        attachments = mock_send.call_args.kwargs["attachments"]
+        self.assertEqual(attachments[0][2], "application/pdf")
 
     def test_send_builds_html_from_signature_url(self) -> None:
         from unittest.mock import patch
 
+        png = (
+            b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01"
+            b"\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89"
+            b"\x00\x00\x00\nIDATx\x9cc\x00\x01\x00\x00\x05\x00\x01"
+            b"\r\n-\xb4\x00\x00\x00\x00IEND\xaeB`\x82"
+        )
         self._configure_smtp()
         self.client.force_authenticate(self.seller)
         url = f"/api/ventas/quotations/{self.quotation.pk}/send-email/"
-        with patch("ventas.quotation_email.send_with_company_smtp") as mock_send:
-            res = self.client.post(
-                url,
-                {
-                    "message": "Linea 1\nLinea 2",
-                    "signature_url": "https://res.cloudinary.com/x/firma.png",
-                    "pdf_base64": self.pdf_b64,
-                },
-                format="json",
-            )
+        with patch(
+            "accounts.email_inline.fetch_remote_image",
+            return_value=(png, "image/png"),
+        ):
+            with patch("ventas.quotation_email.send_with_company_smtp") as mock_send:
+                res = self.client.post(
+                    url,
+                    {
+                        "message": "Linea 1\nLinea 2",
+                        "signature_url": "https://res.cloudinary.com/x/firma.png",
+                        "pdf_base64": self.pdf_b64,
+                    },
+                    format="json",
+                )
         self.assertEqual(res.status_code, status.HTTP_200_OK, res.data)
         html_body = mock_send.call_args.kwargs["html_body"]
-        self.assertIn("https://res.cloudinary.com/x/firma.png", html_body)
+        self.assertIn("cid:firma_vendedor", html_body)
         self.assertIn("<img", html_body)
         self.assertIn("Linea 1<br/>Linea 2", html_body)
+        self.assertNotIn("https://res.cloudinary.com/x/firma.png", html_body)
+        inline = mock_send.call_args.kwargs["inline_images"]
+        self.assertEqual(inline[0].cid, "firma_vendedor")
 
     def test_peer_can_send_same_company(self) -> None:
         from unittest.mock import patch

@@ -158,3 +158,47 @@ class CompanyEmailSettingsAPITests(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK, res.data)
         self.assertEqual(res.data["profile"]["reply_to_email"], "maria@empresa.com")
         self.assertEqual(res.data["profile"]["email_display_name"], "María Ventas")
+
+
+class EmailInlineMimeTests(TestCase):
+    def test_related_inline_and_pdf_attachment(self) -> None:
+        from accounts.email_inline import InlineImage
+        from accounts.email_sending import EmailMultiRelated
+
+        png = (
+            b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01"
+            b"\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89"
+            b"\x00\x00\x00\nIDATx\x9cc\x00\x01\x00\x00\x05\x00\x01"
+            b"\r\n-\xb4\x00\x00\x00\x00IEND\xaeB`\x82"
+        )
+        msg = EmailMultiRelated(
+            subject="Cotización",
+            body="Hola",
+            from_email="noreply@empresa.com",
+            to=["ana@cliente.com"],
+        )
+        msg.attach_alternative('<img src="cid:logo_empresa" alt="Logo" />', "text/html")
+        msg.attach_related_image(
+            InlineImage(
+                cid="logo_empresa",
+                content=png,
+                mimetype="image/png",
+                filename="logo_empresa.png",
+            )
+        )
+        msg.attach("cotizacion-GER-000293.pdf", b"%PDF-1.4 fake", "application/pdf")
+        mime = msg.message()
+        self.assertEqual(mime.get_content_type(), "multipart/mixed")
+        mixed_children = list(mime.iter_parts())
+        related = next(p for p in mixed_children if p.get_content_type() == "multipart/related")
+        pdf = next(p for p in mixed_children if p.get_content_type() == "application/pdf")
+        self.assertIn("attachment", (pdf.get("Content-Disposition") or "").lower())
+        image_part = next(
+            p for p in related.iter_parts() if p.get_content_maintype() == "image"
+        )
+        cid = image_part.get("Content-ID") or ""
+        self.assertIn("logo_empresa", cid)
+        self.assertIn("inline", (image_part.get("Content-Disposition") or "").lower())
+        html_blob = mime.as_string()
+        self.assertIn("cid:logo_empresa", html_blob)
+

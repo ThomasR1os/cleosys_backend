@@ -12,6 +12,7 @@ from .models import (
     Client,
     PaymentMethods,
     SubcategoryProduct,
+    SubcategoryRecommendedPart,
     Supplier,
     TypeProduct,
     UnitMeasurement,
@@ -65,6 +66,27 @@ class SubcategoryProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = SubcategoryProduct
         fields = "__all__"
+
+
+class SubcategoryRecommendedPartSerializer(serializers.ModelSerializer):
+    subcategory_name = serializers.CharField(source="subcategory.name", read_only=True)
+    category_id = serializers.IntegerField(source="subcategory.category_id", read_only=True)
+
+    class Meta:
+        model = SubcategoryRecommendedPart
+        fields = [
+            "id",
+            "subcategory",
+            "subcategory_name",
+            "category_id",
+            "name",
+            "description",
+            "sort_order",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
 
 
 class TypeProductSerializer(serializers.ModelSerializer):

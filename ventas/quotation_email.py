@@ -8,8 +8,9 @@ from typing import Any
 
 from rest_framework.exceptions import ValidationError
 
+from accounts.email_inline import iter_named_cids, prepare_html_inline_images
 from accounts.email_sending import send_with_company_smtp
-from accounts.models import CompanyEmailSettings, UserProfile
+from accounts.models import Company, CompanyEmailSettings, UserProfile
 from accounts.permissions import company_id_for_user
 
 from .models import Quotation, QuotationEmailLog
@@ -108,32 +109,69 @@ def _escape_html(text: str) -> str:
     )
 
 
+def _resolve_signature_named_urls(sender, company_id: int, signature_url: str | None) -> tuple[dict[str, str], str]:
+    """CIDs conocidos → URL remota. El HTML usa src=\"cid:…\"."""
+    sig = (signature_url or "").strip()
+    if not sig:
+        profile = UserProfile.objects.filter(user=sender).first()
+        sig = ((profile.signature_url or "").strip() if profile else "")
+    company = Company.objects.filter(pk=company_id).first()
+    logo = ((company.logo_url or "").strip() if company else "")
+    name = ((company.name or "").strip() if company else "") or "Compresores del Perú"
+    named = iter_named_cids(
+        [
+            ("firma_logo", sig),
+            ("firma_vendedor", sig),
+            ("logo_empresa", logo),
+        ]
+    )
+    return named, name
+
+
 def _build_html_body(
     *,
     message: str,
     html_message: str | None,
-    signature_url: str | None,
+    named_urls: dict[str, str],
 ) -> str | None:
     """
-    Prioridad: html_message del front.
-    Si no hay HTML pero hay signature_url, arma HTML con message + <img>.
+    Prioridad: html_message del front (se reescribe a CID después).
+    Si no hay HTML, arma firma en tablas + cid: (Outlook).
     """
     html = (html_message or "").strip()
     if html:
         return html
 
-    sig = (signature_url or "").strip()
-    if not sig:
+    has_logo = bool(named_urls.get("logo_empresa"))
+    has_sig = bool(named_urls.get("firma_vendedor") or named_urls.get("firma_logo"))
+    if not has_logo and not has_sig:
         return None
 
     safe_text = _escape_html(message or "").replace("\n", "<br/>")
-    safe_src = _escape_html(sig)
+    logo_cell = ""
+    if has_logo:
+        logo_cell = (
+            '<td style="padding-right:12px;vertical-align:top;">'
+            '<img src="cid:logo_empresa" alt="Compresores del Perú" width="120" border="0" '
+            'style="display:block;border:0;outline:none;text-decoration:none;max-width:120px;height:auto;" />'
+            "</td>"
+        )
+    sig_img = ""
+    if has_sig:
+        sig_img = (
+            '<img src="cid:firma_vendedor" alt="Firma" width="220" border="0" '
+            'style="display:block;border:0;outline:none;text-decoration:none;max-width:220px;height:auto;margin-top:8px;" />'
+        )
     return (
-        f'<div style="font-family:Arial,sans-serif;font-size:14px;color:#222;">'
-        f"{safe_text}"
-        f'<div style="margin-top:16px;">'
-        f'<img src="{safe_src}" alt="Firma" style="max-width:280px;height:auto;"/>'
-        f"</div></div>"
+        '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" '
+        'style="border-collapse:collapse;">'
+        '<tr><td style="font-family:Arial,sans-serif;font-size:14px;line-height:1.5;color:#222222;">'
+        f"{safe_text}</td></tr>"
+        '<tr><td style="padding-top:16px;">'
+        '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">'
+        f"<tr>{logo_cell}"
+        '<td style="font-family:Arial,sans-serif;font-size:12px;color:#222222;vertical-align:top;">'
+        f"{sig_img}</td></tr></table></td></tr></table>"
     )
 
 
@@ -169,13 +207,18 @@ def send_quotation_email(
     filename = (pdf_filename or "").strip() or f"cotizacion-{quotation.correlativo}.pdf"
     pdf_bytes = _decode_pdf_base64(pdf_base64)
     plain = message or ""
+
+    company_id = _resolve_company_id(quotation, sender)
+    named_urls, _company_name = _resolve_signature_named_urls(sender, company_id, signature_url)
     html_body = _build_html_body(
         message=plain,
         html_message=html_message,
-        signature_url=signature_url,
+        named_urls=named_urls,
     )
+    inline_images = []
+    if html_body:
+        html_body, inline_images = prepare_html_inline_images(html_body, named_urls=named_urls)
 
-    company_id = _resolve_company_id(quotation, sender)
     settings_obj = _get_active_smtp(company_id)
     from_override, from_name, reply_to = _sender_identity(sender, settings_obj)
 
@@ -226,6 +269,7 @@ def send_quotation_email(
             from_email=from_override,
             from_name=from_name if from_override else None,
             attachments=[(filename, pdf_bytes, "application/pdf")],
+            inline_images=inline_images,
         )
     except Exception as exc:
         log.error_message = str(exc)[:2000]

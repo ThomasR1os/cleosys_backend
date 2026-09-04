@@ -3,10 +3,17 @@ from collections import Counter
 
 from django.db.models import Exists, OuterRef
 from rest_framework import permissions, status, viewsets, views
+from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 
 from accounts.models import UserProfile
-from accounts.permissions import AlmacenWritePermission, company_id_for_user, is_admin_access
+from accounts.permissions import (
+    AlmacenWritePermission,
+    ServiciosOrAlmacenWritePermission,
+    company_id_for_user,
+    is_admin_access,
+)
 from ventas.models import ClientContact
 from ventas.serializers import ClientContactSerializer, UserPublicSummarySerializer
 
@@ -18,12 +25,14 @@ from .client_lookup import (
     validate_pe_ruc_digits,
 )
 
+from .excel_recommended_parts import import_recommended_parts_from_excel
 from .models import (
     Brand,
     CategoryProduct,
     Client,
     PaymentMethods,
     SubcategoryProduct,
+    SubcategoryRecommendedPart,
     Supplier,
     TypeProduct,
     UnitMeasurement,
@@ -35,6 +44,7 @@ from .serializers import (
     ClientSerializer,
     PaymentMethodsSerializer,
     SubcategoryProductSerializer,
+    SubcategoryRecommendedPartSerializer,
     SupplierSerializer,
     TypeProductSerializer,
     UnitMeasurementSerializer,
@@ -85,6 +95,54 @@ class CategoryProductViewSet(MaestroCatalogViewSet):
 class SubcategoryProductViewSet(MaestroCatalogViewSet):
     queryset = SubcategoryProduct.objects.all().order_by("id")
     serializer_class = SubcategoryProductSerializer
+
+
+class SubcategoryRecommendedPartViewSet(viewsets.ModelViewSet):
+    """
+    Partes recomendadas por subcategoría.
+    Lectura: autenticados. Escritura: SERVICIOS / ALMACEN / ADMIN.
+    """
+
+    queryset = SubcategoryRecommendedPart.objects.select_related(
+        "subcategory", "subcategory__category"
+    ).order_by("sort_order", "id")
+    serializer_class = SubcategoryRecommendedPartSerializer
+    permission_classes = [permissions.IsAuthenticated, ServiciosOrAlmacenWritePermission]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
+
+    def get_queryset(self):
+        qs = SubcategoryRecommendedPart.objects.select_related(
+            "subcategory", "subcategory__category"
+        ).order_by("sort_order", "id")
+        subcategory_id = self.request.query_params.get("subcategory_id")
+        if subcategory_id:
+            qs = qs.filter(subcategory_id=subcategory_id)
+        active = self.request.query_params.get("is_active")
+        if active is not None and str(active).strip() != "":
+            qs = qs.filter(is_active=str(active).lower() in ("1", "true", "yes", "si", "sí"))
+        return qs
+
+    @action(detail=False, methods=["post"], url_path="import-excel")
+    def import_excel(self, request):
+        upload = request.FILES.get("file")
+        if upload is None:
+            return Response(
+                {"file": "Envíe el archivo Excel en el campo 'file'."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        name = (upload.name or "").lower()
+        if not (name.endswith(".xlsx") or name.endswith(".xlsm")):
+            return Response(
+                {"file": "Formato no soportado. Use .xlsx"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        result = import_recommended_parts_from_excel(upload)
+        http_status = (
+            status.HTTP_200_OK
+            if not result["errors"] or result["created"] or result["updated"]
+            else status.HTTP_400_BAD_REQUEST
+        )
+        return Response(result, status=http_status)
 
 
 class TypeProductViewSet(MaestroCatalogViewSet):

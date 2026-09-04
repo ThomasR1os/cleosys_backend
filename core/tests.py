@@ -154,3 +154,68 @@ class ClientLookupByRucTests(APITestCase):
         self.client.force_authenticate(self.seller_a)
         res = self.client.get("/api/clients/lookup-by-ruc/", {"ruc": "123"})
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class SubcategoryRecommendedPartAPITests(APITestCase):
+    def setUp(self) -> None:
+        from io import BytesIO
+
+        from openpyxl import Workbook
+
+        from core.models import SubcategoryProduct, SubcategoryRecommendedPart
+
+        self.BytesIO = BytesIO
+        self.Workbook = Workbook
+        self.SubcategoryRecommendedPart = SubcategoryRecommendedPart
+
+        self.company = Company.objects.get(pk=1)
+        self.user = User.objects.create_user(username="parts_serv", password="pass12345")
+        UserProfile.objects.create(
+            user=self.user,
+            company=self.company,
+            role=UserProfile.Role.SERVICIOS,
+        )
+        self.subcategory = SubcategoryProduct.objects.get(pk=1)
+        self.url = "/api/subcategory-recommended-parts/"
+
+    def test_create_and_filter_by_subcategory(self) -> None:
+        self.client.force_authenticate(self.user)
+        resp = self.client.post(
+            self.url,
+            {
+                "subcategory": self.subcategory.pk,
+                "name": "Rodamiento",
+                "description": "Eje principal",
+                "sort_order": 1,
+                "is_active": True,
+            },
+            format="json",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED, resp.data)
+        listed = self.client.get(self.url, {"subcategory_id": self.subcategory.pk})
+        self.assertEqual(listed.status_code, status.HTTP_200_OK)
+        self.assertTrue(any(r["name"] == "Rodamiento" for r in listed.data))
+
+    def test_import_excel(self) -> None:
+        self.client.force_authenticate(self.user)
+        wb = self.Workbook()
+        ws = wb.active
+        ws.append(["subcategory_id", "name", "description", "sort_order", "is_active"])
+        ws.append([self.subcategory.pk, "Junta", "Junta térmica", 2, "si"])
+        buf = self.BytesIO()
+        wb.save(buf)
+        buf.seek(0)
+        buf.name = "parts.xlsx"
+
+        resp = self.client.post(
+            f"{self.url}import-excel/",
+            {"file": buf},
+            format="multipart",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK, resp.data)
+        self.assertEqual(resp.data["created"], 1)
+        self.assertTrue(
+            self.SubcategoryRecommendedPart.objects.filter(
+                subcategory=self.subcategory, name="Junta"
+            ).exists()
+        )

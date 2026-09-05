@@ -182,7 +182,7 @@ def send_quotation_email(
         recipients = [contact_email]
 
     cc_list = [e.strip() for e in (cc or []) if e and str(e).strip()]
-    subj = (subject or "").strip() or f"Cotización {quotation.correlativo}"
+    subj = (subject or "").strip() or f"Cotización {quotation.correlativo} Compresores del Perú"
     filename = (pdf_filename or "").strip() or f"cotizacion-{quotation.correlativo}.pdf"
     pdf_bytes = _decode_pdf_base64(pdf_base64)
     plain = message or ""
